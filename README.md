@@ -452,7 +452,7 @@ Then reload the unpacked extension and refresh the chat tab.
   <img alt="DSA — Data Science and its Applications" src="docs/assets/dsa-logo.png" height="120">
 </a></td>
 <td>
-Privacy Guardrail is developed in the [Data Science and its Applications](https://www.dfki.de/web/forschung/forschungsbereiche/data-science-und-ihre-anwendungen) research group at the [German Research Center for Artificial Intelligence (DFKI)](https://www.dfki.de/).</td></tr></table>
+Privacy Guardrail is developed in the <a href="https://www.dfki.de/web/forschung/forschungsbereiche/data-science-und-ihre-anwendungen">Data Science and its Applications research group</a> at the <a href="https://www.dfki.de/">German Research Center for Artificial Intelligence (DFKI)</a>.</td></tr></table>
 
 ### Contributors
 
