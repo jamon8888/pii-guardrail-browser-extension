@@ -322,7 +322,7 @@ const BARDSAI_LABEL_MAP: Readonly<Record<string, EntityType>> = {
   PHONE_NUMBER: 'PHONE',
   POLITICAL_OPINION: 'MISC',
   POSTAL_ADDRESS: 'ADDRESS',
-  PROPER_NAME: 'PERSON',
+  PROPER_NAME: 'MISC',
   RELIGION_OR_BELIEF: 'MISC',
   SEXUAL_ORIENTATION: 'MISC',
   TRADE_UNION_MEMBERSHIP: 'MISC',
@@ -758,7 +758,8 @@ function transformerItemToSpan(
   searchFrom: number,
   modelKey: NerModelKey
 ): { span: PiiSpan; nextSearchFrom: number } | null {
-  const entityType = mapTransformerLabelToEntityType(item.entity_group ?? item.entity, modelKey);
+  const rawLabel = item.entity_group ?? item.entity;
+  const entityType = mapTransformerLabelToEntityType(rawLabel, modelKey);
   if (!entityType) return null;
 
   const range = fallbackCharacterRange(text, item, searchFrom);
@@ -774,6 +775,7 @@ function transformerItemToSpan(
       score: item.score,
       text: text.slice(range.start, range.end),
       source: 'ner',
+      ...(rawLabel ? { nerRawLabel: rawLabel } : {}),
     },
     nextSearchFrom: range.end,
   };

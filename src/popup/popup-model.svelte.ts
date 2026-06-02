@@ -489,7 +489,9 @@ function formatResults(spans: PiiSpan[], timings?: Timings): string {
     output += `    Type: ${span.entity_type}\n`;
     output += `    Score: ${(span.score * 100).toFixed(1)}%\n`;
     output += `    Position: ${span.start}-${span.end}\n`;
-    output += `    Source: ${span.source}\n\n`;
+    output += `    Source: ${span.source}\n`;
+    if (span.nerRawLabel) output += `    Raw label: ${span.nerRawLabel}\n`;
+    output += `\n`;
   }
   return output;
 }

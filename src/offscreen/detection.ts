@@ -261,6 +261,7 @@ export async function detectWithExternalNer(
     nerEnabledForWasm: detectConfig?.ner_enabled,
   });
   const spans = await detectPii(text, detectConfig, externalNerSpans);
+  reattachNerRawLabels(spans, externalNerSpans);
   throwIfAborted(signal);
   debugLog('[PG:offscreen] WASM pipeline result', {
     finalSpanCount: spans.length,
@@ -270,6 +271,20 @@ export async function detectWithExternalNer(
     }, {}),
   });
   return { spans, nerMs };
+}
+
+function reattachNerRawLabels(spans: PiiSpan[], externalNerSpans: PiiSpan[]): void {
+  if (externalNerSpans.length === 0) return;
+  const key = (s: PiiSpan) => `${s.start}:${s.end}:${s.entity_type}`;
+  const labels = new Map<string, string>();
+  for (const span of externalNerSpans) {
+    if (span.nerRawLabel) labels.set(key(span), span.nerRawLabel);
+  }
+  for (const span of spans) {
+    if (span.source !== 'ner' || span.nerRawLabel) continue;
+    const raw = labels.get(key(span));
+    if (raw) span.nerRawLabel = raw;
+  }
 }
 
 export function setNerProviderFactoryForTests(factory: NerProviderFactory): void {

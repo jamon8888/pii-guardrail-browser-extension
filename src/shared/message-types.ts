@@ -59,6 +59,8 @@ export interface PiiSpan {
   source: DetectionSource;
   /** Set by the pipeline when skipCodeBlocks is true and the span's start lies inside a code region. */
   inCodeBlock?: boolean;
+  /** For NER-sourced spans: the raw model label before it was mapped to entity_type. Debug aid only. */
+  nerRawLabel?: string;
 }
 
 /** Pipeline configuration sent to the WASM module. */
