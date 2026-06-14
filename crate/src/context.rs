@@ -96,9 +96,7 @@ fn keywords_for(entity_type: EntityType) -> &'static [&'static str] {
         EntityType::Iban => IBAN_KEYWORDS,
         EntityType::BankAccount => BANK_ACCOUNT_KEYWORDS,
         EntityType::Date => DATE_KEYWORDS,
-        EntityType::IpAddress => &[],
-        EntityType::Organization => &[],
-        EntityType::Misc => &[],
+        _ => &[],
     }
 }
 

@@ -100,29 +100,37 @@ fn confidence_threshold_for(span: &PiiSpan, config: &PipelineConfig) -> f64 {
 // drop here (real bug seen with LOCATION "Boston" @ 0.65 dropped by Rust 0.82).
 fn ner_min_confidence(entity_type: crate::types::EntityType) -> f64 {
     match entity_type {
-        crate::types::EntityType::Person
-        | crate::types::EntityType::Location
-        | crate::types::EntityType::Address => 0.55,
-        // Organization stays at the regex baseline (0.5). PRD user story 17
-        // requires NER >= regex baseline; lower would be silently capped by
-        // `max(config.min_confidence, ...)` below anyway.
-        crate::types::EntityType::Organization => 0.50,
-        crate::types::EntityType::Url
-        | crate::types::EntityType::Username
-        | crate::types::EntityType::Password => 0.60,
-        // Account-number model scores are softer in the prototype corpus, but
-        // still useful when above the regex baseline.
-        crate::types::EntityType::BankAccount => 0.50,
+        crate::types::EntityType::PersonName | crate::types::EntityType::PersonAlias => 0.55,
         crate::types::EntityType::Email
         | crate::types::EntityType::Phone
         | crate::types::EntityType::CreditCard
+        | crate::types::EntityType::PaymentCardSecurity
         | crate::types::EntityType::Ssn
         | crate::types::EntityType::Iban
-        | crate::types::EntityType::IpAddress
-        | crate::types::EntityType::Date => 0.80,
-        // Keep Rust's authoritative cap permissive enough for model-specific
-        // TS threshold profiles. AI4Privacy still filters MISC at 0.90 before
-        // this boundary; BardsAI maps explicit sensitive labels to MISC at 0.70.
+        | crate::types::EntityType::IpAddress => 0.80,
+        crate::types::EntityType::Passport
+        | crate::types::EntityType::DriverLicense
+        | crate::types::EntityType::TaxId
+        | crate::types::EntityType::NationalId => 0.75,
+        crate::types::EntityType::MacAddress
+        | crate::types::EntityType::DocumentIdentifier => 0.75,
+        crate::types::EntityType::Sensitive
+        | crate::types::EntityType::PersonAttribute
+        | crate::types::EntityType::DeviceIdentifier => 0.65,
+        crate::types::EntityType::DocumentReference => 0.70,
+        crate::types::EntityType::Url
+        | crate::types::EntityType::Username
+        | crate::types::EntityType::ContactHandle => 0.60,
+        crate::types::EntityType::Nationality => 0.60,
+        crate::types::EntityType::Location
+        | crate::types::EntityType::GeoLocation
+        | crate::types::EntityType::Address => 0.55,
+        crate::types::EntityType::Person | crate::types::EntityType::PersonRole => 0.50,
+        crate::types::EntityType::Organization | crate::types::EntityType::Date => 0.50,
+        crate::types::EntityType::DateOfBirth => 0.65,
+        crate::types::EntityType::BankAccount
+        | crate::types::EntityType::FinancialAmount => 0.50,
+        crate::types::EntityType::Password => 0.60,
         crate::types::EntityType::Misc => 0.70,
     }
 }
@@ -497,17 +505,17 @@ mod tests {
     fn external_ner_spans_use_stricter_type_thresholds_than_regex_spans() {
         let text = "Ada Lovelace";
 
-        // PERSON threshold = 0.55 (see ner_min_confidence and the matching TS
-        // table). 0.54 < threshold; 0.55 == threshold.
+        // PERSON threshold = 0.50 (see ner_min_confidence and the matching TS
+        // table). 0.49 < threshold; 0.50 == threshold.
         let below_threshold = detect_with_external_spans(
             text,
             &default_config(),
-            vec![external_span(text, "Ada Lovelace", EntityType::Person, 0.54)],
+            vec![external_span(text, "Ada Lovelace", EntityType::Person, 0.49)],
         );
         let at_threshold = detect_with_external_spans(
             text,
             &default_config(),
-            vec![external_span(text, "Ada Lovelace", EntityType::Person, 0.55)],
+            vec![external_span(text, "Ada Lovelace", EntityType::Person, 0.50)],
         );
 
         assert!(below_threshold.is_empty());
