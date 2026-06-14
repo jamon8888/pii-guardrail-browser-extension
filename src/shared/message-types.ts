@@ -6,10 +6,14 @@ export type GroupName =
   | 'Location'
   | 'Password'
   | 'Organization'
+  | 'Documents'
+  | 'Temporal'
+  | 'Sensitive'
   | 'Low-signal';
 
 /** Entity types matching the Rust WASM module's EntityType enum. */
 export type EntityType =
+  // Existing (16)
   | 'PERSON'
   | 'EMAIL'
   | 'PHONE'
@@ -25,25 +29,38 @@ export type EntityType =
   | 'PASSWORD'
   | 'BANK_ACCOUNT'
   | 'DATE'
-  | 'MISC';
+  | 'MISC'
+  // New (19)
+  | 'PERSON_NAME'
+  | 'PERSON_ALIAS'
+  | 'PERSON_ATTRIBUTE'
+  | 'PERSON_ROLE'
+  | 'DATE_OF_BIRTH'
+  | 'DOCUMENT_IDENTIFIER'
+  | 'DOCUMENT_REFERENCE'
+  | 'PASSPORT'
+  | 'DRIVER_LICENSE'
+  | 'TAX_ID'
+  | 'NATIONAL_ID'
+  | 'NATIONALITY'
+  | 'GEO_LOCATION'
+  | 'FINANCIAL_AMOUNT'
+  | 'PAYMENT_CARD_SECURITY'
+  | 'MAC_ADDRESS'
+  | 'DEVICE_IDENTIFIER'
+  | 'CONTACT_HANDLE'
+  | 'SENSITIVE';
 
 export const ENTITY_TYPES: readonly EntityType[] = [
-  'PERSON',
-  'EMAIL',
-  'PHONE',
-  'CREDIT_CARD',
-  'SSN',
-  'IBAN',
-  'IP_ADDRESS',
-  'LOCATION',
-  'ORGANIZATION',
-  'ADDRESS',
-  'URL',
-  'USERNAME',
-  'PASSWORD',
-  'BANK_ACCOUNT',
-  'DATE',
-  'MISC',
+  'PERSON', 'EMAIL', 'PHONE', 'CREDIT_CARD', 'SSN', 'IBAN',
+  'IP_ADDRESS', 'LOCATION', 'ORGANIZATION', 'ADDRESS', 'URL',
+  'USERNAME', 'PASSWORD', 'BANK_ACCOUNT', 'DATE', 'MISC',
+  'PERSON_NAME', 'PERSON_ALIAS', 'PERSON_ATTRIBUTE', 'PERSON_ROLE',
+  'DATE_OF_BIRTH', 'DOCUMENT_IDENTIFIER', 'DOCUMENT_REFERENCE',
+  'PASSPORT', 'DRIVER_LICENSE', 'TAX_ID', 'NATIONAL_ID',
+  'NATIONALITY', 'GEO_LOCATION', 'FINANCIAL_AMOUNT',
+  'PAYMENT_CARD_SECURITY', 'MAC_ADDRESS', 'DEVICE_IDENTIFIER',
+  'CONTACT_HANDLE', 'SENSITIVE',
 ];
 
 /** Detection source — which pipeline stage produced this span. */
@@ -72,7 +89,7 @@ export interface PipelineConfig {
 }
 
 export type NerProviderMode = 'off' | 'fixture' | 'transformers';
-export type NerModelKey = 'ai4privacy' | 'bardsai' | 'hikmaai';
+export type NerModelKey = 'ai4privacy' | 'bardsai' | 'hikmaai' | 'bardsai-v2';
 export type NerRuntimeState = 'idle' | 'unavailable' | 'loading' | 'ready' | 'failed';
 // 'cpu' only occurs in the Node benchmark harness (onnxruntime-node has no
 // wasm EP); the extension itself runs 'wasm' or 'webgpu'.
