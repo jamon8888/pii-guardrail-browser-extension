@@ -1,0 +1,1158 @@
+{
+  "appName": {
+    "message": "Privacy Guardrail",
+    "description": "Extension name"
+  },
+  "betaBadge": {
+    "message": "BETA",
+    "description": "Beta badge label"
+  },
+  "publicBetaNote": {
+    "message": "Public beta — features may change",
+    "description": "Tooltip for beta badge"
+  },
+  "byDfki": {
+    "message": "by DFKI",
+    "description": "DFKI attribution"
+  },
+  "masterProtection": {
+    "message": "Master protection",
+    "description": "Master protection toggle label"
+  },
+  "extensionSettings": {
+    "message": "Extension Settings",
+    "description": "Options page title"
+  },
+  "tabProtect": {
+    "message": "Protect",
+    "description": "Protect tab label"
+  },
+  "tabDetect": {
+    "message": "Detect",
+    "description": "Detect tab label"
+  },
+  "tabTest": {
+    "message": "Test",
+    "description": "Test tab label"
+  },
+  "tabSettings": {
+    "message": "Settings",
+    "description": "Settings tab label"
+  },
+  "protection": {
+    "message": "protection",
+    "description": "Protection status pill key"
+  },
+  "statusOn": {
+    "message": "on",
+    "description": "Protection on status"
+  },
+  "statusOff": {
+    "message": "off",
+    "description": "Protection off status"
+  },
+  "localAi": {
+    "message": "local ai",
+    "description": "Local AI status pill key"
+  },
+  "wasm": {
+    "message": "wasm",
+    "description": "WASM status pill key"
+  },
+  "loading": {
+    "message": "Loading...",
+    "description": "Loading status"
+  },
+  "loaded": {
+    "message": "Loaded",
+    "description": "Loaded status"
+  },
+  "notLoaded": {
+    "message": "Not loaded",
+    "description": "Not loaded status"
+  },
+  "ready": {
+    "message": "Ready",
+    "description": "Ready status"
+  },
+  "failed": {
+    "message": "Failed",
+    "description": "Failed status"
+  },
+  "unavailable": {
+    "message": "Unavailable",
+    "description": "Unavailable status"
+  },
+  "off": {
+    "message": "Off",
+    "description": "Off status"
+  },
+  "aiTransparencyNotice": {
+    "message": "Detection uses a local AI model that runs on your device. It can miss or mis-flag sensitive content, so review text before you send it.",
+    "description": "EU AI Act Art. 50 transparency notice"
+  },
+  "limitsDisclaimer": {
+    "message": "Privacy Guardrail is assistive only and can miss or mis-flag sensitive content. Always review text before you send it.",
+    "description": "Limits of detection disclaimer"
+  },
+  "runningOnCpuFallback": {
+    "message": "Running on CPU fallback.",
+    "description": "CPU fallback warning title"
+  },
+  "webgpuUnavailable": {
+    "message": "WebGPU is unavailable, so local detection will be slower. Expect paste detection to take at least a couple of seconds.",
+    "description": "WebGPU unavailable warning"
+  },
+  "detectionCategories": {
+    "message": "Detection categories",
+    "description": "Detection categories card heading"
+  },
+  "identityVault": {
+    "message": "Identity vault",
+    "description": "Identity vault card heading"
+  },
+  "crossSessionMemory": {
+    "message": "Cross-session memory",
+    "description": "Cross-session memory toggle label"
+  },
+  "replacement": {
+    "message": "Replacement",
+    "description": "Replacement mode label"
+  },
+  "placeholder": {
+    "message": "Placeholder",
+    "description": "Placeholder replacement mode"
+  },
+  "synthetic": {
+    "message": "Synthetic",
+    "description": "Synthetic replacement mode"
+  },
+  "manageVault": {
+    "message": "Manage vault",
+    "description": "Manage vault button label"
+  },
+  "saved": {
+    "message": "saved",
+    "description": "Saved count suffix"
+  },
+  "restoreDefaults": {
+    "message": "Restore defaults",
+    "description": "Restore defaults button"
+  },
+  "clearMappings": {
+    "message": "Clear mappings",
+    "description": "Clear mappings button"
+  },
+  "legal": {
+    "message": "Legal",
+    "description": "Legal card heading"
+  },
+  "privacyPolicy": {
+    "message": "Privacy Policy",
+    "description": "Privacy policy link"
+  },
+  "impressum": {
+    "message": "Impressum",
+    "description": "Impressum link"
+  },
+  "detection": {
+    "message": "Detection",
+    "description": "Detection card heading"
+  },
+  "sensitivity": {
+    "message": "Sensitivity",
+    "description": "Sensitivity label"
+  },
+  "fewerDetections": {
+    "message": "Fewer detections",
+    "description": "Slider left label"
+  },
+  "moreDetections": {
+    "message": "More detections",
+    "description": "Slider right label"
+  },
+  "individualModeHint": {
+    "message": "Individual mode — configure per-group thresholds in Options.",
+    "description": "Individual mode hint"
+  },
+  "options": {
+    "message": "Options ›",
+    "description": "Options button label"
+  },
+  "nerModel": {
+    "message": "NER model",
+    "description": "NER model label"
+  },
+  "localTransformerHint": {
+    "message": "Local transformer used for detection",
+    "description": "NER model hint"
+  },
+  "behavior": {
+    "message": "Behavior",
+    "description": "Behavior card heading"
+  },
+  "interceptClipboard": {
+    "message": "Intercept clipboard",
+    "description": "Clipboard intercept toggle label"
+  },
+  "restoreCopiedHint": {
+    "message": "Offer to restore copied replaced items",
+    "description": "Clipboard intercept hint"
+  },
+  "debugMode": {
+    "message": "Debug mode",
+    "description": "Debug mode toggle label"
+  },
+  "verboseLogging": {
+    "message": "Verbose logging in console",
+    "description": "Debug mode hint"
+  },
+  "maintenance": {
+    "message": "Maintenance",
+    "description": "Maintenance card heading"
+  },
+  "clearFeedback": {
+    "message": "Clear feedback",
+    "description": "Clear feedback button"
+  },
+  "corrections": {
+    "message": "corrections",
+    "description": "Corrections count suffix"
+  },
+  "support": {
+    "message": "Support",
+    "description": "Support card heading"
+  },
+  "reportIssue": {
+    "message": "Report issue",
+    "description": "Report issue button"
+  },
+  "reportSecurityIssue": {
+    "message": "Report security/privacy issue",
+    "description": "Report security issue button"
+  },
+  "privacyAndSupport": {
+    "message": "Privacy and support",
+    "description": "Privacy and support card heading"
+  },
+  "publicBetaLinks": {
+    "message": "Public beta links",
+    "description": "Public beta links hint"
+  },
+  "termsOfUse": {
+    "message": "Terms of Use",
+    "description": "Terms of use link"
+  },
+  "termsOfUseSoon": {
+    "message": "Terms of Use (soon)",
+    "description": "Terms of use pending link"
+  },
+  "termsOfUsePending": {
+    "message": "Terms of Use will be published soon.",
+    "description": "Terms of use pending tooltip"
+  },
+  "sensitiveReportsHint": {
+    "message": "For sensitive reports, use the private instructions in SECURITY.md. The contact is",
+    "description": "Sensitive reports hint"
+  },
+  "moreSettings": {
+    "message": "More settings…",
+    "description": "More settings button"
+  },
+  "versionNote": {
+    "message": "Privacy Guardrail · {0}",
+    "description": "Version note in settings (0 = model name)"
+  },
+  "testDetection": {
+    "message": "Test detection",
+    "description": "Test detection card heading"
+  },
+  "categoriesCount": {
+    "message": "{0} categories",
+    "description": "Categories count hint (0 = count)"
+  },
+  "sampleTextPlaceholder": {
+    "message": "Paste sample text…",
+    "description": "Test input placeholder"
+  },
+  "runDetection": {
+    "message": "Run detection",
+    "description": "Run detection button"
+  },
+  "detecting": {
+    "message": "Detecting…",
+    "description": "Detecting status"
+  },
+  "detected": {
+    "message": "Detected",
+    "description": "Detected results heading"
+  },
+  "feedback": {
+    "message": "Feedback",
+    "description": "Feedback card heading"
+  },
+  "correctionsLabel": {
+    "message": "Corrections",
+    "description": "Corrections stat label"
+  },
+  "allowlistLabel": {
+    "message": "Allowlist",
+    "description": "Allowlist stat label"
+  },
+  "runningDetectionPipeline": {
+    "message": "Running detection pipeline...",
+    "description": "Detection pipeline running"
+  },
+  "errorInvalidResponse": {
+    "message": "Error: Invalid response",
+    "description": "Invalid response error"
+  },
+  "noPiiDetected": {
+    "message": "No obvious PII detected{0}. Review before sending — detection can miss things.",
+    "description": "No PII detected message (0 = timings)"
+  },
+  "foundPiiSpans": {
+    "message": "Found {0} PII span(s){1}:",
+    "description": "PII spans found (0 = count, 1 = timings)"
+  },
+  "type": {
+    "message": "Type:",
+    "description": "Span type label"
+  },
+  "score": {
+    "message": "Score:",
+    "description": "Span score label"
+  },
+  "position": {
+    "message": "Position:",
+    "description": "Span position label"
+  },
+  "source": {
+    "message": "Source:",
+    "description": "Span source label"
+  },
+  "rawLabel": {
+    "message": "Raw label:",
+    "description": "NER raw label"
+  },
+  "nerReady": {
+    "message": "NER ready",
+    "description": "NER ready status"
+  },
+  "nerNotLoaded": {
+    "message": "NER not loaded",
+    "description": "NER not loaded status"
+  },
+  "nerLoading": {
+    "message": "NER loading",
+    "description": "NER loading status"
+  },
+  "nerFailed": {
+    "message": "NER failed",
+    "description": "NER failed status"
+  },
+  "nerUnavailable": {
+    "message": "NER unavailable",
+    "description": "NER unavailable status"
+  },
+  "sharedRuleState": {
+    "message": "Shared rule state",
+    "description": "Shared rule state heading"
+  },
+  "static": {
+    "message": "static",
+    "description": "Static badge"
+  },
+  "sharedRuleDescription": {
+    "message": "Protect and Detect use the same category toggles. Changes here are reflected across tabs.",
+    "description": "Shared rule state description"
+  },
+  "detectionRules": {
+    "message": "Detection rules",
+    "description": "Detection rules card heading"
+  },
+  "perCategory": {
+    "message": "per-category",
+    "description": "Per-category hint"
+  },
+  "sensitivityTuning": {
+    "message": "Detection threshold tuning",
+    "description": "Sensitivity card hint"
+  },
+  "sensitivityMode": {
+    "message": "Sensitivity mode",
+    "description": "Sensitivity mode aria label"
+  },
+  "global": {
+    "message": "Global",
+    "description": "Global sensitivity mode"
+  },
+  "individual": {
+    "message": "Individual",
+    "description": "Individual sensitivity mode"
+  },
+  "globalSensitivityHint": {
+    "message": "One slider controls all categories proportionally, respecting each category's intrinsic sensitivity range.",
+    "description": "Global mode hint"
+  },
+  "individualSensitivityHint": {
+    "message": "Each category group has its own slider. Switching back to Global will clear your individual overrides.",
+    "description": "Individual mode hint"
+  },
+  "globalSensitivity": {
+    "message": "Global sensitivity",
+    "description": "Global sensitivity aria label"
+  },
+  "groupSensitivity": {
+    "message": "{0} sensitivity",
+    "description": "Group sensitivity aria label (0 = group name)"
+  },
+  "allowlist": {
+    "message": "Allowlist",
+    "description": "Allowlist card heading"
+  },
+  "neverFlagThese": {
+    "message": "Never flag these strings",
+    "description": "Allowlist hint"
+  },
+  "allowlistPatternPlaceholder": {
+    "message": "Pattern (e.g. Smith, acme-*)",
+    "description": "Allowlist input placeholder"
+  },
+  "allowlistPatternAria": {
+    "message": "Allowlist pattern",
+    "description": "Allowlist pattern aria label"
+  },
+  "add": {
+    "message": "Add",
+    "description": "Add button"
+  },
+  "noEntries": {
+    "message": "No entries yet.",
+    "description": "No entries message"
+  },
+  "pattern": {
+    "message": "Pattern",
+    "description": "Table column header"
+  },
+  "added": {
+    "message": "Added",
+    "description": "Table column header"
+  },
+  "sourceLabel": {
+    "message": "Source",
+    "description": "Table column header"
+  },
+  "blocklist": {
+    "message": "Blocklist",
+    "description": "Blocklist card heading"
+  },
+  "alwaysFlagThese": {
+    "message": "Always flag these strings",
+    "description": "Blocklist hint"
+  },
+  "blocklistPatternPlaceholder": {
+    "message": "Pattern (e.g. Project Bluebird)",
+    "description": "Blocklist input placeholder"
+  },
+  "blocklistPatternAria": {
+    "message": "Blocklist pattern",
+    "description": "Blocklist pattern aria label"
+  },
+  "category": {
+    "message": "Category",
+    "description": "Category label"
+  },
+  "defaultCategory": {
+    "message": "MISC (default)",
+    "description": "Default category option"
+  },
+  "categoryForPattern": {
+    "message": "Category for {0}",
+    "description": "Category for pattern aria label (0 = pattern)"
+  },
+  "pasteScanCancellation": {
+    "message": "Paste scan cancellation",
+    "description": "Cancel detection card heading"
+  },
+  "canceledPasteBehavior": {
+    "message": "Canceled paste behavior",
+    "description": "Cancel detection hint"
+  },
+  "whenCancelingScan": {
+    "message": "When canceling a scan",
+    "description": "Cancel detection label"
+  },
+  "cancelDetectionHint": {
+    "message": "Choose what Privacy Guardrail does with the pending paste after you explicitly cancel a running scan. \"Paste without checking\" bypasses personal-data detection for that paste.",
+    "description": "Cancel detection description"
+  },
+  "askEveryTime": {
+    "message": "Ask every time",
+    "description": "Ask every time option"
+  },
+  "pasteWithoutChecking": {
+    "message": "Paste without checking",
+    "description": "Paste without checking option"
+  },
+  "dontPaste": {
+    "message": "Don't paste",
+    "description": "Don't paste option"
+  },
+  "codeBlocks": {
+    "message": "Code blocks",
+    "description": "Code blocks card heading"
+  },
+  "suppressCodeDetections": {
+    "message": "Suppress detections inside code regions",
+    "description": "Code blocks hint"
+  },
+  "skipCodeBlocks": {
+    "message": "Skip code blocks",
+    "description": "Skip code blocks label"
+  },
+  "skipCodeBlocksHint": {
+    "message": "When on, detections inside fenced markdown blocks and <code>&lt;code&gt;</code>/<code>&lt;pre&gt;</code> regions move to a collapsed disclosure in the overlay instead of appearing at the top level. Inline backticks are always scanned.",
+    "description": "Skip code blocks description"
+  },
+  "enableCrossSessionVault": {
+    "message": "Enable cross-session vault",
+    "description": "Vault enable label"
+  },
+  "defaultMode": {
+    "message": "Default mode",
+    "description": "Default mode label"
+  },
+  "defaultReplacementMode": {
+    "message": "Default replacement mode",
+    "description": "Default replacement mode aria label"
+  },
+  "vaultIntro": {
+    "message": "Each detected identity is stored once and reused everywhere. Toggle <em>Synthetic</em> mode to replace placeholders like <code>[PERSON_1]</code> with realistic but obviously-fake values such as <code>Jordan Park</code>, which often improves LLM response quality. Pin a record to lock its replacement against automatic changes.",
+    "description": "Vault introduction text"
+  },
+  "vaultEmpty": {
+    "message": "The vault is empty. Records will appear here as you confirm replacements.",
+    "description": "Empty vault message"
+  },
+  "original": {
+    "message": "Original",
+    "description": "Table column header"
+  },
+  "typeLabel": {
+    "message": "Type",
+    "description": "Table column header"
+  },
+  "replacementLabel": {
+    "message": "Replacement",
+    "description": "Table column header"
+  },
+  "mode": {
+    "message": "Mode",
+    "description": "Table column header"
+  },
+  "used": {
+    "message": "Used",
+    "description": "Table column header"
+  },
+  "pin": {
+    "message": "Pin",
+    "description": "Table column header"
+  },
+  "syntheticReplacementFor": {
+    "message": "Synthetic replacement for {0}",
+    "description": "Synthetic replacement aria label (0 = original text)"
+  },
+  "replacementModeFor": {
+    "message": "Replacement mode for {0}",
+    "description": "Replacement mode aria label (0 = original text)"
+  },
+  "syntheticUnavailable": {
+    "message": "Synthetic mode is unavailable for this entity type",
+    "description": "Synthetic unavailable tooltip"
+  },
+  "unpinRecord": {
+    "message": "Unpin record",
+    "description": "Unpin record aria label"
+  },
+  "pinRecord": {
+    "message": "Pin record",
+    "description": "Pin record aria label"
+  },
+  "pinnedClickToUnpin": {
+    "message": "Pinned (click to unpin)",
+    "description": "Pinned tooltip"
+  },
+  "remove": {
+    "message": "Remove {0}",
+    "description": "Remove button aria label (0 = item name)"
+  },
+  "exportJson": {
+    "message": "Export JSON",
+    "description": "Export JSON button"
+  },
+  "importJson": {
+    "message": "Import JSON",
+    "description": "Import JSON button"
+  },
+  "clearUnpinned": {
+    "message": "Clear unpinned",
+    "description": "Clear unpinned button"
+  },
+  "importedRecords": {
+    "message": "Imported {0} record(s).",
+    "description": "Import success message (0 = count)"
+  },
+  "noUnpinnedToClear": {
+    "message": "No unpinned records to clear.",
+    "description": "No unpinned records message"
+  },
+  "confirmRemoveUnpinned": {
+    "message": "Remove {0} unpinned record(s)? This cannot be undone.",
+    "description": "Confirm remove unpinned (0 = count)"
+  },
+  "justNow": {
+    "message": "just now",
+    "description": "Time relative: just now"
+  },
+  "minutesAgo": {
+    "message": "{0}m ago",
+    "description": "Time relative: minutes ago (0 = count)"
+  },
+  "hoursAgo": {
+    "message": "{0}h ago",
+    "description": "Time relative: hours ago (0 = count)"
+  },
+  "daysAgo": {
+    "message": "{0}d ago",
+    "description": "Time relative: days ago (0 = count)"
+  },
+  "crossSessionProviderMappings": {
+    "message": "Cross-session, cross-provider mappings",
+    "description": "Vault card hint"
+  },
+  "systemCompatibility": {
+    "message": "System Compatibility",
+    "description": "System compatibility card heading"
+  },
+  "localAiResourceGuard": {
+    "message": "Local AI resource guard",
+    "description": "System compatibility hint"
+  },
+  "checkingCompatibility": {
+    "message": "Checking compatibility",
+    "description": "Checking compatibility status"
+  },
+  "criticalResourceRisk": {
+    "message": "Critical resource risk",
+    "description": "Critical resource risk"
+  },
+  "resourceWarning": {
+    "message": "Resource warning",
+    "description": "Resource warning"
+  },
+  "compatibilityUnknown": {
+    "message": "Compatibility partially unknown",
+    "description": "Unknown compatibility"
+  },
+  "noResourceConcern": {
+    "message": "No known resource concern",
+    "description": "OK compatibility"
+  },
+  "browserMemory": {
+    "message": "{0} GB browser-reported memory",
+    "description": "Browser memory (0 = GB count)"
+  },
+  "memoryUnavailable": {
+    "message": "Browser-reported memory unavailable",
+    "description": "Memory unavailable"
+  },
+  "checkingSystem": {
+    "message": "Checking…",
+    "description": "Checking system"
+  },
+  "localAiDetection": {
+    "message": "Local AI detection",
+    "description": "Local AI detection label"
+  },
+  "localAiDetectionOn": {
+    "message": "Local AI detection on",
+    "description": "Local AI on"
+  },
+  "localAiDetectionOff": {
+    "message": "Local AI detection off",
+    "description": "Local AI off"
+  },
+  "fixtureLocalAiMode": {
+    "message": "Fixture Local AI mode (development)",
+    "description": "Fixture mode"
+  },
+  "localAiDetectionHint": {
+    "message": "Detects names, organizations, locations, and context-only PII. When off, pattern detection remains active, but those contextual details may be missed.",
+    "description": "Local AI detection hint"
+  },
+  "localAiModel": {
+    "message": "Local AI model",
+    "description": "Local AI model label"
+  },
+  "loadingLocalAi": {
+    "message": "Loading Local AI detection…",
+    "description": "Loading Local AI"
+  },
+  "localAiFailed": {
+    "message": "Local AI failed to load",
+    "description": "Local AI failed title"
+  },
+  "patternDetectionActive": {
+    "message": "Pattern detection remains active.",
+    "description": "Pattern detection active hint"
+  },
+  "retryLocalAi": {
+    "message": "Retry Local AI",
+    "description": "Retry Local AI button"
+  },
+  "unloadAfterInactivity": {
+    "message": "Unload after inactivity",
+    "description": "Unload timeout label"
+  },
+  "browserSession": {
+    "message": "Browser session",
+    "description": "Browser session timeout"
+  },
+  "keepLoadedWhileActive": {
+    "message": "Keep loaded while active on a supported page",
+    "description": "Keep loaded checkbox"
+  },
+  "warmLocalAi": {
+    "message": "Warm Local AI on capable active supported pages",
+    "description": "Auto warm checkbox"
+  },
+  "localAiStatus": {
+    "message": "Local AI status",
+    "description": "Local AI status label"
+  },
+  "runtimeStatus": {
+    "message": "Runtime status",
+    "description": "Runtime status label"
+  },
+  "passiveWebGpu": {
+    "message": "Passive WebGPU",
+    "description": "Passive WebGPU label"
+  },
+  "runtimeLoading": {
+    "message": "Runtime loading",
+    "description": "Runtime loading"
+  },
+  "runtimeReady": {
+    "message": "Runtime ready",
+    "description": "Runtime ready"
+  },
+  "runtimeFailed": {
+    "message": "Runtime failed",
+    "description": "Runtime failed"
+  },
+  "runtimeNotLoaded": {
+    "message": "Runtime not loaded",
+    "description": "Runtime not loaded"
+  },
+  "runtimeUnknown": {
+    "message": "Runtime unknown",
+    "description": "Runtime unknown"
+  },
+  "compatibilityCheckPending": {
+    "message": "Compatibility check is pending. This check uses passive browser APIs only and does not load the Local AI model.",
+    "description": "Compatibility check pending"
+  },
+  "reRunSystemCheck": {
+    "message": "Re-run system check",
+    "description": "Re-run system check button"
+  },
+  "reRunningSystemCheck": {
+    "message": "Re-running system check…",
+    "description": "Re-running system check"
+  },
+  "reRunHint": {
+    "message": "Refreshes browser-reported memory and WebGPU signals. The Local AI model is not loaded.",
+    "description": "Re-run hint"
+  },
+  "q4f16Hint": {
+    "message": "q4f16: 4-bit model — about 1 GB of RAM while loaded.",
+    "description": "q4f16 dtype hint"
+  },
+  "fp16Hint": {
+    "message": "fp16: full-precision model — slightly more RAM and about twice the GPU memory of the 4-bit (q4f16) model.",
+    "description": "fp16 dtype hint"
+  },
+  "quantizationHint": {
+    "message": "The quantization only applies when the model runs on the GPU (WebGPU); the CPU fallback always uses the compact model.",
+    "description": "Quantization hint"
+  },
+  "debugSystemCompatibility": {
+    "message": "Debug: system compatibility",
+    "description": "Debug card heading"
+  },
+  "forLocalTestingOnly": {
+    "message": "For local testing only",
+    "description": "Debug card hint"
+  },
+  "debugModeHint": {
+    "message": "Reveals testing controls that simulate compatibility states without restarting the browser.",
+    "description": "Debug mode hint"
+  },
+  "debugWarning": {
+    "message": "These buttons write directly to <code>pg_system_check</code> and the Local AI setting. Use only when testing — to return to the real passive check, click <strong>Clear &amp; re-run passive check</strong>.",
+    "description": "Debug warning"
+  },
+  "tier": {
+    "message": "Tier",
+    "description": "Tier label"
+  },
+  "memory": {
+    "message": "Memory",
+    "description": "Memory label"
+  },
+  "webGpu": {
+    "message": "WebGPU",
+    "description": "WebGPU label"
+  },
+  "modal": {
+    "message": "Modal",
+    "description": "Modal label"
+  },
+  "runtime": {
+    "message": "Runtime",
+    "description": "Runtime label"
+  },
+  "clearAndRerunPassive": {
+    "message": "Clear &amp; re-run passive check",
+    "description": "Clear and re-run button"
+  },
+  "sensitiveDataDetected": {
+    "message": "Sensitive data detected",
+    "description": "Overlay header title"
+  },
+  "itemsFound": {
+    "message": "{0} item{1} found",
+    "description": "Items found (0 = count, 1 = plural suffix)"
+  },
+  "detectionTook": {
+    "message": " · detection took {0} ms",
+    "description": "Detection timing (0 = ms)"
+  },
+  "cancelNothingPasted": {
+    "message": "Cancel (nothing pasted)",
+    "description": "Cancel button tooltip"
+  },
+  "entities": {
+    "message": "Entities",
+    "description": "Entities card title"
+  },
+  "entitiesCount": {
+    "message": "{0} of {1}",
+    "description": "Entity count (0 = enabled, 1 = total)"
+  },
+  "inCodeBlocks": {
+    "message": "In code blocks ({0})",
+    "description": "Code blocks disclosure (0 = count)"
+  },
+  "pasteOriginal": {
+    "message": "Paste original",
+    "description": "Paste original button"
+  },
+  "replacingItems": {
+    "message": "Replacing {0} of {1} items",
+    "description": "Replacing items summary (0 = enabled, 1 = total)"
+  },
+  "replaceAndPaste": {
+    "message": "Replace & paste",
+    "description": "Replace and paste button"
+  },
+  "minConfidence": {
+    "message": "Min. confidence",
+    "description": "Confidence slider label"
+  },
+  "markNewPii": {
+    "message": "Mark new PII",
+    "description": "Mark overlay title"
+  },
+  "selection": {
+    "message": "Selection",
+    "description": "Selection label"
+  },
+  "assignType": {
+    "message": "Assign type",
+    "description": "Assign type label"
+  },
+  "moreTypes": {
+    "message": "{0} more types…",
+    "description": "More types button (0 = count)"
+  },
+  "fewerTypes": {
+    "message": "Fewer types",
+    "description": "Fewer types button"
+  },
+  "addAsType": {
+    "message": "Add as {0}",
+    "description": "Add as type button (0 = type name)"
+  },
+  "dismiss": {
+    "message": "Dismiss {0}",
+    "description": "Dismiss menu title (0 = truncated text)"
+  },
+  "justThisTime": {
+    "message": "Just this time",
+    "description": "Dismiss just this time"
+  },
+  "alwaysAllowValue": {
+    "message": "Always allow this value",
+    "description": "Dismiss always allow value"
+  },
+  "allowPattern": {
+    "message": "Allow pattern…",
+    "description": "Dismiss allow pattern"
+  },
+  "replacedItems": {
+    "message": "{0} replaced item{1}",
+    "description": "Replaced items count (0 = count, 1 = plural suffix)"
+  },
+  "revealOriginals": {
+    "message": "Reveal originals",
+    "description": "Reveal originals button"
+  },
+  "hideOriginals": {
+    "message": "Hide originals",
+    "description": "Hide originals button"
+  },
+  "copiedContainsReplaced": {
+    "message": "Copied — contains replaced items. Restore originals?",
+    "description": "Clipboard toast message"
+  },
+  "replaceWithOriginals": {
+    "message": "Replace with originals",
+    "description": "Replace with originals button"
+  },
+  "clipboardReplaced": {
+    "message": "Clipboard replaced",
+    "description": "Clipboard replaced confirmation"
+  },
+  "scanCanceled": {
+    "message": "Scan canceled",
+    "description": "Cancel dialog title"
+  },
+  "cancelDialogBody": {
+    "message": "Do you want to paste this text without checking for personal data?",
+    "description": "Cancel dialog body"
+  },
+  "rememberChoice": {
+    "message": "Remember this choice",
+    "description": "Remember choice checkbox"
+  },
+  "pasteWithoutCheckingBtn": {
+    "message": "Paste without checking",
+    "description": "Paste without checking button"
+  },
+  "localAiOffModalTitle": {
+    "message": "Local AI detection is off to protect this browser",
+    "description": "Critical modal title"
+  },
+  "localAiOffModalBody": {
+    "message": "Privacy Guardrail detected critical browser-reported memory and turned off Local AI detection once to reduce the risk of browser slowdowns or freezes.",
+    "description": "Critical modal body"
+  },
+  "patternDetectionActiveItem": {
+    "message": "Pattern detection remains active for structured personal data.",
+    "description": "Critical modal list item 1"
+  },
+  "namesMayBeMissed": {
+    "message": "Names, organizations, locations, and context-only PII may be missed while Local AI detection is off.",
+    "description": "Critical modal list item 2"
+  },
+  "canReviewSetting": {
+    "message": "You can review this setting and re-enable Local AI detection if you accept the performance risk.",
+    "description": "Critical modal list item 3"
+  },
+  "keepPatternDetectionOnly": {
+    "message": "Keep pattern detection only",
+    "description": "Critical modal dismiss button"
+  },
+  "openSettings": {
+    "message": "Open settings",
+    "description": "Critical modal settings button"
+  },
+  "localAi4privacy": {
+    "message": "AI4Privacy prototype",
+    "description": "AI4Privacy model label"
+  },
+  "localAiBardsai": {
+    "message": "BardsAI EU multilingual",
+    "description": "BardsAI model label"
+  },
+  "localAiHikmaai": {
+    "message": "HikmaAI DistilBERT PII",
+    "description": "HikmaAI model label"
+  },
+  "identity": {
+    "message": "Identity",
+    "description": "Identity category"
+  },
+  "contact": {
+    "message": "Contact",
+    "description": "Contact category"
+  },
+  "financial": {
+    "message": "Financial",
+    "description": "Financial category"
+  },
+  "network": {
+    "message": "Network",
+    "description": "Network category"
+  },
+  "locationCategory": {
+    "message": "Location",
+    "description": "Location category"
+  },
+  "password": {
+    "message": "Password",
+    "description": "Password category"
+  },
+  "organization": {
+    "message": "Organization",
+    "description": "Organization category"
+  },
+  "lowSignal": {
+    "message": "Low-signal",
+    "description": "Low-signal category"
+  },
+  "identityDescription": {
+    "message": "Names, usernames",
+    "description": "Identity category description"
+  },
+  "contactDescription": {
+    "message": "Email, phone, address",
+    "description": "Contact category description"
+  },
+  "financialDescription": {
+    "message": "Cards, IBAN, accounts",
+    "description": "Financial category description"
+  },
+  "networkDescription": {
+    "message": "IP addresses",
+    "description": "Network category description"
+  },
+  "locationDescription": {
+    "message": "Places and regions",
+    "description": "Location category description"
+  },
+  "passwordDescription": {
+    "message": "Secrets and keys",
+    "description": "Password category description"
+  },
+  "organizationDescription": {
+    "message": "Companies and orgs",
+    "description": "Organization category description"
+  },
+  "lowSignalDescription": {
+    "message": "URLs, dates, misc",
+    "description": "Low-signal category description"
+  },
+  "person": {
+    "message": "Person",
+    "description": "Entity type: person"
+  },
+  "email": {
+    "message": "Email",
+    "description": "Entity type: email"
+  },
+  "phone": {
+    "message": "Phone",
+    "description": "Entity type: phone"
+  },
+  "creditCard": {
+    "message": "Credit card",
+    "description": "Entity type: credit card"
+  },
+  "ssn": {
+    "message": "SSN",
+    "description": "Entity type: SSN"
+  },
+  "iban": {
+    "message": "IBAN",
+    "description": "Entity type: IBAN"
+  },
+  "ipAddress": {
+    "message": "IP address",
+    "description": "Entity type: IP address"
+  },
+  "locationEntity": {
+    "message": "Location",
+    "description": "Entity type: location"
+  },
+  "organizationEntity": {
+    "message": "Organization",
+    "description": "Entity type: organization"
+  },
+  "address": {
+    "message": "Address",
+    "description": "Entity type: address"
+  },
+  "url": {
+    "message": "URL",
+    "description": "Entity type: URL"
+  },
+  "username": {
+    "message": "Username",
+    "description": "Entity type: username"
+  },
+  "passwordEntity": {
+    "message": "Password",
+    "description": "Entity type: password"
+  },
+  "bankAccount": {
+    "message": "Bank account",
+    "description": "Entity type: bank account"
+  },
+  "date": {
+    "message": "Date",
+    "description": "Entity type: date"
+  },
+  "misc": {
+    "message": "Misc",
+    "description": "Entity type: miscellaneous"
+  },
+  "was": {
+    "message": "Was: {0}",
+    "description": "Revealed original tooltip (0 = original text)"
+  },
+  "language": {
+    "message": "Language",
+    "description": "Language selector label"
+  },
+  "languageHint": {
+    "message": "Choose the display language for the extension",
+    "description": "Language selector hint"
+  },
+  "documents": {
+    "message": "Documents",
+    "description": "Category label for document entity types"
+  },
+  "documentsDescription": {
+    "message": "Government IDs, passports, and document references",
+    "description": "Category description for documents"
+  },
+  "temporal": {
+    "message": "Temporal",
+    "description": "Category label for date/time entity types"
+  },
+  "temporalDescription": {
+    "message": "Dates and dates of birth",
+    "description": "Category description for temporal"
+  },
+  "sensitive": {
+    "message": "Sensitive",
+    "description": "Category label for sensitive entity types"
+  },
+  "sensitiveDescription": {
+    "message": "Sensitive content that requires careful handling",
+    "description": "Category description for sensitive"
+  }
+}

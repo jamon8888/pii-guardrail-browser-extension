@@ -3,6 +3,7 @@
 	import type { FeedbackCounts } from '../popup-model.svelte';
 	import FeedbackCard from './FeedbackCard.svelte';
 	import CardHeading from './CardHeading.svelte';
+	import { t } from '../../shared/i18n';
 
 	let {
 		testInput,
@@ -25,16 +26,16 @@
 
 <div class="test-stack">
 	<article class="card">
-		<CardHeading title="Test detection" hint={`${$enabledCount} categories`} />
+		<CardHeading title={t('testDetection')} hint={`${$enabledCount} categories`} />
 		<div class="body">
-			<textarea bind:value={$testInput} aria-label="Sample text to test for sensitive data" placeholder="Paste sample text…"></textarea>
-			<button type="button" disabled={$isRunning || !$testInput.trim()} onclick={runDetection}>{$isRunning ? 'Detecting…' : 'Run detection'}</button>
+			<textarea bind:value={$testInput} aria-label="Sample text to test for sensitive data" placeholder={t('sampleTextPlaceholder')}></textarea>
+			<button type="button" disabled={$isRunning || !$testInput.trim()} onclick={runDetection}>{$isRunning ? t('detecting') : t('runDetection')}</button>
 		</div>
 	</article>
 
 	{#if $resultText}
 		<article class="card">
-			<CardHeading title="Detected" />
+			<CardHeading title={t('detected')} />
 			<pre class="results">{$resultText}</pre>
 		</article>
 	{/if}

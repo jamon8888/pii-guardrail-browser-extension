@@ -9,6 +9,7 @@
 import { EntityMap } from '../../shared/entity-map';
 import { deAnonymize } from '../../shared/de-anonymizer';
 import { resolveText } from '../../shared/placeholder-resolver';
+import { t } from '../../shared/i18n';
 import { SHADOW_DESIGN_SYSTEM_STYLES } from '../shared/shadow-design-system';
 
 type FormControl = HTMLInputElement | HTMLTextAreaElement;
@@ -86,8 +87,8 @@ export function attachDeAnonBanner(
     <style>${BANNER_STYLES}</style>
     <div class="pg-banner pg-design-surface" data-theme="${theme}" role="status" aria-live="polite">
       <span class="pg-banner-icon" aria-hidden="true"></span>
-      <span class="pg-banner-text pg-design-muted">${totalRevealable} replaced item${totalRevealable !== 1 ? 's' : ''}</span>
-      <button class="pg-banner-btn pg-design-button" id="pg-reveal-btn">Reveal originals</button>
+      <span class="pg-banner-text pg-design-muted">${t('replacedItems', String(totalRevealable))}</span>
+      <button class="pg-banner-btn pg-design-button" id="pg-reveal-btn">${t('revealOriginals')}</button>
       <button class="pg-banner-btn pg-banner-copy pg-design-button pg-design-button-subtle" id="pg-copy-btn" title="Copy restored text">Copy</button>
     </div>
   `;
@@ -101,7 +102,7 @@ export function attachDeAnonBanner(
       ({ hiddenElements, hiddenTextNodes } = hideOriginalContent(responseElement));
       responseElement.appendChild(overlayEl);
 
-      revealBtn.textContent = 'Hide originals';
+      revealBtn.textContent = t('hideOriginals');
       revealed = true;
     } else {
       // Remove overlay, restore original
@@ -112,7 +113,7 @@ export function attachDeAnonBanner(
       restoreOriginalContent(hiddenElements, hiddenTextNodes);
       hiddenElements = [];
       hiddenTextNodes = [];
-      revealBtn.textContent = 'Reveal originals';
+      revealBtn.textContent = t('revealOriginals');
       revealed = false;
     }
   });
@@ -225,7 +226,7 @@ function buildReplacementFragment(
 
     const span = document.createElement('span');
     span.className = `pg-revealed pg-revealed-${match.styleKey}`;
-    span.title = `Was: ${match.matchText}`;
+    span.title = t('was', match.matchText);
     span.textContent = match.originalText;
     applyRevealHighlight(span, match.styleKey);
     fragment.appendChild(span);

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { t } from '../../../shared/i18n';
+
   let {
     value,
     onChange,
@@ -6,7 +8,7 @@
 </script>
 
 <div class="pg-threshold-row">
-  <label class="pg-threshold-label" for="pg-threshold">Min. confidence</label>
+  <label class="pg-threshold-label" for="pg-threshold">{t('minConfidence')}</label>
   <input
     id="pg-threshold"
     type="range"

@@ -11,6 +11,7 @@
  */
 
 import { SHADOW_DESIGN_SYSTEM_STYLES } from '../shared/shadow-design-system';
+import { t } from '../../shared/i18n';
 
 const TOAST_AUTO_DISMISS_MS = 6000;
 const CONFIRMATION_VISIBLE_MS = 1500;
@@ -104,8 +105,8 @@ export class ClipboardToast {
       <style>${CLIPBOARD_TOAST_STYLES}</style>
       <div class="pg-toast pg-design-surface" data-theme="${this.theme}" role="status" aria-live="polite" aria-atomic="true">
         <span class="pg-toast-status" aria-hidden="true"></span>
-        <span class="pg-toast-msg pg-design-muted">Copied — contains replaced items. Restore originals?</span>
-        <button class="pg-toast-btn pg-design-button" type="button">Replace with originals</button>
+        <span class="pg-toast-msg pg-design-muted">${t('copiedContainsReplaced')}</span>
+        <button class="pg-toast-btn pg-design-button" type="button">${t('replaceWithOriginals')}</button>
       </div>
     `;
     this.toastEl = this.shadow.querySelector('.pg-toast');
@@ -154,7 +155,7 @@ export class ClipboardToast {
   private showConfirmation(): void {
     if (this.disposed) return;
     this.pauseAutoDismiss();
-    if (this.msgEl) this.msgEl.textContent = 'Clipboard replaced';
+    if (this.msgEl) this.msgEl.textContent = t('clipboardReplaced');
     if (this.btnEl) this.btnEl.hidden = true;
     window.setTimeout(() => this.dispose(), CONFIRMATION_VISIBLE_MS);
   }

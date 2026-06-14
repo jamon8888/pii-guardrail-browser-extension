@@ -3,6 +3,7 @@
 	import type { StatusPill } from '../popup-model.svelte';
 	import type { ResourceSummary } from '../../shared/popup-resource-summary';
 	import { AI_TRANSPARENCY_NOTICE } from '../../shared/project-links';
+	import { t } from '../../shared/i18n';
 
 	let { enabled, wasmStatus, nerStatus, cpuFallback, resourceSummary }: {
 		enabled: Writable<boolean>;
@@ -16,17 +17,17 @@
 <div class="pill-row" aria-label="System status">
 	<span class="pill">
 		<span class={['dot', !$enabled && 'off']}></span>
-		<span class="key">protection</span>
-		<span class="value">{$enabled ? 'on' : 'off'}</span>
+		<span class="key">{t('protection')}</span>
+		<span class="value">{$enabled ? t('statusOn') : t('statusOff')}</span>
 	</span>
 	<span class="pill" title={$nerStatus.title}>
 		<span class={['dot', $nerStatus.tone]}></span>
-		<span class="key">local ai</span>
+		<span class="key">{t('localAi')}</span>
 		<span class="value">{$nerStatus.label}</span>
 	</span>
 	<span class="pill" title={$wasmStatus.title}>
 		<span class={['dot', $wasmStatus.tone]}></span>
-		<span class="key">wasm</span>
+		<span class="key">{t('wasm')}</span>
 		<span class="value">{$wasmStatus.label}</span>
 	</span>
 </div>
@@ -40,8 +41,8 @@
 	</div>
 {:else if $cpuFallback}
 	<div class="resource-summary" data-tone="warning" role="status">
-		<strong>Running on CPU fallback.</strong>
-		<span>WebGPU is unavailable, so local detection will be slower. Expect paste detection to take at least a couple of seconds.</span>
+		<strong>{t('runningOnCpuFallback')}</strong>
+		<span>{t('webgpuUnavailable')}</span>
 	</div>
 {/if}
 

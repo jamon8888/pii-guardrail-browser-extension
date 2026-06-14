@@ -1,27 +1,28 @@
 <script lang="ts">
 	import { PUBLIC_PROJECT_LINKS, SECURITY_SUPPORT_EMAIL, TERMS_PUBLISHED } from '../../shared/project-links';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 </script>
 
 <article class="card" id="support-section">
-	<CardHeading title="Privacy and support" hint="Public beta links" />
+	<CardHeading title={t('privacyAndSupport')} hint={t('publicBetaLinks')} />
 	<div class="links">
-		<a href={PUBLIC_PROJECT_LINKS.newIssue} target="_blank" rel="noopener noreferrer">Report issue</a>
-		<a href={PUBLIC_PROJECT_LINKS.security} target="_blank" rel="noopener noreferrer">Report security/privacy issue</a>
-		<a href={PUBLIC_PROJECT_LINKS.support} target="_blank" rel="noopener noreferrer">Support</a>
+		<a href={PUBLIC_PROJECT_LINKS.newIssue} target="_blank" rel="noopener noreferrer">{t('reportIssue')}</a>
+		<a href={PUBLIC_PROJECT_LINKS.security} target="_blank" rel="noopener noreferrer">{t('reportSecurityIssue')}</a>
+		<a href={PUBLIC_PROJECT_LINKS.support} target="_blank" rel="noopener noreferrer">{t('support')}</a>
 	</div>
-	<p class="group-label">Legal</p>
+	<p class="group-label">{t('legal')}</p>
 	<div class="links">
-		<a href={PUBLIC_PROJECT_LINKS.privacy} target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-		<a href={PUBLIC_PROJECT_LINKS.impressum} target="_blank" rel="noopener noreferrer">Impressum</a>
+		<a href={PUBLIC_PROJECT_LINKS.privacy} target="_blank" rel="noopener noreferrer">{t('privacyPolicy')}</a>
+		<a href={PUBLIC_PROJECT_LINKS.impressum} target="_blank" rel="noopener noreferrer">{t('impressum')}</a>
 		{#if TERMS_PUBLISHED}
-			<a href={PUBLIC_PROJECT_LINKS.terms} target="_blank" rel="noopener noreferrer">Terms of Use</a>
+			<a href={PUBLIC_PROJECT_LINKS.terms} target="_blank" rel="noopener noreferrer">{t('termsOfUse')}</a>
 		{:else}
-			<span class="link-pending" aria-disabled="true" title="Terms of Use will be published soon.">Terms of Use (soon)</span>
+			<span class="link-pending" aria-disabled="true" title={t('termsOfUsePending')}>{t('termsOfUseSoon')}</span>
 		{/if}
 	</div>
 	<p class="hint">
-		For sensitive reports, use the private instructions in SECURITY.md. The contact is
+		{t('sensitiveReportsHint')}
 		<code>{SECURITY_SUPPORT_EMAIL}</code>.
 	</p>
 </article>

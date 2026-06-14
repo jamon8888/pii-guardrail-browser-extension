@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { t } from '../shared/i18n';
 	import DFKILogo from '../popup/components/DFKILogo.svelte';
 	import PGLogo from '../popup/components/PGLogo.svelte';
 	import { createOptionsModel } from './options-model.svelte';
@@ -39,16 +40,16 @@
 		<div class="brand-row">
 			<div class="logo-box"><PGLogo size={24} /></div>
 			<div class="brand-copy">
-				<h1>Privacy Guardrail <span class="beta-badge" title="Public beta — features may change">BETA</span></h1>
-				<p>Extension Settings</p>
+				<h1>{t('appName')} <span class="beta-badge" title={t('publicBetaNote')}>{t('betaBadge')}</span></h1>
+				<p>{t('extensionSettings')}</p>
 			</div>
 			<a
 				class="dfki-mark"
 				href="https://www.dfki.de"
 				target="_blank"
 				rel="noopener noreferrer"
-				aria-label="by DFKI"
-				title="by DFKI"
+			aria-label={t('byDfki')}
+			title={t('byDfki')}
 			>
 				<span class="dfki-by">by</span>
 				<DFKILogo height={32} />

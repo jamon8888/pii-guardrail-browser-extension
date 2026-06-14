@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import type { CancelDetectionBehavior, Settings } from '../../shared/message-types';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 
 	let {
@@ -15,23 +16,22 @@
 </script>
 
 <article class="card" id="cancel-detection-section">
-	<CardHeading title="Paste scan cancellation" hint="Canceled paste behavior" />
+	<CardHeading title={t('pasteScanCancellation')} hint={t('canceledPasteBehavior')} />
 	<div class="row">
 		<div class="info">
-			<span class="row-label">When canceling a scan</span>
+			<span class="row-label">{t('whenCancelingScan')}</span>
 			<p class="hint">
-				Choose what Privacy Guardrail does with the pending paste after you explicitly cancel a running scan.
-				“Paste without checking” bypasses personal-data detection for that paste.
+				{t('cancelDetectionHint')}
 			</p>
 		</div>
 		<select
-			aria-label="When canceling a scan"
+			aria-label={t('whenCancelingScan')}
 			value={value}
 			onchange={(event) => setValue(event.currentTarget.value as CancelDetectionBehavior)}
 		>
-			<option value="ask">Ask every time</option>
-			<option value="paste-original">Paste without checking</option>
-			<option value="drop">Don’t paste</option>
+			<option value="ask">{t('askEveryTime')}</option>
+			<option value="paste-original">{t('pasteWithoutChecking')}</option>
+			<option value="drop">{t('dontPaste')}</option>
 		</select>
 	</div>
 </article>

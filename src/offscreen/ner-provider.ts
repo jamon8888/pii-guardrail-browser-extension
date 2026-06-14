@@ -180,6 +180,26 @@ export const NER_THRESHOLD_BY_ENTITY_TYPE: Readonly<Record<EntityType, number>> 
   // MISC catches AI4Privacy labels we don't have a dedicated bucket for —
   // keep conservative to avoid distracting users with weak guesses.
   MISC: 0.90,
+  // Extended entity types
+  PERSON_NAME: 0.55,
+  PERSON_ALIAS: 0.55,
+  PERSON_ATTRIBUTE: 0.60,
+  PERSON_ROLE: 0.60,
+  DATE_OF_BIRTH: 0.70,
+  DOCUMENT_IDENTIFIER: 0.70,
+  DOCUMENT_REFERENCE: 0.70,
+  PASSPORT: 0.70,
+  DRIVER_LICENSE: 0.70,
+  TAX_ID: 0.70,
+  NATIONAL_ID: 0.70,
+  NATIONALITY: 0.70,
+  GEO_LOCATION: 0.60,
+  FINANCIAL_AMOUNT: 0.70,
+  PAYMENT_CARD_SECURITY: 0.70,
+  MAC_ADDRESS: 0.80,
+  DEVICE_IDENTIFIER: 0.80,
+  CONTACT_HANDLE: 0.70,
+  SENSITIVE: 0.70,
 };
 
 const BARDSAI_NER_THRESHOLD_BY_ENTITY_TYPE: Readonly<Record<EntityType, number>> = {
@@ -201,6 +221,25 @@ const BARDSAI_NER_THRESHOLD_BY_ENTITY_TYPE: Readonly<Record<EntityType, number>>
   // BardsAI has explicit sensitive-data labels that the app currently
   // collapses to MISC. Keep recall higher for those categories.
   MISC: 0.70,
+  PERSON_NAME: 0.55,
+  PERSON_ALIAS: 0.55,
+  PERSON_ATTRIBUTE: 0.60,
+  PERSON_ROLE: 0.60,
+  DATE_OF_BIRTH: 0.70,
+  DOCUMENT_IDENTIFIER: 0.70,
+  DOCUMENT_REFERENCE: 0.70,
+  PASSPORT: 0.70,
+  DRIVER_LICENSE: 0.70,
+  TAX_ID: 0.70,
+  NATIONAL_ID: 0.70,
+  NATIONALITY: 0.70,
+  GEO_LOCATION: 0.60,
+  FINANCIAL_AMOUNT: 0.70,
+  PAYMENT_CARD_SECURITY: 0.70,
+  MAC_ADDRESS: 0.80,
+  DEVICE_IDENTIFIER: 0.80,
+  CONTACT_HANDLE: 0.70,
+  SENSITIVE: 0.60,
 };
 
 const NER_THRESHOLDS_BY_MODEL: Readonly<Record<NerModelKey, Readonly<Record<EntityType, number>>>> = {
@@ -209,6 +248,8 @@ const NER_THRESHOLDS_BY_MODEL: Readonly<Record<NerModelKey, Readonly<Record<Enti
   // HikmaAI shares AI4Privacy's distilbert-base-uncased base, so reuse the
   // same threshold table until benchmark numbers justify tuning.
   hikmaai: NER_THRESHOLD_BY_ENTITY_TYPE,
+  // BardsAI v2 inherits v1 thresholds until benchmarked.
+  'bardsai-v2': BARDSAI_NER_THRESHOLD_BY_ENTITY_TYPE,
 };
 
 const AI4PRIVACY_LABEL_MAP: Readonly<Record<string, EntityType>> = {

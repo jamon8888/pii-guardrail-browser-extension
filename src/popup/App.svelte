@@ -7,6 +7,7 @@
   import SettingsTab from "./components/SettingsTab.svelte";
   import TestTab from "./components/TestTab.svelte";
   import Toggle from "./components/Toggle.svelte";
+  import { t } from "../shared/i18n";
 
   const { navigation, protection, categories, vault, test, settings } = createAppModels();
   const { activeTab, setActiveTab } = navigation;
@@ -19,12 +20,12 @@
       <div class="brand-row">
         <div class="logo-box"><PGLogo size={24} /></div>
         <div class="brand-copy">
-          <h1>Privacy Guardrail <span class="beta-badge" title="Public beta — features may change">BETA</span></h1>
+          <h1>{t('appName')} <span class="beta-badge" title={t('publicBetaNote')}>{t('betaBadge')}</span></h1>
           <p>v{$version} · {$modelLabel}</p>
         </div>
         <Toggle
           checked={$protectionEnabled}
-          label="Master protection"
+          label={t('masterProtection')}
           onchange={(checked) => protection.setEnabled(checked)}
         />
         <a
@@ -32,8 +33,8 @@
           href="https://www.dfki.de"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="by DFKI"
-          title="by DFKI"
+          aria-label={t('byDfki')}
+          title={t('byDfki')}
         >
           <DFKILogo height={32} />
         </a>
@@ -102,7 +103,7 @@
     </section>
 
     <footer class="shell-footer">
-      <button type="button" onclick={() => settings.openOptions()}>More settings…</button>
+      <button type="button" onclick={() => settings.openOptions()}>{t('moreSettings')}</button>
     </footer>
   </main>
 </div>

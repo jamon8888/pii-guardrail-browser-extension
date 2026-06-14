@@ -8,18 +8,24 @@ export const GROUP_NAMES: readonly GroupName[] = [
   'Location',
   'Password',
   'Organization',
+  'Documents',
+  'Temporal',
+  'Sensitive',
   'Low-signal',
 ];
 
 export const GROUP_MEMBERS: Readonly<Record<GroupName, readonly EntityType[]>> = {
-  Identity: ['PERSON', 'USERNAME'],
-  Contact: ['EMAIL', 'PHONE', 'ADDRESS'],
-  Financial: ['CREDIT_CARD', 'IBAN', 'BANK_ACCOUNT', 'SSN'],
-  Network: ['IP_ADDRESS'],
-  Location: ['LOCATION'],
+  Identity: ['PERSON', 'USERNAME', 'PERSON_NAME', 'PERSON_ALIAS', 'PERSON_ATTRIBUTE', 'PERSON_ROLE', 'NATIONALITY'],
+  Contact: ['EMAIL', 'PHONE', 'ADDRESS', 'CONTACT_HANDLE'],
+  Financial: ['CREDIT_CARD', 'IBAN', 'BANK_ACCOUNT', 'SSN', 'FINANCIAL_AMOUNT', 'PAYMENT_CARD_SECURITY', 'TAX_ID'],
+  Network: ['IP_ADDRESS', 'MAC_ADDRESS', 'DEVICE_IDENTIFIER'],
+  Location: ['LOCATION', 'GEO_LOCATION'],
   Password: ['PASSWORD'],
   Organization: ['ORGANIZATION'],
-  'Low-signal': ['URL', 'DATE', 'MISC'],
+  Documents: ['DOCUMENT_IDENTIFIER', 'DOCUMENT_REFERENCE', 'PASSPORT', 'DRIVER_LICENSE', 'NATIONAL_ID'],
+  Temporal: ['DATE', 'DATE_OF_BIRTH'],
+  Sensitive: ['SENSITIVE'],
+  'Low-signal': ['URL', 'MISC'],
 };
 
 export const GROUP_DEFAULT_ON: Readonly<Record<GroupName, boolean>> = {
@@ -30,6 +36,9 @@ export const GROUP_DEFAULT_ON: Readonly<Record<GroupName, boolean>> = {
   Location: true,
   Password: true,
   Organization: true,
+  Documents: true,
+  Temporal: true,
+  Sensitive: true,
   'Low-signal': false,
 };
 

@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Privacy Guardrail",
+  "name": "__MSG_appName__",
   "version": "0.3.0",
   "description": "Review and replace personal data in text before pasting into LLM chats. Runs locally in your browser. Assistive only.",
+  "default_locale": "en",
   "permissions": [
     "storage",
     "offscreen",

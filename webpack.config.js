@@ -89,6 +89,7 @@ module.exports = (_env = {}) => {
       new CopyPlugin({
         patterns: [
           { from: 'manifest.json', to: '.' },
+          { from: '_locales', to: '_locales' },
           { from: 'src/assets', to: 'assets' },
           { from: 'src/assets/fonts', to: 'fonts' },
           { from: 'src/ui/banner/de-anon-banner.css', to: 'ui/banner/' },

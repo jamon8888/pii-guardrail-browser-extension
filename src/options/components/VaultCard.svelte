@@ -3,6 +3,7 @@
 	import type { ReplacementModeSetting, Settings } from '../../shared/message-types';
 	import type { IdentityRecord } from '../../shared/identity-vault';
 	import { supportsSynthetic } from '../../shared/synthetic-pool';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 	import Segmented from '../../popup/components/Segmented.svelte';
 	import Toggle from '../../popup/components/Toggle.svelte';
@@ -38,11 +39,11 @@
 
 	function formatRelative(ts: number): string {
 		const diff = Date.now() - ts;
-		if (diff < 60_000) return 'just now';
-		if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
-		if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+		if (diff < 60_000) return t('justNow');
+		if (diff < 3_600_000) return t('minutesAgo', String(Math.floor(diff / 60_000)));
+		if (diff < 86_400_000) return t('hoursAgo', String(Math.floor(diff / 3_600_000)));
 		const days = Math.floor(diff / 86_400_000);
-		if (days < 30) return `${days}d ago`;
+		if (days < 30) return t('daysAgo', String(days));
 		return new Date(ts).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 	}
 
@@ -66,18 +67,18 @@
 		const result = await importVault(file);
 		target.value = '';
 		if ('error' in result) alert(result.error);
-		else alert(`Imported ${result.imported} record(s).`);
+		else alert(t('importedRecords', String(result.imported)));
 	}
 
 	async function onClearUnpinned() {
 		const count = await new Promise<number>((resolve) => {
 			const unpinned = $records.filter((r) => !r.pinned).length;
 			if (unpinned === 0) {
-				alert('No unpinned records to clear.');
+				alert(t('noUnpinnedRecords'));
 				resolve(0);
 				return;
 			}
-			if (!confirm(`Remove ${unpinned} unpinned record(s)? This cannot be undone.`)) {
+			if (!confirm(t('removeUnpinnedConfirm', String(unpinned)))) {
 				resolve(0);
 				return;
 			}
@@ -88,46 +89,42 @@
 </script>
 
 <article class="card" id="vault-section">
-	<CardHeading title="Identity vault" hint="Cross-session, cross-provider mappings" />
+	<CardHeading title={t('identityVault')} hint={t('crossSessionProviderMappings')} />
 
 	<div class="body">
 		<p class="intro">
-			Each detected identity is stored once and reused everywhere. Toggle
-			<em>Synthetic</em> mode to replace placeholders like <code>[PERSON_1]</code>
-			with realistic but obviously-fake values such as <code>Jordan Park</code>,
-			which often improves LLM response quality. Pin a record to lock its
-			replacement against automatic changes.
+			{@html t('vaultIntro')}
 		</p>
 
 		<div class="controls">
 			<div class="row">
-				<span class="row-label">Enable cross-session vault</span>
-				<Toggle size="sm" checked={vaultEnabled} label="Enable cross-session vault" onchange={(checked) => setVaultEnabled(checked)} />
+				<span class="row-label">{t('enableCrossSessionVault')}</span>
+				<Toggle size="sm" checked={vaultEnabled} label={t('enableCrossSessionVault')} onchange={(checked) => setVaultEnabled(checked)} />
 			</div>
 			<div class="row">
-				<span class="row-label">Default mode</span>
+				<span class="row-label">{t('defaultMode')}</span>
 				<Segmented
-					ariaLabel="Default replacement mode"
+					ariaLabel={t('defaultReplacementMode')}
 					value={defaultMode}
-					options={[{ value: 'placeholder', label: 'Placeholder' }, { value: 'synthetic', label: 'Synthetic' }]}
+					options={[{ value: 'placeholder', label: t('placeholder') }, { value: 'synthetic', label: t('synthetic') }]}
 					onchange={(mode) => setDefaultReplacementMode(mode)}
 				/>
 			</div>
 		</div>
 
 		{#if $records.length === 0}
-			<p class="empty">The vault is empty. Records will appear here as you confirm replacements.</p>
+			<p class="empty">{t('vaultEmpty')}</p>
 		{:else}
 			<div class="table-wrap">
 				<table class="vault-table" aria-label="Identity vault entries">
 					<thead>
 						<tr>
-							<th>Original</th>
-							<th>Type</th>
-							<th>Replacement</th>
-							<th>Mode</th>
-							<th>Used</th>
-							<th>Pin</th>
+							<th>{t('original')}</th>
+							<th>{t('type')}</th>
+							<th>{t('replacement')}</th>
+							<th>{t('mode')}</th>
+							<th>{t('used')}</th>
+							<th>{t('pin')}</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -158,8 +155,8 @@
 										title={modeDisabled ? 'Synthetic mode is unavailable for this entity type' : undefined}
 										onchange={(event) => onModeChange(record, event.currentTarget.value as ReplacementModeSetting)}
 									>
-										<option value="placeholder">Placeholder</option>
-										<option value="synthetic">Synthetic</option>
+										<option value="placeholder">{t('placeholder')}</option>
+										<option value="synthetic">{t('synthetic')}</option>
 									</select>
 								</td>
 								<td class="cell-meta">{record.usageCount}× · {formatRelative(record.lastSeenAt)}</td>
@@ -168,8 +165,8 @@
 										type="button"
 										class="pin-btn"
 										class:pinned={record.pinned}
-										title={record.pinned ? 'Pinned (click to unpin)' : 'Pin record'}
-										aria-label={record.pinned ? 'Unpin record' : 'Pin record'}
+							title={record.pinned ? t('pinnedClickToUnpin') : t('pinRecord')}
+									aria-label={record.pinned ? t('unpinRecord') : t('pinRecord')}
 										onclick={() => updateRecord(record.id, { pinned: !record.pinned })}
 									>{record.pinned ? '📌' : '📍'}</button>
 								</td>
@@ -189,10 +186,10 @@
 		{/if}
 
 		<div class="bulk">
-			<button type="button" class="action-btn" onclick={exportVault}>Export JSON</button>
-			<button type="button" class="action-btn" onclick={() => fileInput?.click()}>Import JSON</button>
+			<button type="button" class="action-btn" onclick={exportVault}>{t('exportJson')}</button>
+			<button type="button" class="action-btn" onclick={() => fileInput?.click()}>{t('importJson')}</button>
 			<input type="file" accept="application/json" hidden bind:this={fileInput} onchange={onImportChange} />
-			<button type="button" class="action-btn danger" onclick={onClearUnpinned}>Clear unpinned</button>
+			<button type="button" class="action-btn danger" onclick={onClearUnpinned}>{t('clearUnpinned')}</button>
 		</div>
 	</div>
 </article>

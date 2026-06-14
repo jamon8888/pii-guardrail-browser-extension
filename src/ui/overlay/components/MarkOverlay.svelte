@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ENTITY_TYPES, type EntityType } from '../../../shared/message-types';
+  import { t as i18n } from '../../../shared/i18n';
 
   let {
     snippet,
@@ -34,13 +35,13 @@
   }
 </script>
 
-<div class="pg-mark-overlay" role="dialog" aria-label="Mark new PII">
+<div class="pg-mark-overlay" role="dialog" aria-label="{i18n('markNewPii')}">
   <span aria-hidden="true" class="pg-mark-nook"></span>
   <span aria-hidden="true" class="pg-mark-nook-cover"></span>
 
   <div class="pg-mark-head">
     <div class="pg-mark-head-title">
-      <span>Mark new PII</span>
+      <span>{i18n('markNewPii')}</span>
     </div>
     <button type="button" class="pg-mark-close" aria-label="Close" onclick={onCancel}>
       <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
@@ -50,10 +51,10 @@
   </div>
 
   <div class="pg-mark-body">
-    <div class="pg-mark-kicker">Selection</div>
+    <div class="pg-mark-kicker">{i18n('selection')}</div>
     <div class="pg-mark-snippet" title={snippet}>{snippet}</div>
 
-    <div class="pg-mark-kicker">Assign type</div>
+    <div class="pg-mark-kicker">{i18n('assignType')}</div>
     <div class="pg-mark-type-grid">
       {#each COMMON_TYPES as t (t)}
         <button
@@ -91,7 +92,7 @@
         onmousedown={(e) => e.preventDefault()}
         onclick={() => (expanded = !expanded)}
       >
-        <span>{expanded ? 'Fewer types' : `${MORE_TYPES.length} more types…`}</span>
+        <span>{expanded ? i18n('fewerTypes') : i18n('moreTypes', String(MORE_TYPES.length))}</span>
         <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
           {#if expanded}
             <path d="M2 5.5L4.5 3 7 5.5" />
@@ -110,6 +111,6 @@
       class="pg-mark-add"
       onmousedown={(e) => e.preventDefault()}
       onclick={() => onAdd(snippet, activeType)}
-    >Add as {label(activeType)}</button>
+    >{i18n('addAsType', label(activeType))}</button>
   </div>
 </div>

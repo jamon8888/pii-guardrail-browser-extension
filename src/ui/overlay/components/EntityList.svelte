@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { EntityType } from '../../../shared/message-types';
   import type { OverlayModel } from '../overlay-model';
+  import { t } from '../../../shared/i18n';
   import EntityRow from './EntityRow.svelte';
   import ManualSpanRow from './ManualSpanRow.svelte';
 
@@ -47,7 +48,7 @@
 
   {#if $codeBlockIndices.length > 0}
     <details class="pg-code-disclosure">
-      <summary class="pg-code-disclosure-summary">In code blocks ({$codeBlockIndices.length})</summary>
+      <summary class="pg-code-disclosure-summary">{t('inCodeBlocks', String($codeBlockIndices.length))}</summary>
       <div class="pg-code-disclosure-body">
         {#each $codeBlockIndices as i (i)}
           <EntityRow

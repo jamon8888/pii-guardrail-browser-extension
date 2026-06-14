@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { t } from '../../shared/i18n';
 	let { restoreDefaults, clearMappings }: { restoreDefaults: () => void; clearMappings: () => void } = $props();
 </script>
 
 <div class="maint-row">
-	<button type="button" onclick={restoreDefaults}>Restore defaults</button>
-	<button type="button" onclick={clearMappings}>Clear mappings</button>
+	<button type="button" onclick={restoreDefaults}>{t('restoreDefaults')}</button>
+	<button type="button" onclick={clearMappings}>{t('clearMappings')}</button>
 </div>
 
 <style>

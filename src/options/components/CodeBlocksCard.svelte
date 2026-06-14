@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import type { Settings } from '../../shared/message-types';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 	import Toggle from '../../popup/components/Toggle.svelte';
 
@@ -16,18 +17,15 @@
 </script>
 
 <article class="card" id="code-blocks-section">
-	<CardHeading title="Code blocks" hint="Suppress detections inside code regions" />
+	<CardHeading title={t('codeBlocks')} hint={t('suppressCodeDetections')} />
 	<div class="row">
 		<div class="info">
-			<span class="row-label">Skip code blocks</span>
-			<p class="hint">
-				When on, detections inside fenced markdown blocks and
-				<code>&lt;code&gt;</code>/<code>&lt;pre&gt;</code> regions move to a
-				collapsed disclosure in the overlay instead of appearing at the top level.
-				Inline backticks are always scanned.
-			</p>
+			<span class="row-label">{t('skipCodeBlocks')}</span>
+		<p class="hint">
+			{@html t('skipCodeBlocksHint')}
+		</p>
 		</div>
-		<Toggle size="sm" checked={value} label="Skip code blocks" onchange={(checked) => setValue(checked)} />
+		<Toggle size="sm" checked={value} label={t('skipCodeBlocks')} onchange={(checked) => setValue(checked)} />
 	</div>
 </article>
 

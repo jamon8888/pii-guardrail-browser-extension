@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { EntityType } from '../../shared/message-types';
   import { LIMITS_DISCLAIMER } from '../../shared/project-links';
+  import { t } from '../../shared/i18n';
   import type { OverlayModel } from './overlay-model';
   import OverlayHeader from './components/OverlayHeader.svelte';
   import TextTabs from './components/TextTabs.svelte';
@@ -75,8 +76,8 @@
 
       <article class="pg-card">
         <div class="pg-card-head">
-          <span class="pg-card-title">Entities</span>
-          <span class="pg-card-badge">{$enabledCount} of {$totalCount}</span>
+          <span class="pg-card-title">{t('entities')}</span>
+          <span class="pg-card-badge">{t('entitiesCount', String($enabledCount), String($totalCount))}</span>
         </div>
         <div class="pg-card-body">
           <EntityList {model} />
@@ -104,17 +105,17 @@
           class="pg-btn-link"
           title="Esc"
           onclick={() => model.pasteOriginal()}
-        >Paste original</button>
+        >{t('pasteOriginal')}</button>
       </div>
       <div class="pg-footer-right">
-        <span class="pg-footer-summary">Replacing {$enabledCount} of {$totalCount} items</span>
+        <span class="pg-footer-summary">{t('replacingItems', String($enabledCount), String($totalCount))}</span>
         <button
           type="button"
           class="pg-btn pg-btn-primary"
           id="pg-confirm-btn"
           title="Enter"
           onclick={() => model.confirm()}
-        >Replace &amp; paste</button>
+        >{t('replaceAndPaste')}</button>
       </div>
     </footer>
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import type { GroupName, Settings } from '../../shared/message-types';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 	import Segmented from '../../popup/components/Segmented.svelte';
 
@@ -24,26 +25,25 @@
 </script>
 
 <article class="card" id="sensitivity-section">
-	<CardHeading title="Sensitivity" hint="Detection threshold tuning" />
+	<CardHeading title={t('sensitivity')} hint={t('sensitivityTuning')} />
 
 	<div class="body">
 		<div class="mode-row">
 			<Segmented
-				ariaLabel="Sensitivity mode"
+				ariaLabel={t('sensitivityMode')}
 				value={mode}
-				options={[{ value: 'global', label: 'Global' }, { value: 'individual', label: 'Individual' }]}
+				options={[{ value: 'global', label: t('global') }, { value: 'individual', label: t('individual') }]}
 				onchange={(next) => setSensitivityMode(next)}
 			/>
 		</div>
 
 		{#if mode === 'global'}
 			<p class="hint">
-				One slider controls all categories proportionally, respecting each category's
-				intrinsic sensitivity range.
+				{t('globalSensitivityHint')}
 			</p>
 			<div class="slider-row">
 				<div class="slider-head">
-					<span class="row-label">Sensitivity</span>
+					<span class="row-label">{t('sensitivity')}</span>
 					<span class="mono">{globalValue.toFixed(2)}</span>
 				</div>
 				<input
@@ -52,14 +52,13 @@
 					max="100"
 					value={Math.round(globalValue * 100)}
 					oninput={(event) => setGlobalThreshold(Number(event.currentTarget.value) / 100)}
-					aria-label="Global sensitivity"
+					aria-label={t('globalSensitivity')}
 				/>
-				<div class="ticks"><span>Fewer detections</span><span>More detections</span></div>
+				<div class="ticks"><span>{t('fewerDetections')}</span><span>{t('moreDetections')}</span></div>
 			</div>
 		{:else}
 			<p class="hint">
-				Each category group has its own slider. Switching back to Global will clear
-				your individual overrides.
+				{t('individualSensitivityHint')}
 			</p>
 			<div class="group-list">
 				{#each groupNames as group (group)}
@@ -79,7 +78,7 @@
 					</div>
 				{/each}
 			</div>
-			<div class="ticks ticks-indent"><span>Fewer detections</span><span>More detections</span></div>
+			<div class="ticks ticks-indent"><span>{t('fewerDetections')}</span><span>{t('moreDetections')}</span></div>
 		{/if}
 	</div>
 </article>

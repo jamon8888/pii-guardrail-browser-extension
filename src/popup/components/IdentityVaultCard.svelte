@@ -3,30 +3,31 @@
 	import CardHeading from './CardHeading.svelte';
 	import Segmented from './Segmented.svelte';
 	import Toggle from './Toggle.svelte';
+	import { t } from '../../shared/i18n';
 
 	let { memoryEnabled, consistentReplacementMode, mappingCount, setMemoryEnabled, setReplacementMode, openVaultOptions }: Pick<VaultModel, 'memoryEnabled' | 'consistentReplacementMode' | 'mappingCount' | 'setMemoryEnabled' | 'setReplacementMode' | 'openVaultOptions'> = $props();
 </script>
 
 <article class="card">
-	<CardHeading title="Identity vault" />
+	<CardHeading title={t('identityVault')} />
 	<div class="row">
-		<div class="row-label">Cross-session memory</div>
-		<Toggle size="sm" checked={$memoryEnabled} label="Cross-session memory" onchange={(checked) => setMemoryEnabled(checked)} />
+		<div class="row-label">{t('crossSessionMemory')}</div>
+		<Toggle size="sm" checked={$memoryEnabled} label={t('crossSessionMemory')} onchange={(checked) => setMemoryEnabled(checked)} />
 	</div>
 	<div class="divider"></div>
 	<div class="row">
-		<div class="row-label">Replacement</div>
+		<div class="row-label">{t('replacement')}</div>
 		<Segmented
-			ariaLabel="Replacement mode"
+			ariaLabel={t('replacement')}
 			value={$consistentReplacementMode ? 'placeholder' : 'synthetic'}
-			options={[{ value: 'placeholder', label: 'Placeholder' }, { value: 'synthetic', label: 'Synthetic' }]}
+			options={[{ value: 'placeholder', label: t('placeholder') }, { value: 'synthetic', label: t('synthetic') }]}
 			onchange={(mode) => setReplacementMode(mode)}
 		/>
 	</div>
 	<div class="divider"></div>
 	<button type="button" class="link-row" onclick={openVaultOptions}>
-		<span class="row-label">Manage vault</span>
-		<span class="right"><span class="count">{$mappingCount} saved</span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 2 6.5 5 3.5 8" /></svg></span>
+		<span class="row-label">{t('manageVault')}</span>
+		<span class="right"><span class="count">{$mappingCount} {t('saved')}</span><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3.5 2 6.5 5 3.5 8" /></svg></span>
 	</button>
 </article>
 

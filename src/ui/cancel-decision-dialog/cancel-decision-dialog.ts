@@ -1,4 +1,5 @@
 import type { ThemeSetting } from '../../shared/message-types';
+import { t } from '../../shared/i18n';
 
 export type CancelDecision = 'paste-original' | 'drop';
 
@@ -74,14 +75,14 @@ export class CancelDecisionDialog {
       <div class="backdrop" part="backdrop">
         <section class="dialog" data-theme="${this.theme}" role="dialog" aria-modal="true" aria-labelledby="pg-cancel-title" aria-describedby="pg-cancel-body">
           <div class="header">
-            <h2 id="pg-cancel-title">Scan canceled</h2>
+            <h2 id="pg-cancel-title">${t('scanCanceled')}</h2>
             <button class="close" type="button" aria-label="Close">×</button>
           </div>
-          <p id="pg-cancel-body">Do you want to paste this text without checking for personal data?</p>
-          <label><input class="remember" type="checkbox"> <span>Remember this choice</span></label>
+          <p id="pg-cancel-body">${t('cancelDialogBody')}</p>
+          <label><input class="remember" type="checkbox"> <span>${t('rememberChoice')}</span></label>
           <div class="actions">
-            <button class="secondary" type="button">Don’t paste</button>
-            <button class="primary" type="button">Paste without checking</button>
+            <button class="secondary" type="button">${t('dontPaste')}</button>
+            <button class="primary" type="button">${t('pasteWithoutChecking')}</button>
           </div>
         </section>
       </div>

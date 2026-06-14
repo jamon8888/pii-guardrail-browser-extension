@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { CategoriesModel } from '../popup-model.svelte';
 	import CardHeading from './CardHeading.svelte';
+	import { t } from '../../shared/i18n';
 
 	let { categories, enabledCount, toggleCategory }: Pick<CategoriesModel, 'categories' | 'enabledCount' | 'toggleCategory'> = $props();
 </script>
 
 <article class="card">
-	<CardHeading title="Detection categories" badge={`${$enabledCount}/${$categories.length}`} />
+	<CardHeading title={t('detectionCategories')} badge={`${$enabledCount}/${$categories.length}`} />
 	<div class="chip-grid" aria-label="Detection category controls">
 		{#each $categories as category (category.id)}
 			<button type="button" class={['chip', category.enabled && 'enabled']} aria-pressed={category.enabled} onclick={() => toggleCategory(category.id)}>

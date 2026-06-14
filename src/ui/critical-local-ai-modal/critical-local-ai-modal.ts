@@ -1,4 +1,5 @@
 import type { ThemeSetting } from '../../shared/message-types';
+import { t } from '../../shared/i18n';
 
 const MODAL_STYLES = `
   :host { all: initial; }
@@ -106,18 +107,18 @@ export class CriticalLocalAiModal {
       <style>${MODAL_STYLES}</style>
       <div class="pg-critical-modal-backdrop" role="presentation">
         <section class="pg-critical-modal" data-theme="${this.theme}" role="dialog" aria-modal="true" aria-labelledby="pg-critical-modal-title">
-          <h2 class="pg-critical-modal-title" id="pg-critical-modal-title">Local AI detection is off to protect this browser</h2>
+          <h2 class="pg-critical-modal-title" id="pg-critical-modal-title">${t('localAiOffModalTitle')}</h2>
           <p class="pg-critical-modal-body">
-            Privacy Guardrail detected critical browser-reported memory and turned off Local AI detection once to reduce the risk of browser slowdowns or freezes.
+            ${t('localAiOffModalBody')}
           </p>
           <ul class="pg-critical-modal-list">
-            <li>Pattern detection remains active for structured personal data.</li>
-            <li>Names, organizations, locations, and context-only PII may be missed while Local AI detection is off.</li>
-            <li>You can review this setting and re-enable Local AI detection if you accept the performance risk.</li>
+            <li>${t('patternDetectionActiveItem')}</li>
+            <li>${t('namesMayBeMissed')}</li>
+            <li>${t('canReviewSetting')}</li>
           </ul>
           <div class="pg-critical-modal-actions">
-            <button class="pg-critical-modal-button pg-critical-modal-button-secondary" type="button" data-action="dismiss">Keep pattern detection only</button>
-            <button class="pg-critical-modal-button pg-critical-modal-button-primary" type="button" data-action="settings">Open settings</button>
+            <button class="pg-critical-modal-button pg-critical-modal-button-secondary" type="button" data-action="dismiss">${t('keepPatternDetectionOnly')}</button>
+            <button class="pg-critical-modal-button pg-critical-modal-button-primary" type="button" data-action="settings">${t('openSettings')}</button>
           </div>
         </section>
       </div>

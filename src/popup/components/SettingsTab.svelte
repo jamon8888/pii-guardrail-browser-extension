@@ -5,6 +5,7 @@
 	import type { NerModelChoice } from '../../shared/constants';
 	import Toggle from './Toggle.svelte';
 	import LegalCard from './LegalCard.svelte';
+	import { t, currentLocale, setLanguage, SUPPORTED_LOCALES, type Locale } from '../../shared/i18n';
 
 	let {
 		minConfidence,
@@ -56,22 +57,22 @@
 
 <div class="settings-stack">
 	<article class="card">
-		<div class="head"><span>Detection</span></div>
+		<div class="head"><span>{t('detection')}</span></div>
 		{#if $sensitivityMode === 'global'}
 			<div class="row-col">
-				<div class="row-head"><span class="row-label">Sensitivity</span><span class="mono">{$minConfidence.toFixed(2)}</span></div>
-				<input type="range" min="0" max="100" value={sliderValue} oninput={(event) => setMinConfidence(Number(event.currentTarget.value) / 100)} aria-label="Detection sensitivity" />
-				<div class="ticks"><span>Fewer detections</span><span>More detections</span></div>
+				<div class="row-head"><span class="row-label">{t('sensitivity')}</span><span class="mono">{$minConfidence.toFixed(2)}</span></div>
+				<input type="range" min="0" max="100" value={sliderValue} oninput={(event) => setMinConfidence(Number(event.currentTarget.value) / 100)} aria-label={t('sensitivity')} />
+				<div class="ticks"><span>{t('fewerDetections')}</span><span>{t('moreDetections')}</span></div>
 			</div>
 		{:else}
 			<div class="row">
-				<div><div class="row-label">Sensitivity</div><div class="row-meta">Individual mode — configure per-group thresholds in Options.</div></div>
-				<button type="button" class="select" onclick={openOptions}>Options ›</button>
+				<div><div class="row-label">{t('sensitivity')}</div><div class="row-meta">{t('individualModeHint')}</div></div>
+				<button type="button" class="select" onclick={openOptions}>{t('options')}</button>
 			</div>
 		{/if}
 		<div class="divider"></div>
 		<div class="row">
-			<div><div class="row-label">NER model</div><div class="row-meta">Local transformer used for detection</div></div>
+			<div><div class="row-label">{t('nerModel')}</div><div class="row-meta">{t('localTransformerHint')}</div></div>
 			<select value={$nerModelChoice} onchange={(event) => setNerModelChoice(event.currentTarget.value)}>
 				{#each nerModelChoices as choice (choice.value)}
 					<option value={choice.value}>{choice.label}</option>
@@ -81,26 +82,37 @@
 	</article>
 
 	<article class="card">
-		<div class="head"><span>Behavior</span></div>
-		<div class="row"><div><div class="row-label">Intercept clipboard</div><div class="row-meta">Offer to restore copied replaced items</div></div><Toggle size="sm" checked={$clipboardInterceptEnabled} onchange={(checked) => setClipboardInterceptEnabled(checked)} label="Intercept clipboard" /></div>
-		<div class="divider"></div>
-		<div class="row"><div><div class="row-label">Debug mode</div><div class="row-meta">Verbose logging in console</div></div><Toggle size="sm" checked={$debug} onchange={(checked) => setDebug(checked)} label="Debug mode" /></div>
+		<div class="head"><span>{t('language')}</span></div>
+		<div class="row">
+			<div><div class="row-label">{t('language')}</div><div class="row-meta">{t('languageHint')}</div></div>
+			<select value={$currentLocale} onchange={(event) => setLanguage(event.currentTarget.value as Locale)}>
+				<option value="en">English</option>
+				<option value="fr">Français</option>
+			</select>
+		</div>
 	</article>
 
 	<article class="card">
-		<div class="head"><span>Maintenance</span></div>
-		<button type="button" class="link-row" onclick={clearFeedback}><span class="row-label">Clear feedback</span><span class="right"><span class="count">{$feedbackCounts.confirmed} corrections</span>›</span></button>
+		<div class="head"><span>{t('behavior')}</span></div>
+		<div class="row"><div><div class="row-label">{t('interceptClipboard')}</div><div class="row-meta">{t('restoreCopiedHint')}</div></div><Toggle size="sm" checked={$clipboardInterceptEnabled} onchange={(checked) => setClipboardInterceptEnabled(checked)} label={t('interceptClipboard')} /></div>
 		<div class="divider"></div>
-		<button type="button" class="link-row" onclick={clearMappings}><span class="row-label">Clear mappings</span><span class="right"><span class="count">{$mappingCount} saved</span>›</span></button>
+		<div class="row"><div><div class="row-label">{t('debugMode')}</div><div class="row-meta">{t('verboseLogging')}</div></div><Toggle size="sm" checked={$debug} onchange={(checked) => setDebug(checked)} label={t('debugMode')} /></div>
 	</article>
 
 	<article class="card">
-		<div class="head"><span>Support</span></div>
-		<button type="button" class="link-row" onclick={openIssueReport}><span class="row-label">Report issue</span><span class="right">›</span></button>
+		<div class="head"><span>{t('maintenance')}</span></div>
+		<button type="button" class="link-row" onclick={clearFeedback}><span class="row-label">{t('clearFeedback')}</span><span class="right"><span class="count">{$feedbackCounts.confirmed} {t('corrections')}</span>›</span></button>
 		<div class="divider"></div>
-		<button type="button" class="link-row" onclick={openSecurityReport}><span class="row-label">Report security/privacy issue</span><span class="right">›</span></button>
+		<button type="button" class="link-row" onclick={clearMappings}><span class="row-label">{t('clearMappings')}</span><span class="right"><span class="count">{$mappingCount} {t('saved')}</span>›</span></button>
+	</article>
+
+	<article class="card">
+		<div class="head"><span>{t('support')}</span></div>
+		<button type="button" class="link-row" onclick={openIssueReport}><span class="row-label">{t('reportIssue')}</span><span class="right">›</span></button>
 		<div class="divider"></div>
-		<button type="button" class="link-row" onclick={openPrivacySupport}><span class="row-label">Support</span><span class="right">›</span></button>
+		<button type="button" class="link-row" onclick={openSecurityReport}><span class="row-label">{t('reportSecurityIssue')}</span><span class="right">›</span></button>
+		<div class="divider"></div>
+		<button type="button" class="link-row" onclick={openPrivacySupport}><span class="row-label">{t('support')}</span><span class="right">›</span></button>
 	</article>
 
 	<LegalCard {openPrivacyPolicy} {openImpressum} />

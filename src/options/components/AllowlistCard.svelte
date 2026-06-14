@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import type { AllowlistEntry, Settings } from '../../shared/message-types';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 
 	let {
@@ -42,21 +43,21 @@
 </script>
 
 <article class="card" id="allowlist-section">
-	<CardHeading title="Allowlist" hint="Never flag these strings" />
+	<CardHeading title={t('allowlist')} hint={t('neverFlagThese')} />
 
 	<div class="body">
 		<form class="add-form" autocomplete="off" onsubmit={handleSubmit}>
 			<input
 				type="text"
 				class="input"
-				placeholder="Pattern (e.g. Smith, acme-*)"
-				aria-label="Allowlist pattern"
+				placeholder={t('allowlistPatternPlaceholder')}
+				aria-label={t('allowlistPatternAria')}
 				aria-invalid={$error !== null}
 				bind:value={inputValue}
 				bind:this={inputEl}
 				oninput={handleInput}
 			/>
-			<button type="submit" class="add-btn">Add</button>
+			<button type="submit" class="add-btn">{t('add')}</button>
 		</form>
 
 		{#if $error}
@@ -64,14 +65,14 @@
 		{/if}
 
 		{#if entries.length === 0}
-			<p class="empty">No entries yet.</p>
+			<p class="empty">{t('noEntries')}</p>
 		{:else}
 			<table class="list-table" aria-label="Allowlist entries">
 				<thead>
 					<tr>
-						<th>Pattern</th>
-						<th>Added</th>
-						<th>Source</th>
+						<th>{t('pattern')}</th>
+						<th>{t('added')}</th>
+						<th>{t('source')}</th>
 						<th></th>
 					</tr>
 				</thead>

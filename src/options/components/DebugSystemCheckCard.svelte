@@ -2,6 +2,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { Settings, SystemCompatibilityStatus } from '../../shared/message-types';
 	import type { DebugSystemCheckScenario } from '../options-model.svelte';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 
 	let {
@@ -33,13 +34,13 @@
 </script>
 
 <article class="card" id="debug-system-check-section" aria-labelledby="debug-system-check-heading">
-	<CardHeading title="Debug: system compatibility" hint="For local testing only" />
+	<CardHeading title={t('debugSystemCompatibility')} hint={t('forLocalTestingOnly')} />
 
 	<div class="body">
 		<label class="toggle-row" for="debug-mode-toggle">
 			<div>
-				<span>Debug mode</span>
-				<p>Reveals testing controls that simulate compatibility states without restarting the browser.</p>
+				<span>{t('debugMode')}</span>
+				<p>{t('debugModeHint')}</p>
 			</div>
 			<input
 				id="debug-mode-toggle"
@@ -51,34 +52,32 @@
 
 		{#if debugEnabled}
 			<p class="warning" role="note">
-				These buttons write directly to <code>pg_system_check</code> and the Local AI
-				setting. Use only when testing — to return to the real passive check, click
-				<strong>Clear &amp; re-run passive check</strong>.
+				{@html t('debugWarning')}
 			</p>
 
 			<div class="current" data-tier={$status?.tier ?? 'unknown'}>
 				<div>
-					<span class="label">Tier</span>
+					<span class="label">{t('tier')}</span>
 					<strong>{$status?.tier ?? '—'}</strong>
 				</div>
 				<div>
-					<span class="label">Local AI</span>
+					<span class="label">{t('localAi')}</span>
 					<strong>{$status?.localAiState ?? '—'}</strong>
 				</div>
 				<div>
-					<span class="label">Memory</span>
+					<span class="label">{t('memory')}</span>
 					<strong>{typeof $status?.browserMemoryGb === 'number' ? `${$status.browserMemoryGb} GB` : 'unavailable'}</strong>
 				</div>
 				<div>
-					<span class="label">WebGPU</span>
+					<span class="label">{t('webGpu')}</span>
 					<strong>{$status?.webGpu ?? '—'}</strong>
 				</div>
 				<div>
-					<span class="label">Modal</span>
+					<span class="label">{t('modal')}</span>
 					<strong>{$status?.criticalModal ?? '—'}</strong>
 				</div>
 				<div>
-					<span class="label">Runtime</span>
+					<span class="label">{t('runtime')}</span>
 					<strong>{$status?.runtimeState ?? '—'}</strong>
 				</div>
 			</div>
@@ -93,7 +92,7 @@
 			</div>
 
 			<button type="button" class="reset" onclick={clearOverride}>
-				Clear &amp; re-run passive check
+				{t('clearAndRerunPassive')}
 			</button>
 		{/if}
 	</div>

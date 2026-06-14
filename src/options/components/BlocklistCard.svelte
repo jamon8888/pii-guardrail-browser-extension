@@ -2,6 +2,7 @@
 	import type { Writable } from 'svelte/store';
 	import type { BlocklistEntry, EntityType, Settings } from '../../shared/message-types';
 	import { ENTITY_TYPES } from '../../shared/message-types';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 
 	let {
@@ -43,25 +44,25 @@
 </script>
 
 <article class="card" id="blocklist-section">
-	<CardHeading title="Blocklist" hint="Always flag these strings" />
+	<CardHeading title={t('blocklist')} hint={t('alwaysFlagThese')} />
 
 	<div class="body">
 		<form class="add-form" autocomplete="off" onsubmit={handleSubmit}>
 			<input
 				type="text"
 				class="input"
-				placeholder="Pattern (e.g. Project Bluebird)"
-				aria-label="Blocklist pattern"
+				placeholder={t('blocklistPatternPlaceholder')}
+				aria-label={t('blocklistPatternAria')}
 				aria-invalid={$error !== null}
 				bind:value={inputValue}
 				oninput={() => clearError()}
 			/>
-			<select class="select" aria-label="Category" bind:value={category}>
+			<select class="select" aria-label={t('category')} bind:value={category}>
 				{#each ENTITY_TYPES as et (et)}
-					<option value={et}>{et === 'MISC' ? 'MISC (default)' : et}</option>
+					<option value={et}>{et === 'MISC' ? t('defaultCategory') : et}</option>
 				{/each}
 			</select>
-			<button type="submit" class="add-btn">Add</button>
+			<button type="submit" class="add-btn">{t('add')}</button>
 		</form>
 
 		{#if $error}
@@ -69,15 +70,15 @@
 		{/if}
 
 		{#if entries.length === 0}
-			<p class="empty">No entries yet.</p>
+			<p class="empty">{t('noEntries')}</p>
 		{:else}
 			<table class="list-table" aria-label="Blocklist entries">
 				<thead>
 					<tr>
-						<th>Pattern</th>
-						<th>Category</th>
-						<th>Added</th>
-						<th>Source</th>
+						<th>{t('pattern')}</th>
+						<th>{t('category')}</th>
+						<th>{t('added')}</th>
+						<th>{t('source')}</th>
 						<th></th>
 					</tr>
 				</thead>

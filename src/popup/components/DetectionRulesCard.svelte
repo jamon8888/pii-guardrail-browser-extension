@@ -2,12 +2,13 @@
 	import type { CategoriesModel } from '../popup-model.svelte';
 	import CardHeading from './CardHeading.svelte';
 	import Toggle from './Toggle.svelte';
+	import { t } from '../../shared/i18n';
 
 	let { categories, setCategoryEnabled }: Pick<CategoriesModel, 'categories' | 'enabledCount' | 'setCategoryEnabled'> = $props();
 </script>
 
 <article class="card">
-	<CardHeading title="Detection rules" hint="per-category" />
+	<CardHeading title={t('detectionRules')} hint={t('perCategory')} />
 	<div class="rule-list" aria-label="Detection rule controls">
 		{#each $categories as category, index (category.id)}
 			<label class="row">

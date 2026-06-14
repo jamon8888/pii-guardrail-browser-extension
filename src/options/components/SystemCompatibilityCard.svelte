@@ -3,6 +3,7 @@
 	import type { LocalAiUnloadTimeoutMs, Settings, SystemCompatibilityStatus } from '../../shared/message-types';
 	import { LOCAL_AI_UNLOAD_TIMEOUT_CHOICES, nerModelChoices, nerModelChoiceValue } from '../../shared/constants';
 	import { AI_TRANSPARENCY_NOTICE } from '../../shared/project-links';
+	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 
 	let {
@@ -42,35 +43,35 @@
 	}
 
 	let memoryLabel = $derived.by(() => {
-		if (!$status) return 'Checking…';
+		if (!$status) return t('checking');
 		return typeof $status.browserMemoryGb === 'number'
-			? `${$status.browserMemoryGb} GB browser-reported memory`
-			: 'Browser-reported memory unavailable';
+			? t('browserMemoryGb', String($status.browserMemoryGb))
+			: t('browserMemoryUnavailable');
 	});
 
 	let tierLabel = $derived.by(() => {
-		if (!$status) return 'Checking compatibility';
-		if ($status.tier === 'critical') return 'Critical resource risk';
-		if ($status.tier === 'warning') return 'Resource warning';
-		if ($status.tier === 'unknown') return 'Compatibility partially unknown';
-		return 'No known resource concern';
+		if (!$status) return t('checkingCompatibility');
+		if ($status.tier === 'critical') return t('criticalResourceRisk');
+		if ($status.tier === 'warning') return t('resourceWarning');
+		if ($status.tier === 'unknown') return t('compatibilityPartiallyUnknown');
+		return t('noKnownResourceConcern');
 	});
 
 	let localAiLabel = $derived.by(() => {
-		if (!$settings) return 'Loading setting…';
-		if ($settings.nerProvider === 'off') return 'Local AI detection off';
-		if ($settings.nerProvider === 'fixture') return 'Fixture Local AI mode (development)';
-		return 'Local AI detection on';
+		if (!$settings) return t('loadingSetting');
+		if ($settings.nerProvider === 'off') return t('localAiDetectionOff');
+		if ($settings.nerProvider === 'fixture') return t('localAiFixtureMode');
+		return t('localAiDetectionOn');
 	});
 
 	let runtimeLabel = $derived.by(() => {
 		const runtime = $status?.runtimeState ?? 'unknown';
-		if ($warmupState === 'loading') return 'Runtime loading';
-		if ($warmupState === 'ready') return 'Runtime ready';
-		if ($warmupState === 'failed') return 'Runtime failed';
-		if (runtime === 'not-loaded') return 'Runtime not loaded';
-		if (runtime === 'unknown') return 'Runtime unknown';
-		return `Runtime ${runtime}`;
+		if ($warmupState === 'loading') return t('runtimeLoading');
+		if ($warmupState === 'ready') return t('runtimeReady');
+		if ($warmupState === 'failed') return t('runtimeFailed');
+		if (runtime === 'not-loaded') return t('runtimeNotLoaded');
+		if (runtime === 'unknown') return t('runtimeUnknown');
+		return t('runtimeLabel', runtime);
 	});
 
 	let localAiEnabled = $derived($settings?.nerProvider !== 'off');
@@ -89,12 +90,12 @@
 	let webGpuDtypeHint = $derived.by(() => {
 		const choice = $settings?.nerWebGpuDtype ?? 'q4f16';
 		return choice === 'fp16'
-			? 'fp16: full-precision model — slightly more RAM and about twice the GPU memory of the 4-bit (q4f16) model.'
-			: 'q4f16: 4-bit model — about 1 GB of RAM while loaded.';
+			? t('dtypeFp16')
+			: t('dtypeQ4f16');
 	});
 
 	function timeoutLabel(value: LocalAiUnloadTimeoutMs): string {
-		if (value === null) return 'Browser session';
+		if (value === null) return t('browserSession');
 		return `${Math.round(value / 60000)} min`;
 	}
 
@@ -104,7 +105,7 @@
 </script>
 
 <article class="card" id="system-compatibility-section" aria-live="polite">
-	<CardHeading title="System Compatibility" hint="Local AI resource guard" />
+	<CardHeading title={t('systemCompatibility')} hint={t('localAiResourceGuard')} />
 	<div class="body">
 		<div class="summary" data-tier={$status?.tier ?? 'loading'}>
 			<span class="summary-title">{tierLabel}</span>
@@ -116,11 +117,10 @@
 
 			<div class="toggle-row">
 				<div>
-					<label for="local-ai-toggle">Local AI detection</label>
-					<p>
-						Detects names, organizations, locations, and context-only PII. When off,
-						pattern detection remains active, but those contextual details may be missed.
-					</p>
+				<label for="local-ai-toggle">{t('localAiDetection')}</label>
+				<p>
+					{t('localAiDetectionHint')}
+				</p>
 				</div>
 				<input
 					id="local-ai-toggle"
@@ -131,7 +131,7 @@
 				/>
 			</div>
 
-			<label class="model-label" for="local-ai-model">Local AI model</label>
+			<label class="model-label" for="local-ai-model">{t('localAiModel')}</label>
 			<select
 				id="local-ai-model"
 				value={modelChoiceValue}
@@ -144,26 +144,25 @@
 			</select>
 			<p class="hint">
 				{webGpuDtypeHint}
-				The quantization only applies when the model runs on the GPU (WebGPU); the CPU
-				fallback always uses the compact model.
+				{t('quantizationHint')}
 			</p>
 			{#if $warmupState === 'loading'}
-				<p class="hint">Loading Local AI detection…</p>
+				<p class="hint">{t('loadingLocalAi')}</p>
 			{/if}
 			{#if showRetry}
 				<div class="failure" role="status">
-					<p class="failure-title">Local AI failed to load</p>
+					<p class="failure-title">{t('localAiFailed')}</p>
 					{#if loadFailureMessage}
 						<p class="failure-detail">{loadFailureMessage}</p>
 					{:else}
-						<p class="failure-detail">Pattern detection remains active.</p>
+						<p class="failure-detail">{t('patternDetectionActive')}</p>
 					{/if}
-					<button type="button" class="retry" onclick={() => retryLocalAi()}>Retry Local AI</button>
+					<button type="button" class="retry" onclick={() => retryLocalAi()}>{t('retryLocalAi')}</button>
 				</div>
 			{/if}
 
 			<div class="runtime-controls">
-				<label class="model-label" for="local-ai-unload-timeout">Unload after inactivity</label>
+				<label class="model-label" for="local-ai-unload-timeout">{t('unloadAfterInactivity')}</label>
 				<select
 					id="local-ai-unload-timeout"
 					value={unloadTimeoutValue}
@@ -181,7 +180,7 @@
 						disabled={!$settings}
 						onchange={(event) => setKeepLocalAiLoadedWhileActive(event.currentTarget.checked)}
 					/>
-					<span>Keep loaded while active on a supported page</span>
+					<span>{t('keepLoadedWhileActive')}</span>
 				</label>
 				<label class="checkbox-row">
 					<input
@@ -190,22 +189,22 @@
 						disabled={!$settings || !localAiEnabled}
 						onchange={(event) => setAutoWarmLocalAiOnActiveSupportedPage(event.currentTarget.checked)}
 					/>
-					<span>Warm Local AI on capable active supported pages</span>
+					<span>{t('warmLocalAi')}</span>
 				</label>
 			</div>
 		</div>
 
 		<div class="grid">
 			<div>
-				<span class="label">Local AI status</span>
+				<span class="label">{t('localAiStatus')}</span>
 				<strong>{localAiLabel}</strong>
 			</div>
 			<div>
-				<span class="label">Runtime status</span>
+				<span class="label">{t('runtimeStatus')}</span>
 				<strong>{runtimeLabel}</strong>
 			</div>
 			<div>
-				<span class="label">Passive WebGPU</span>
+				<span class="label">{t('passiveWebGpu')}</span>
 				<strong>{$status?.webGpu ?? 'checking'}</strong>
 			</div>
 		</div>
@@ -217,14 +216,14 @@
 				{/each}
 			</ul>
 		{:else}
-			<p class="hint">Compatibility check is pending. This check uses passive browser APIs only and does not load the Local AI model.</p>
+			<p class="hint">{t('compatibilityCheckPending')}</p>
 		{/if}
 
 		<div class="actions">
 			<button type="button" class="rerun" onclick={handleRerun} disabled={rerunInFlight}>
-				{rerunInFlight ? 'Re-running system check…' : 'Re-run system check'}
+				{rerunInFlight ? t('reRunningSystemCheck') : t('reRunSystemCheck')}
 			</button>
-			<p class="hint">Refreshes browser-reported memory and WebGPU signals. The Local AI model is not loaded.</p>
+			<p class="hint">{t('reRunHint')}</p>
 		</div>
 	</div>
 </article>

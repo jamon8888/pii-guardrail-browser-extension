@@ -27,6 +27,25 @@ export const CATEGORY_THRESHOLDS: Record<EntityType, CategoryThreshold> = {
   URL:          { baseline: 0.50, delta: 0.30 }, // loose — shifts a lot
   DATE:         { baseline: 0.40, delta: 0.30 }, // loose — shifts a lot
   MISC:         { baseline: 0.50, delta: 0.20 },
+  PERSON_NAME:      { baseline: 0.50, delta: 0.20 },
+  PERSON_ALIAS:     { baseline: 0.50, delta: 0.20 },
+  PERSON_ATTRIBUTE: { baseline: 0.50, delta: 0.20 },
+  PERSON_ROLE:      { baseline: 0.50, delta: 0.20 },
+  DATE_OF_BIRTH:    { baseline: 0.50, delta: 0.15 },
+  DOCUMENT_IDENTIFIER: { baseline: 0.50, delta: 0.15 },
+  DOCUMENT_REFERENCE:  { baseline: 0.50, delta: 0.15 },
+  PASSPORT:        { baseline: 0.50, delta: 0.15 },
+  DRIVER_LICENSE:  { baseline: 0.50, delta: 0.15 },
+  TAX_ID:          { baseline: 0.50, delta: 0.15 },
+  NATIONAL_ID:     { baseline: 0.50, delta: 0.15 },
+  NATIONALITY:     { baseline: 0.50, delta: 0.20 },
+  GEO_LOCATION:    { baseline: 0.50, delta: 0.20 },
+  FINANCIAL_AMOUNT:      { baseline: 0.50, delta: 0.15 },
+  PAYMENT_CARD_SECURITY: { baseline: 0.50, delta: 0.15 },
+  MAC_ADDRESS:         { baseline: 0.50, delta: 0.20 },
+  DEVICE_IDENTIFIER:   { baseline: 0.50, delta: 0.20 },
+  CONTACT_HANDLE:      { baseline: 0.50, delta: 0.20 },
+  SENSITIVE:           { baseline: 0.50, delta: 0.10 },
 };
 
 type ResolverSettings = Pick<Settings, 'minConfidence' | 'sensitivityMode' | 'groupThresholds'>;

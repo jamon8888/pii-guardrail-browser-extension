@@ -1,15 +1,16 @@
 <script lang="ts">
 	import type { TestModel } from '../popup-model.svelte';
 	import CardHeading from './CardHeading.svelte';
+	import { t } from '../../shared/i18n';
 
 	let { feedbackCounts }: Pick<TestModel, 'feedbackCounts' | 'clearFeedback'> = $props();
 </script>
 
 <article class="card">
-	<CardHeading title="Feedback" />
+	<CardHeading title={t('feedback')} />
 	<div class="stat-row">
-		<div><strong>{$feedbackCounts.confirmed}</strong><span>Corrections</span></div>
-		<div><strong>{$feedbackCounts.ignored}</strong><span>Allowlist</span></div>
+		<div><strong>{$feedbackCounts.confirmed}</strong><span>{t('correctionsLabel')}</span></div>
+		<div><strong>{$feedbackCounts.ignored}</strong><span>{t('allowlistLabel')}</span></div>
 	</div>
 </article>
 

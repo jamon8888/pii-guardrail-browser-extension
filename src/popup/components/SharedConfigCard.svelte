@@ -1,6 +1,10 @@
+<script lang="ts">
+	import { t } from '../../shared/i18n';
+</script>
+
 <article class="card">
-	<div class="card-head"><span>Shared rule state</span><span>static</span></div>
-	<p>Protect and Detect use the same category toggles. Changes here are reflected across tabs.</p>
+	<div class="card-head"><span>{t('sharedRuleState')}</span><span>{t('static')}</span></div>
+	<p>{t('sharedRuleDescription')}</p>
 </article>
 
 <style>
