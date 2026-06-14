@@ -81,7 +81,7 @@ export interface NerModelDefinition {
   webGpuArtifacts?: Partial<Readonly<Record<NerDtype, NerWebGpuArtifact>>>;
 }
 
-export const DEFAULT_NER_MODEL: NerModelKey = 'bardsai';
+export const DEFAULT_NER_MODEL: NerModelKey = 'bardsai-v2';
 
 export const NER_MODELS: readonly NerModelDefinition[] = [
   {
@@ -150,6 +150,51 @@ export const NER_MODELS: readonly NerModelDefinition[] = [
     },
   },
   {
+    key: 'bardsai-v2',
+    label: 'BardsAI EU PII v2 (36 entities)',
+    modelId: 'ner/bardsai-v2-eu-pii-anonimization-multilang-v2',
+    assetBasePath: 'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2',
+    requiredAssets: [
+      'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/config.json',
+      'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/tokenizer.json',
+      'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/tokenizer_config.json',
+      'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/onnx/model_quantized.onnx',
+    ],
+    webGpuDtype: 'q4f16',
+    webGpuArtifacts: {
+      q4f16: {
+        requiredAssets: [
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/config.json',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/tokenizer.json',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/tokenizer_config.json',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/onnx/model_q4f16.onnx',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/onnx/model_q4f16.onnx.data',
+        ],
+        externalData: [
+          {
+            path: 'model_q4f16.onnx.data',
+            data: 'onnx/model_q4f16.onnx.data',
+          },
+        ],
+      },
+      fp16: {
+        requiredAssets: [
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/config.json',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/tokenizer.json',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/tokenizer_config.json',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/onnx/model_fp16.onnx',
+          'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/onnx/model_fp16.onnx.data',
+        ],
+        externalData: [
+          {
+            path: 'model_fp16.onnx.data',
+            data: 'onnx/model_fp16.onnx.data',
+          },
+        ],
+      },
+    },
+  },
+  {
     key: 'hikmaai',
     label: 'HikmaAI DistilBERT PII',
     modelId: 'ner/hikmaai-distilbert-pii',
@@ -177,7 +222,7 @@ export const NER_MODELS: readonly NerModelDefinition[] = [
 ] as const;
 
 export const ACTIVE_NER_MODELS: readonly NerModelDefinition[] = NER_MODELS.filter(
-  (model) => model.key === DEFAULT_NER_MODEL
+  (model) => model.key === 'bardsai-v2' || model.key === 'bardsai',
 );
 
 export function runtimeNerModelKey(key: NerModelKey | undefined): NerModelKey {
