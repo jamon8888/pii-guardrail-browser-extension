@@ -6,7 +6,7 @@ import type {
   NerWebGpuDtype,
   PiiSpan,
 } from '../shared/message-types';
-import { ACTIVE_NER_MODELS, DEFAULT_NER_MODEL, nerModelDefinitionFor, runtimeNerModelKey } from '../shared/constants';
+import { DEFAULT_NER_MODEL, nerModelDefinitionFor, runtimeNerModelKey } from '../shared/constants';
 import { debugLog } from './debug';
 import { detectPii } from './wasm-bridge';
 import { createNerProvider, resetNerProviderCachesForTests, type NerProvider } from './ner-provider';
@@ -78,13 +78,7 @@ function regexOnlyConfig(config: DetectionOptions | undefined): DetectionOptions
 function transformerModelFallbackOrder(
   selected: NonNullable<DetectionOptions['ner_model']>
 ): NonNullable<DetectionOptions['ner_model']>[] {
-  const normalizedSelected = runtimeNerModelKey(selected);
-  return [
-    normalizedSelected,
-    ...ACTIVE_NER_MODELS
-      .map((model) => model.key)
-      .filter((model) => model !== normalizedSelected),
-  ];
+  return ['bardsai-v2', 'bardsai', 'hikmaai', 'ai4privacy'];
 }
 
 export function getNerStatus(config?: DetectionOptions): NerStatus {

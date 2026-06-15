@@ -6,8 +6,7 @@
   "default_locale": "en",
   "permissions": [
     "storage",
-    "offscreen",
-    "tabs"
+    "offscreen"
   ],
   "host_permissions": [
     "https://chat.openai.com/*",
@@ -65,6 +64,8 @@
         "models/ner/hikmaai-distilbert-pii/onnx/*",
         "models/ner/bardsai-eu-pii-anonimization-multilang/*",
         "models/ner/bardsai-eu-pii-anonimization-multilang/onnx/*",
+        "models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/*",
+        "models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2/onnx/*",
         "vendor/onnxruntime-web/*"
       ],
       "matches": [

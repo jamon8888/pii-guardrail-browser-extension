@@ -242,14 +242,52 @@ const BARDSAI_NER_THRESHOLD_BY_ENTITY_TYPE: Readonly<Record<EntityType, number>>
   SENSITIVE: 0.60,
 };
 
+const BARDSAI_V2_NER_THRESHOLD: Readonly<Record<EntityType, number>> = {
+  PERSON_NAME: 0.55,
+  PERSON_ALIAS: 0.55,
+  PERSON_ATTRIBUTE: 0.65,
+  PERSON_ROLE: 0.50,
+  PERSON: 0.55,
+  EMAIL: 0.80,
+  PHONE: 0.80,
+  CREDIT_CARD: 0.80,
+  PAYMENT_CARD_SECURITY: 0.80,
+  SSN: 0.80,
+  IBAN: 0.80,
+  IP_ADDRESS: 0.80,
+  MAC_ADDRESS: 0.75,
+  LOCATION: 0.55,
+  GEO_LOCATION: 0.55,
+  ADDRESS: 0.55,
+  ORGANIZATION: 0.50,
+  URL: 0.60,
+  USERNAME: 0.60,
+  CONTACT_HANDLE: 0.60,
+  PASSWORD: 0.60,
+  BANK_ACCOUNT: 0.50,
+  FINANCIAL_AMOUNT: 0.50,
+  DATE: 0.50,
+  DATE_OF_BIRTH: 0.65,
+  DOCUMENT_IDENTIFIER: 0.75,
+  DOCUMENT_REFERENCE: 0.70,
+  PASSPORT: 0.75,
+  DRIVER_LICENSE: 0.75,
+  TAX_ID: 0.75,
+  NATIONAL_ID: 0.75,
+  NATIONALITY: 0.60,
+  DEVICE_IDENTIFIER: 0.65,
+  SENSITIVE: 0.65,
+  MISC: 0.70,
+};
+
 const NER_THRESHOLDS_BY_MODEL: Readonly<Record<NerModelKey, Readonly<Record<EntityType, number>>>> = {
   ai4privacy: NER_THRESHOLD_BY_ENTITY_TYPE,
   bardsai: BARDSAI_NER_THRESHOLD_BY_ENTITY_TYPE,
   // HikmaAI shares AI4Privacy's distilbert-base-uncased base, so reuse the
   // same threshold table until benchmark numbers justify tuning.
   hikmaai: NER_THRESHOLD_BY_ENTITY_TYPE,
-  // BardsAI v2 inherits v1 thresholds until benchmarked.
-  'bardsai-v2': BARDSAI_NER_THRESHOLD_BY_ENTITY_TYPE,
+  // BardsAI v2 has its own tuned thresholds.
+  'bardsai-v2': BARDSAI_V2_NER_THRESHOLD,
 };
 
 const AI4PRIVACY_LABEL_MAP: Readonly<Record<string, EntityType>> = {
@@ -394,6 +432,55 @@ const BARDSAI_LABEL_MAP: Readonly<Record<string, EntityType>> = {
   VEHICLE_IDENTIFIER: 'MISC',
 };
 
+const BARDSAI_V2_LABEL_MAP: Readonly<Record<string, EntityType>> = {
+  PERSON_NAME: 'PERSON_NAME',
+  PERSON_ALIAS: 'PERSON_ALIAS',
+  PERSON_ATTRIBUTE: 'PERSON_ATTRIBUTE',
+  PERSON_ROLE_OR_TITLE: 'PERSON_ROLE',
+  PROPER_NAME: 'PERSON_NAME',
+  // Fallback: v1 label still emitted by v2 in some contexts
+  PERSON: 'PERSON_NAME',
+  SSN: 'NATIONAL_ID',
+  EMAIL_ADDRESS: 'EMAIL',
+  PHONE_NUMBER: 'PHONE',
+  POSTAL_ADDRESS: 'ADDRESS',
+  GEO_LOCATION: 'GEO_LOCATION',
+  LOCATION: 'LOCATION',
+  ORGANIZATION_IDENTIFIER: 'ORGANIZATION',
+  ORGANIZATION_NAME: 'ORGANIZATION',
+  IP_ADDRESS: 'IP_ADDRESS',
+  MAC_ADDRESS: 'MAC_ADDRESS',
+  CONTACT_HANDLE: 'CONTACT_HANDLE',
+  ACCOUNT_IDENTIFIER: 'USERNAME',
+  AUTH_SECRET: 'PASSWORD',
+  BANK_ACCOUNT_IDENTIFIER: 'BANK_ACCOUNT',
+  PAYMENT_CARD: 'CREDIT_CARD',
+  PAYMENT_CARD_SECURITY: 'PAYMENT_CARD_SECURITY',
+  IDENTIFYING_LINK: 'URL',
+  DATE: 'DATE',
+  DATE_OF_BIRTH: 'DATE_OF_BIRTH',
+  DOCUMENT_IDENTIFIER: 'DOCUMENT_IDENTIFIER',
+  DOCUMENT_REFERENCE: 'DOCUMENT_REFERENCE',
+  PASSPORT: 'PASSPORT',
+  DRIVER_LICENSE: 'DRIVER_LICENSE',
+  TAX_IDENTIFIER: 'TAX_ID',
+  NATIONAL_IDENTIFIER: 'NATIONAL_ID',
+  NATIONALITY: 'NATIONALITY',
+  FINANCIAL_AMOUNT: 'FINANCIAL_AMOUNT',
+  DEVICE_IDENTIFIER: 'DEVICE_IDENTIFIER',
+  PERSON_IDENTIFIER: 'PERSON_ATTRIBUTE',
+  // GDPR Art.9 → SENSITIVE super-type
+  HEALTH_DATA: 'SENSITIVE',
+  BIOMETRIC_DATA: 'SENSITIVE',
+  GENETIC_DATA: 'SENSITIVE',
+  ETHNIC_ORIGIN: 'SENSITIVE',
+  POLITICAL_OPINION: 'SENSITIVE',
+  RELIGION_OR_BELIEF: 'SENSITIVE',
+  SEXUAL_ORIENTATION: 'SENSITIVE',
+  TRADE_UNION_MEMBERSHIP: 'SENSITIVE',
+  CRIMINAL_OFFENCE_DATA: 'SENSITIVE',
+};
+
 const HIKMAAI_LABEL_MAP: Readonly<Record<string, EntityType>> = {
   GIVENNAME: 'PERSON',
   SURNAME: 'PERSON',
@@ -434,6 +521,8 @@ const encoder = new TextEncoder();
 // (and thus its ONNX artifact) on first detect, so switching the preference
 // must produce a fresh provider instead of reusing a stale pipeline.
 let cachedTransformersProviders = new Map<string, NerProvider>();
+
+let cachedClassifier: TokenClassificationPipeline | null = null;
 
 function byteLength(text: string): number {
   return encoder.encode(text).length;
@@ -761,8 +850,12 @@ export function mapAi4PrivacyLabelToEntityType(label: string | undefined): Entit
   return AI4PRIVACY_LABEL_MAP[normalizeLabel(label)] ?? null;
 }
 
-export function mapBardsAiLabelToEntityType(label: string | undefined): EntityType | null {
-  return BARDSAI_LABEL_MAP[normalizeLabel(label)] ?? null;
+export function mapBardsAiLabelToEntityType(
+  label: string | undefined,
+  modelKey?: NerModelKey,
+): EntityType | null {
+  const map = modelKey === 'bardsai-v2' ? BARDSAI_V2_LABEL_MAP : BARDSAI_LABEL_MAP;
+  return map[normalizeLabel(label)] ?? null;
 }
 
 export function mapHikmaAiLabelToEntityType(label: string | undefined): EntityType | null {
@@ -773,8 +866,8 @@ function mapTransformerLabelToEntityType(
   label: string | undefined,
   modelKey: NerModelKey
 ): EntityType | null {
-  if (modelKey === 'bardsai') {
-    return mapBardsAiLabelToEntityType(label);
+  if (modelKey === 'bardsai' || modelKey === 'bardsai-v2') {
+    return mapBardsAiLabelToEntityType(label, modelKey);
   }
   if (modelKey === 'hikmaai') {
     return mapHikmaAiLabelToEntityType(label);
@@ -789,11 +882,15 @@ export function nerThresholdForEntityType(
   return NER_THRESHOLDS_BY_MODEL[modelKey][entityType];
 }
 
+function thresholdForModel(modelKey: NerModelKey): Readonly<Record<EntityType, number>> {
+  return NER_THRESHOLDS_BY_MODEL[modelKey];
+}
+
 export function passesNerThreshold(
   span: Pick<PiiSpan, 'entity_type' | 'score'>,
   modelKey: NerModelKey = DEFAULT_NER_MODEL
 ): boolean {
-  return span.score >= nerThresholdForEntityType(span.entity_type, modelKey);
+  return span.score >= thresholdForModel(modelKey)[span.entity_type];
 }
 
 export function applyNerThresholdPolicy(
@@ -967,6 +1064,21 @@ export function transformerOutputToSpans(
   );
 }
 
+async function dynamicChunkSize(): Promise<number> {
+  try {
+    const gpu = (navigator as any).gpu;
+    if (!gpu?.requestAdapter) return 5_000;
+    const adapter = await gpu.requestAdapter();
+    const limits = adapter?.limits ?? {};
+    const maxBuffer = limits.maxStorageBufferBindingSize ?? 128 * 1024 * 1024;
+    if (maxBuffer >= 512 * 1024 * 1024) return 12_000;
+    if (maxBuffer >= 256 * 1024 * 1024) return 8_000;
+    return 5_000;
+  } catch {
+    return 5_000;
+  }
+}
+
 export function createTransformersNerProvider(
   options: TransformersProviderOptions = {}
 ): NerProvider {
@@ -1002,6 +1114,11 @@ export function createTransformersNerProvider(
   }
 
   async function ensurePipeline(): Promise<TokenClassificationPipeline> {
+    if (cachedClassifier) {
+      console.log('[PG:ner] reusing cached classifier');
+      return cachedClassifier;
+    }
+
     pipelinePromise ??= (async () => {
       const startedAt = performance.now();
       try {
@@ -1040,7 +1157,10 @@ export function createTransformersNerProvider(
           // and continue; the next real call will retry compilation.
           try {
             const warmupStartedAt = performance.now();
-            await classifier('warmup', { aggregation_strategy: 'simple' });
+            const WARMUP_TEXT = 'John Smith, SSN 123-45-6789, email john@example.com, '
+              + 'phone +1-555-0123, credit card 4111-1111-1111-1111, '
+              + 'born 1990-01-15, passport AB123456, IP 192.168.1.1';
+            await classifier(WARMUP_TEXT, { aggregation_strategy: 'simple' });
             console.log('[PG:ner] webgpu warmup complete', {
               warmupMs: Math.round(performance.now() - warmupStartedAt),
             });
@@ -1051,10 +1171,12 @@ export function createTransformersNerProvider(
 
         lastLoadMs = Math.round(performance.now() - startedAt);
         pipelineReady = true;
+        cachedClassifier = classifier;
         console.log('[PG:ner] pipeline ready', { model: model.key, device, loadMs: lastLoadMs });
         return classifier;
       } catch (err) {
         console.error('[PG:ner] pipeline init failed', err);
+        cachedClassifier = null;
         throw err;
       }
     })();
@@ -1065,53 +1187,55 @@ export function createTransformersNerProvider(
   async function detectChunked(
     text: string,
     classifier: TokenClassificationPipeline,
-    signal?: AbortSignal
+    signal?: AbortSignal,
   ): Promise<{ spans: PiiSpan[]; chunkCount: number }> {
     throwIfAborted(signal);
-    const chunks = chunkTextForNer(text, chunking);
-    debugLog('[PG:ner] detect: chunked text', {
-      model: model.key,
-      textLength: text.length,
-      chunkCount: chunks.length,
+    const chunkSize = chunking?.maxChunkChars ?? (await dynamicChunkSize());
+    const chunks = chunkTextForNer(text, {
+      maxChunkChars: chunkSize,
+      overlapChars: chunking?.overlapChars,
     });
-    const spans: PiiSpan[] = [];
+    const allSpans: PiiSpan[] = [];
 
-    for (let i = 0; i < chunks.length; i += 1) {
-      throwIfAborted(signal);
+    if (chunks.length === 0) return { spans: [], chunkCount: 0 };
+
+    // Pre-tokenize first chunk
+    let nextTokenized = classifier(chunks[0].text, { aggregation_strategy: 'simple' });
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+
       const chunk = chunks[i];
       const chunkStartedAt = performance.now();
-      const output = await classifier(chunk.text, { aggregation_strategy: 'simple' });
-      throwIfAborted(signal);
+
+      // Get current chunk results and start tokenizing next
+      const [output, nextOutput] = await Promise.all([
+        nextTokenized,
+        i + 1 < chunks.length
+          ? classifier(chunks[i + 1].text, { aggregation_strategy: 'simple' })
+          : Promise.resolve([]),
+      ]);
+
       const inferenceMs = Math.round(performance.now() - chunkStartedAt);
-      const sample = output.slice(0, 10).map((item) => ({
-        word: item.word,
-        entity: item.entity_group ?? item.entity,
-        score: Number(item.score?.toFixed(3)),
-        start: item.start,
-        end: item.end,
-      }));
-      // Unconditional diagnostic — see comment in detect() above.
       console.log('[PG:ner] detect: chunk inference', {
-        chunkIndex: i,
-        chunkChars: chunk.text.length,
-        inferenceMs,
+        chunkIndex: i, chunkChars: chunk.text.length, inferenceMs,
         rawItemCount: output.length,
-        sample: sample.map((item) => ({ ...item, word: item.word ? `[${item.word.length} chars]` : item.word })),
       });
+
       const converted = transformerOutputToSpans(chunk.text, output, model.key).map((span) =>
         shiftSpanToOriginalText(span, chunk)
       );
-      debugLog('[PG:ner] detect: chunk converted to spans', {
-        chunkIndex: i,
-        convertedSpanCount: converted.length,
-      });
-      spans.push(...converted);
+      allSpans.push(...converted);
+
+      // Set up next iteration
+      if (i + 2 < chunks.length) {
+        nextTokenized = classifier(chunks[i + 2].text, { aggregation_strategy: 'simple' });
+      } else {
+        nextTokenized = Promise.resolve([]);
+      }
     }
 
-    return {
-      spans: mergeOverlappingNerSpans(spans),
-      chunkCount: chunks.length,
-    };
+    return { spans: mergeOverlappingNerSpans(allSpans), chunkCount: chunks.length };
   }
 
   return {
@@ -1190,5 +1314,6 @@ export function createNerProvider(
 }
 
 export function resetNerProviderCachesForTests(): void {
+  cachedClassifier = null;
   cachedTransformersProviders = new Map<string, NerProvider>();
 }
