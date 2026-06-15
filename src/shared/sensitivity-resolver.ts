@@ -44,6 +44,7 @@ export const CATEGORY_THRESHOLDS: Record<EntityType, CategoryThreshold> = {
   PAYMENT_CARD_SECURITY: { baseline: 0.50, delta: 0.15 },
   MAC_ADDRESS:         { baseline: 0.50, delta: 0.20 },
   DEVICE_IDENTIFIER:   { baseline: 0.50, delta: 0.20 },
+  VEHICLE_IDENTIFIER:  { baseline: 0.50, delta: 0.20 },
   CONTACT_HANDLE:      { baseline: 0.50, delta: 0.20 },
   SENSITIVE:           { baseline: 0.50, delta: 0.15 },
 };

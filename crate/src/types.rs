@@ -37,6 +37,7 @@ pub enum EntityType {
     PaymentCardSecurity,
     MacAddress,
     DeviceIdentifier,
+    VehicleIdentifier,
     ContactHandle,
     Sensitive,
 }
@@ -77,6 +78,7 @@ impl EntityType {
             EntityType::PaymentCardSecurity => "PAYMENT_CARD_SECURITY",
             EntityType::MacAddress => "MAC_ADDRESS",
             EntityType::DeviceIdentifier => "DEVICE_IDENTIFIER",
+            EntityType::VehicleIdentifier => "VEHICLE_IDENTIFIER",
             EntityType::ContactHandle => "CONTACT_HANDLE",
             EntityType::Sensitive => "SENSITIVE",
         }

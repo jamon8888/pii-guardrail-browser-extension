@@ -116,7 +116,8 @@ fn ner_min_confidence(entity_type: crate::types::EntityType) -> f64 {
         | crate::types::EntityType::DocumentIdentifier => 0.75,
         crate::types::EntityType::Sensitive
         | crate::types::EntityType::PersonAttribute
-        | crate::types::EntityType::DeviceIdentifier => 0.65,
+        | crate::types::EntityType::DeviceIdentifier
+        | crate::types::EntityType::VehicleIdentifier => 0.65,
         crate::types::EntityType::DocumentReference => 0.70,
         crate::types::EntityType::Url
         | crate::types::EntityType::Username

@@ -48,6 +48,7 @@ export type EntityType =
   | 'PAYMENT_CARD_SECURITY'
   | 'MAC_ADDRESS'
   | 'DEVICE_IDENTIFIER'
+  | 'VEHICLE_IDENTIFIER'
   | 'CONTACT_HANDLE'
   | 'SENSITIVE';
 
@@ -60,7 +61,7 @@ export const ENTITY_TYPES: readonly EntityType[] = [
   'PASSPORT', 'DRIVER_LICENSE', 'TAX_ID', 'NATIONAL_ID',
   'NATIONALITY', 'GEO_LOCATION', 'FINANCIAL_AMOUNT',
   'PAYMENT_CARD_SECURITY', 'MAC_ADDRESS', 'DEVICE_IDENTIFIER',
-  'CONTACT_HANDLE', 'SENSITIVE',
+  'VEHICLE_IDENTIFIER', 'CONTACT_HANDLE', 'SENSITIVE',
 ];
 
 /** Detection source — which pipeline stage produced this span. */

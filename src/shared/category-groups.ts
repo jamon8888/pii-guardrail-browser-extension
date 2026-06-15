@@ -23,7 +23,7 @@ export const GROUP_MEMBERS: Readonly<Record<GroupName, readonly EntityType[]>> =
   Password: ['PASSWORD'],
   Organization: ['ORGANIZATION'],
   Documents: ['PASSPORT', 'DRIVER_LICENSE', 'TAX_ID', 'NATIONAL_ID',
-              'DOCUMENT_IDENTIFIER', 'DOCUMENT_REFERENCE'],
+              'DOCUMENT_IDENTIFIER', 'DOCUMENT_REFERENCE', 'VEHICLE_IDENTIFIER'],
   Temporal: ['DATE', 'DATE_OF_BIRTH'],
   Sensitive: ['SENSITIVE'],
   'Low-signal': ['URL', 'MISC', 'PERSON_ATTRIBUTE', 'PERSON_ROLE',
