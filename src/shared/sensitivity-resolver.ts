@@ -46,7 +46,15 @@ export const CATEGORY_THRESHOLDS: Record<EntityType, CategoryThreshold> = {
   DEVICE_IDENTIFIER:   { baseline: 0.50, delta: 0.20 },
   VEHICLE_IDENTIFIER:  { baseline: 0.50, delta: 0.20 },
   CONTACT_HANDLE:      { baseline: 0.50, delta: 0.20 },
-  SENSITIVE:           { baseline: 0.50, delta: 0.15 },
+  HEALTH_DATA:         { baseline: 0.65, delta: 0.15 },
+  BIOMETRIC_DATA:      { baseline: 0.65, delta: 0.15 },
+  GENETIC_DATA:        { baseline: 0.65, delta: 0.15 },
+  RELIGION_OR_BELIEF:  { baseline: 0.65, delta: 0.15 },
+  POLITICAL_OPINION:   { baseline: 0.65, delta: 0.15 },
+  TRADE_UNION_MEMBERSHIP: { baseline: 0.65, delta: 0.15 },
+  ETHNIC_ORIGIN:       { baseline: 0.65, delta: 0.15 },
+  SEXUAL_ORIENTATION:  { baseline: 0.65, delta: 0.15 },
+  CRIMINAL_OFFENCE_DATA: { baseline: 0.65, delta: 0.15 },
 };
 
 type ResolverSettings = Pick<Settings, 'minConfidence' | 'sensitivityMode' | 'groupThresholds'>;

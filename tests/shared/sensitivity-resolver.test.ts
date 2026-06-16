@@ -169,7 +169,7 @@ describe('resolveThreshold — individual mode with group overrides', () => {
     const floor = Math.max(0, baseline - delta);
     const ceiling = Math.min(1, baseline + delta);
     const expected = ceiling - overridePos * (ceiling - floor);
-    expect(resolveThreshold(indiv(0.5, { Identity: 0.8 }), 'PERSON')).toBeCloseTo(expected, 10);
+    expect(resolveThreshold(indiv(0.5, { Personal: 0.8 }), 'PERSON')).toBeCloseTo(expected, 10);
   });
 
   test('group override applies to every entity in the group', () => {
@@ -197,7 +197,7 @@ describe('resolveThreshold — individual mode with group overrides', () => {
   });
 
   test('override at 0.5 matches global math at 0.5 for the same group', () => {
-    expect(resolveThreshold(indiv(0.3, { Identity: 0.5 }), 'PERSON'))
+    expect(resolveThreshold(indiv(0.3, { Personal: 0.5 }), 'PERSON'))
       .toBeCloseTo(resolveThreshold(settings(0.5, 'global'), 'PERSON'), 10);
   });
 
@@ -222,11 +222,11 @@ describe('resolveThreshold — individual mode with group overrides', () => {
   });
 
   test('multiple group overrides are independent', () => {
-    const s = indiv(0.5, { Identity: 0.1, Financial: 0.9 });
+    const s = indiv(0.5, { Personal: 0.1, Financial: 0.9 });
 
-    // Identity group at override 0.1 → strict
+    // Personal group at override 0.1 → strict
     const personStrict = resolveThreshold(s, 'PERSON');
-    const personLoose = resolveThreshold(indiv(0.5, { Identity: 0.9 }), 'PERSON');
+    const personLoose = resolveThreshold(indiv(0.5, { Personal: 0.9 }), 'PERSON');
     expect(personStrict).toBeGreaterThan(personLoose); // stricter → higher threshold
 
     // Financial group at override 0.9 → loose

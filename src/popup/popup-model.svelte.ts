@@ -126,7 +126,7 @@ export const tabs: TabDefinition[] = [
 ];
 
 const CATEGORY_DESCRIPTIONS: Record<GroupName, string> = {
-  Identity: t('identityDescription'),
+  Personal: t('personalDescription'),
   Contact: t('contactDescription'),
   Financial: t('financialDescription'),
   Network: t('networkDescription'),
@@ -135,12 +135,16 @@ const CATEGORY_DESCRIPTIONS: Record<GroupName, string> = {
   Organization: t('organizationDescription'),
   Documents: t('documentsDescription'),
   Temporal: t('temporalDescription'),
-  Sensitive: t('sensitiveDescription'),
+  Health: t('healthDescription'),
+  Biometric: t('biometricDescription'),
+  Beliefs: t('beliefsDescription'),
+  Identity: t('identityDescription'),
+  Criminal: t('criminalDescription'),
   'Low-signal': t('lowSignalDescription'),
 };
 
 const CATEGORY_LABELS: Record<GroupName, string> = {
-  Identity: t('identity'),
+  Personal: t('personal'),
   Contact: t('contact'),
   Financial: t('financial'),
   Network: t('network'),
@@ -149,7 +153,11 @@ const CATEGORY_LABELS: Record<GroupName, string> = {
   Organization: t('organization'),
   Documents: t('documents'),
   Temporal: t('temporal'),
-  Sensitive: t('sensitive'),
+  Health: t('health'),
+  Biometric: t('biometric'),
+  Beliefs: t('beliefs'),
+  Identity: t('identity'),
+  Criminal: t('criminal'),
   'Low-signal': t('lowSignal'),
 };
 

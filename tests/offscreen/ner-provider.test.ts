@@ -554,15 +554,15 @@ describe('transformers NER provider', () => {
       ['FINANCIAL_AMOUNT', 'FINANCIAL_AMOUNT'],
       ['DEVICE_IDENTIFIER', 'DEVICE_IDENTIFIER'],
       ['PERSON_IDENTIFIER', 'PERSON_ATTRIBUTE'],
-      ['HEALTH_DATA', 'SENSITIVE'],
-      ['BIOMETRIC_DATA', 'SENSITIVE'],
-      ['GENETIC_DATA', 'SENSITIVE'],
-      ['ETHNIC_ORIGIN', 'SENSITIVE'],
-      ['POLITICAL_OPINION', 'SENSITIVE'],
-      ['RELIGION_OR_BELIEF', 'SENSITIVE'],
-      ['SEXUAL_ORIENTATION', 'SENSITIVE'],
-      ['TRADE_UNION_MEMBERSHIP', 'SENSITIVE'],
-      ['CRIMINAL_OFFENCE_DATA', 'SENSITIVE'],
+      ['HEALTH_DATA', 'HEALTH_DATA'],
+      ['BIOMETRIC_DATA', 'BIOMETRIC_DATA'],
+      ['GENETIC_DATA', 'GENETIC_DATA'],
+      ['ETHNIC_ORIGIN', 'ETHNIC_ORIGIN'],
+      ['POLITICAL_OPINION', 'POLITICAL_OPINION'],
+      ['RELIGION_OR_BELIEF', 'RELIGION_OR_BELIEF'],
+      ['SEXUAL_ORIENTATION', 'SEXUAL_ORIENTATION'],
+      ['TRADE_UNION_MEMBERSHIP', 'TRADE_UNION_MEMBERSHIP'],
+      ['CRIMINAL_OFFENCE_DATA', 'CRIMINAL_OFFENCE_DATA'],
     ] as const;
 
     for (const [label, entityType] of cases) {
@@ -574,10 +574,10 @@ describe('transformers NER provider', () => {
     expect(mapBardsAiLabelToEntityType('PERSON_NAME', 'bardsai-v2')).toBe('PERSON_NAME');
     expect(mapBardsAiLabelToEntityType('PERSON_NAME', 'bardsai')).toBe('PERSON');
 
-    expect(mapBardsAiLabelToEntityType('HEALTH_DATA', 'bardsai-v2')).toBe('SENSITIVE');
+    expect(mapBardsAiLabelToEntityType('HEALTH_DATA', 'bardsai-v2')).toBe('HEALTH_DATA');
     expect(mapBardsAiLabelToEntityType('HEALTH_DATA', 'bardsai')).toBe('MISC');
 
-    expect(mapBardsAiLabelToEntityType('POLITICAL_OPINION', 'bardsai-v2')).toBe('SENSITIVE');
+    expect(mapBardsAiLabelToEntityType('POLITICAL_OPINION', 'bardsai-v2')).toBe('POLITICAL_OPINION');
     expect(mapBardsAiLabelToEntityType('POLITICAL_OPINION', 'bardsai')).toBe('MISC');
 
     expect(mapBardsAiLabelToEntityType('PASSPORT', 'bardsai-v2')).toBe('PASSPORT');
@@ -610,7 +610,10 @@ describe('transformers NER provider', () => {
     expect(nerThresholdForEntityType('PERSON_ALIAS', 'bardsai-v2')).toBe(0.55);
     expect(nerThresholdForEntityType('PERSON_ATTRIBUTE', 'bardsai-v2')).toBe(0.65);
     expect(nerThresholdForEntityType('PERSON_ROLE', 'bardsai-v2')).toBe(0.50);
-    expect(nerThresholdForEntityType('SENSITIVE', 'bardsai-v2')).toBe(0.65);
+    expect(nerThresholdForEntityType('HEALTH_DATA', 'bardsai-v2')).toBe(0.65);
+    expect(nerThresholdForEntityType('BIOMETRIC_DATA', 'bardsai-v2')).toBe(0.65);
+    expect(nerThresholdForEntityType('ETHNIC_ORIGIN', 'bardsai-v2')).toBe(0.65);
+    expect(nerThresholdForEntityType('CRIMINAL_OFFENCE_DATA', 'bardsai-v2')).toBe(0.65);
     expect(nerThresholdForEntityType('PASSPORT', 'bardsai-v2')).toBe(0.75);
     expect(nerThresholdForEntityType('DRIVER_LICENSE', 'bardsai-v2')).toBe(0.75);
     expect(nerThresholdForEntityType('TAX_ID', 'bardsai-v2')).toBe(0.75);
@@ -624,11 +627,11 @@ describe('transformers NER provider', () => {
     expect(nerThresholdForEntityType('MAC_ADDRESS', 'bardsai-v2')).toBe(0.75);
   });
 
-  test('bardsai-v2 SENSITIVE threshold is lower than default MISC threshold', () => {
-    expect(nerThresholdForEntityType('SENSITIVE', 'bardsai-v2')).toBeLessThan(
+  test('bardsai-v2 granular GDPR thresholds are lower than default MISC threshold', () => {
+    expect(nerThresholdForEntityType('HEALTH_DATA', 'bardsai-v2')).toBeLessThan(
       nerThresholdForEntityType('MISC')
     );
-    expect(passesNerThreshold({ entity_type: 'SENSITIVE', score: 0.66 }, 'bardsai-v2')).toBe(true);
+    expect(passesNerThreshold({ entity_type: 'HEALTH_DATA', score: 0.66 }, 'bardsai-v2')).toBe(true);
     expect(passesNerThreshold({ entity_type: 'MISC', score: 0.66 })).toBe(false);
   });
 
@@ -702,8 +705,8 @@ describe('transformers NER provider', () => {
       expect.objectContaining({ entity_type: 'PERSON_NAME', text: 'Ada', score: 0.8 }),
       expect.objectContaining({ entity_type: 'ORGANIZATION', text: 'Acme', score: 0.81 }),
       expect.objectContaining({ entity_type: 'LOCATION', text: 'Berlin', score: 0.82 }),
-      expect.objectContaining({ entity_type: 'SENSITIVE', text: 'X123', score: 0.94 }),
-      expect.objectContaining({ entity_type: 'SENSITIVE', text: 'X123', score: 0.95 }),
+      expect.objectContaining({ entity_type: 'HEALTH_DATA', text: 'X123', score: 0.94 }),
+      expect.objectContaining({ entity_type: 'HEALTH_DATA', text: 'X123', score: 0.95 }),
     ]);
     expect(spans).not.toEqual(
       expect.arrayContaining([expect.objectContaining({ text: 'works' })])
@@ -820,7 +823,7 @@ describe('production transformer NER provider', () => {
 
     expect(spans).toEqual([
       expect.objectContaining({ entity_type: 'PERSON_NAME', text: 'Ada Smith', score: 0.6 }),
-      expect.objectContaining({ entity_type: 'SENSITIVE', text: 'X123', score: 0.69 }),
+      expect.objectContaining({ entity_type: 'HEALTH_DATA', text: 'X123', score: 0.69 }),
     ]);
   });
 

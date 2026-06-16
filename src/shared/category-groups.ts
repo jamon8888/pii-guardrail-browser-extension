@@ -1,7 +1,7 @@
 import type { EntityType, GroupName } from './message-types';
 
 export const GROUP_NAMES: readonly GroupName[] = [
-  'Identity',
+  'Personal',
   'Contact',
   'Financial',
   'Network',
@@ -10,28 +10,34 @@ export const GROUP_NAMES: readonly GroupName[] = [
   'Organization',
   'Documents',
   'Temporal',
-  'Sensitive',
+  'Health',
+  'Biometric',
+  'Beliefs',
+  'Identity',
+  'Criminal',
   'Low-signal',
-];
+] as const;
 
 export const GROUP_MEMBERS: Readonly<Record<GroupName, readonly EntityType[]>> = {
-  Identity: ['PERSON', 'PERSON_NAME', 'PERSON_ALIAS', 'USERNAME'],
+  Personal: ['PERSON', 'PERSON_NAME', 'PERSON_ALIAS', 'USERNAME'],
   Contact: ['EMAIL', 'PHONE', 'ADDRESS', 'CONTACT_HANDLE'],
   Financial: ['CREDIT_CARD', 'PAYMENT_CARD_SECURITY', 'IBAN', 'BANK_ACCOUNT', 'SSN', 'FINANCIAL_AMOUNT'],
   Network: ['IP_ADDRESS', 'MAC_ADDRESS'],
   Location: ['LOCATION', 'GEO_LOCATION'],
   Password: ['PASSWORD'],
   Organization: ['ORGANIZATION'],
-  Documents: ['PASSPORT', 'DRIVER_LICENSE', 'TAX_ID', 'NATIONAL_ID',
-              'DOCUMENT_IDENTIFIER', 'DOCUMENT_REFERENCE', 'VEHICLE_IDENTIFIER'],
+  Documents: ['PASSPORT', 'DRIVER_LICENSE', 'TAX_ID', 'NATIONAL_ID', 'DOCUMENT_IDENTIFIER', 'DOCUMENT_REFERENCE', 'VEHICLE_IDENTIFIER'],
   Temporal: ['DATE', 'DATE_OF_BIRTH'],
-  Sensitive: ['SENSITIVE'],
-  'Low-signal': ['URL', 'MISC', 'PERSON_ATTRIBUTE', 'PERSON_ROLE',
-                 'NATIONALITY', 'DEVICE_IDENTIFIER'],
+  Health: ['HEALTH_DATA'],
+  Biometric: ['BIOMETRIC_DATA', 'GENETIC_DATA'],
+  Beliefs: ['RELIGION_OR_BELIEF', 'POLITICAL_OPINION', 'TRADE_UNION_MEMBERSHIP'],
+  Identity: ['ETHNIC_ORIGIN', 'SEXUAL_ORIENTATION'],
+  Criminal: ['CRIMINAL_OFFENCE_DATA'],
+  'Low-signal': ['URL', 'MISC', 'PERSON_ATTRIBUTE', 'PERSON_ROLE', 'NATIONALITY', 'DEVICE_IDENTIFIER'],
 };
 
 export const GROUP_DEFAULT_ON: Readonly<Record<GroupName, boolean>> = {
-  Identity: true,
+  Personal: true,
   Contact: true,
   Financial: true,
   Network: true,
@@ -40,7 +46,11 @@ export const GROUP_DEFAULT_ON: Readonly<Record<GroupName, boolean>> = {
   Organization: true,
   Documents: true,
   Temporal: true,
-  Sensitive: true,
+  Health: true,
+  Biometric: true,
+  Beliefs: true,
+  Identity: true,
+  Criminal: true,
   'Low-signal': false,
 };
 

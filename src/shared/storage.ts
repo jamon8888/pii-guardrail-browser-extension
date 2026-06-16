@@ -25,7 +25,7 @@ function isNerProviderMode(value: unknown): value is NerProviderMode {
 }
 
 function isNerModelKey(value: unknown): value is NerModelKey {
-  return value === 'ai4privacy' || value === 'bardsai' || value === 'hikmaai';
+  return value === 'ai4privacy' || value === 'bardsai' || value === 'bardsai-v2' || value === 'hikmaai';
 }
 
 function isNerWebGpuDtype(value: unknown): value is NerWebGpuDtype {
@@ -122,6 +122,17 @@ function normalizeSettings(raw: unknown): Settings {
   }
   settings.groupsEnabled = normalizeGroupsEnabled(candidate.groupsEnabled);
   settings.groupThresholds = normalizeGroupThresholds(candidate.groupThresholds);
+
+  // Auto-migrate old SENSITIVE toggle to 5 new GDPR groups
+  if ((settings.groupsEnabled as Record<string, boolean>).Sensitive !== undefined) {
+    const sensitiveEnabled = (settings.groupsEnabled as Record<string, boolean>).Sensitive;
+    settings.groupsEnabled.Health = sensitiveEnabled;
+    settings.groupsEnabled.Biometric = sensitiveEnabled;
+    settings.groupsEnabled.Beliefs = sensitiveEnabled;
+    settings.groupsEnabled.Identity = sensitiveEnabled;
+    settings.groupsEnabled.Criminal = sensitiveEnabled;
+    delete (settings.groupsEnabled as Record<string, boolean>).Sensitive;
+  }
   settings.allowlist = normalizeAllowlist(candidate.allowlist);
   settings.blocklist = normalizeBlocklist(candidate.blocklist);
   if (typeof settings.skipCodeBlocks !== 'boolean') {

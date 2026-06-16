@@ -1,5 +1,5 @@
 export type GroupName =
-  | 'Identity'
+  | 'Personal'
   | 'Contact'
   | 'Financial'
   | 'Network'
@@ -8,7 +8,11 @@ export type GroupName =
   | 'Organization'
   | 'Documents'
   | 'Temporal'
-  | 'Sensitive'
+  | 'Health'
+  | 'Biometric'
+  | 'Beliefs'
+  | 'Identity'
+  | 'Criminal'
   | 'Low-signal';
 
 /** Entity types matching the Rust WASM module's EntityType enum. */
@@ -50,7 +54,15 @@ export type EntityType =
   | 'DEVICE_IDENTIFIER'
   | 'VEHICLE_IDENTIFIER'
   | 'CONTACT_HANDLE'
-  | 'SENSITIVE';
+  | 'HEALTH_DATA'
+  | 'BIOMETRIC_DATA'
+  | 'GENETIC_DATA'
+  | 'RELIGION_OR_BELIEF'
+  | 'POLITICAL_OPINION'
+  | 'TRADE_UNION_MEMBERSHIP'
+  | 'ETHNIC_ORIGIN'
+  | 'SEXUAL_ORIENTATION'
+  | 'CRIMINAL_OFFENCE_DATA';
 
 export const ENTITY_TYPES: readonly EntityType[] = [
   'PERSON', 'EMAIL', 'PHONE', 'CREDIT_CARD', 'SSN', 'IBAN',
@@ -61,7 +73,10 @@ export const ENTITY_TYPES: readonly EntityType[] = [
   'PASSPORT', 'DRIVER_LICENSE', 'TAX_ID', 'NATIONAL_ID',
   'NATIONALITY', 'GEO_LOCATION', 'FINANCIAL_AMOUNT',
   'PAYMENT_CARD_SECURITY', 'MAC_ADDRESS', 'DEVICE_IDENTIFIER',
-  'VEHICLE_IDENTIFIER', 'CONTACT_HANDLE', 'SENSITIVE',
+  'VEHICLE_IDENTIFIER', 'CONTACT_HANDLE',
+  'HEALTH_DATA', 'BIOMETRIC_DATA', 'GENETIC_DATA',
+  'RELIGION_OR_BELIEF', 'POLITICAL_OPINION', 'TRADE_UNION_MEMBERSHIP',
+  'ETHNIC_ORIGIN', 'SEXUAL_ORIENTATION', 'CRIMINAL_OFFENCE_DATA',
 ];
 
 /** Detection source — which pipeline stage produced this span. */
@@ -87,6 +102,8 @@ export interface PipelineConfig {
   context_boost: number;
   context_window: number;
   ner_enabled: boolean;
+  /** Language code for locale-specific PII detection (e.g., "en", "de", "fr", "nl", "eu"). Defaults to "eu" (all 24 languages). */
+  language?: string;
 }
 
 export type NerProviderMode = 'off' | 'fixture' | 'transformers';
