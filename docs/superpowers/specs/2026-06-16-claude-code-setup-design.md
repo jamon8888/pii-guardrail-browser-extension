@@ -187,15 +187,15 @@ captured). On failure, writes the captured error list to stderr and exits
 `2` — this blocks the `git commit` Bash call. On success, exits `0`.
 
 **`scripts/claude-hooks/src-edit-privacy-scan.cjs`** — PostToolUse, matcher
-`Edit|Write`. No-ops unless `tool_input.file_path` is under `src/`. Requires
-`scripts/check-privacy-boundary.js`'s exported `scanRuntimeNetworkPrimitives`
-and runs it scoped to the single edited file's contents. If the edited file
-is `src/offscreen/ner-provider.ts`, also runs `checkTransformersLocalOnlyConfig`.
-That function exists in `check-privacy-boundary.js` today but is **not**
-currently in `module.exports` — this change adds it to the exports list (a
-one-line addition, no behavior change to the existing CLI). If a new
-forbidden pattern or a missing transformer-config requirement appears, the
-hook prints a warning to stderr (advisory — always exits `0`, never blocks).
+`Edit|Write`. No-ops unless `tool_input.file_path` is under `src/`. Reuses
+the already-exported `checkPrivacyBoundary(rootDir)` wholesale (same
+function the blocking commit hook uses — DRY, no new exports needed since
+`checkPrivacyBoundary` already runs the runtime-primitive scan, the
+transformer-config check, and allowlist filtering together). If `errors` is
+non-empty, prints them to stderr as a warning (advisory — always exits `0`,
+never blocks). Re-scanning all of `src/` on each edit is acceptable: the
+scan is pure regex/text matching over a few dozen files, not I/O- or
+CPU-heavy.
 
 **`scripts/claude-hooks/rust-edit-reminder.cjs`** — PostToolUse, matcher
 `Edit|Write`. No-ops unless `tool_input.file_path` matches
