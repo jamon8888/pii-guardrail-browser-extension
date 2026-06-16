@@ -160,6 +160,12 @@ async function withOffscreenOperation<T>(operation: () => Promise<T>): Promise<T
 
 async function persistWarmupOutcome(status: NerStatusResponse["payload"]): Promise<void> {
   if (status.state === "failed" || status.state === "unavailable") {
+    console.warn('[PG:service-worker] NER warmup failed — auto-disabling', {
+      state: status.state,
+      message: status.message,
+      model: status.model,
+      device: status.device,
+    });
     const reason = status.message ?? "Local AI failed to load.";
     const settings = await loadSettings();
     if (settings.nerProvider === "transformers") {
@@ -168,6 +174,11 @@ async function persistWarmupOutcome(status: NerStatusResponse["payload"]): Promi
     await recordLoadFailure(reason);
     return;
   }
+  console.log('[PG:service-worker] NER warmup succeeded', {
+    state: status.state,
+    model: status.model,
+    device: status.device,
+  });
   await recordRuntimeState(status.state);
 }
 

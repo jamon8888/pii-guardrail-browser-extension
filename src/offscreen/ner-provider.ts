@@ -770,6 +770,12 @@ async function assertRequiredAssetsAvailable(
     missing,
   });
 
+  for (const assetPath of [...requiredModelAssets, ...REQUIRED_RUNTIME_ASSETS]) {
+    const assetUrl = getExtensionUrl(assetPath);
+    const exists = await assetExists(assetUrl);
+    console.log(`[PG:ner] asset ${exists ? '✓' : '✗'}: ${assetPath}`);
+  }
+
   if (missing.length > 0) {
     throw new NerProviderUnavailableError(
       `Missing transformer NER assets: ${missing.join(', ')}`
@@ -1156,6 +1162,15 @@ export function createTransformersNerProvider(
         const dtype =
           options.dtypeOverride ?? dtypeForDevice(model, device, options.webGpuDtypePreference);
         selectedDevice = device;
+        console.log('[PG:ner] pipeline init: device selection', {
+          webgpuAvailable,
+          deviceOverride: options.deviceOverride,
+          selectedDevice: device,
+          dtypeOverride: options.dtypeOverride,
+          selectedDtype: dtype,
+          modelKey: model.key,
+          modelId: model.modelId,
+        });
         await assertRequiredAssetsAvailable(
           requiredAssetsForDtype(model, dtype),
           getExtensionUrl,
@@ -1203,7 +1218,12 @@ export function createTransformersNerProvider(
         console.log('[PG:ner] pipeline ready', { model: model.key, device, loadMs: lastLoadMs });
         return classifier;
       } catch (err) {
-        console.error('[PG:ner] pipeline init failed', err);
+        console.error('[PG:ner] pipeline init failed', {
+          error: err instanceof Error ? err.message : String(err),
+          stack: err instanceof Error ? err.stack : undefined,
+          model: model.key,
+          device: selectedDevice,
+        });
         cachedClassifier = null;
         throw err;
       }

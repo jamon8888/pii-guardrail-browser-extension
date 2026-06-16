@@ -361,8 +361,8 @@ describe('transformers NER provider', () => {
     await provider.detect('David Smith');
 
     expect(pipeline).toHaveBeenCalledTimes(1);
-    // 4 model assets + 4 runtime assets (incl. asyncify variants).
-    expect(assetExists).toHaveBeenCalledTimes(8);
+    // 4 model assets + 4 runtime assets (incl. asyncify variants) × 2 (batch check + per-asset logging).
+    expect(assetExists).toHaveBeenCalledTimes(16);
     expect(classifier).toHaveBeenCalledTimes(2);
   });
 

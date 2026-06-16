@@ -223,6 +223,13 @@ async function externalNerSpansFor(
         selectedError = err;
       }
       console.error('[PG:offscreen] NER provider failed:', err);
+      console.error('[PG:offscreen] NER fallback details', {
+        mode,
+        model: candidateModel,
+        error: err instanceof Error ? err.message : String(err),
+        willTryNext: mode === 'transformers',
+        modelsRemaining: modelsToTry.slice(modelsToTry.indexOf(candidateModel) + 1),
+      });
       if (mode !== 'transformers') break;
     }
   }
@@ -254,6 +261,13 @@ export async function detectWithExternalNer(
   throwIfAborted(signal);
   const { spans: externalNerSpans, nerMs } = await externalNerSpansFor(text, config, signal);
   throwIfAborted(signal);
+  if (externalNerSpans.length === 0) {
+    console.warn('[PG:offscreen] NER returned 0 spans — falling back to regex-only mode', {
+      nerEnabled: config?.ner_enabled,
+      nerProvider: config?.ner_provider,
+      nerModel: config?.ner_model,
+    });
+  }
   const detectConfig = externalNerSpans.length > 0 ? config : regexOnlyConfig(config);
   debugLog('[PG:offscreen] handing off to WASM', {
     externalNerSpanCount: externalNerSpans.length,
