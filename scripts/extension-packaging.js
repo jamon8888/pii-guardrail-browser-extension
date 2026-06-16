@@ -14,6 +14,13 @@ const PREPARED_HIKMAAI_MODEL_SOURCE_DIR = path.join(
   'ner',
   'hikmaai-distilbert-pii'
 );
+const PREPARED_BARDSAI_V2_MODEL_SOURCE_DIR = path.join(
+  'generated',
+  'models',
+  'ner',
+  'bardsai-v2-eu-pii-anonimization-multilang-v2'
+);
+const PACKAGED_BARDSAI_V2_MODEL_DIR = 'models/ner/bardsai-v2-eu-pii-anonimization-multilang-v2';
 const PACKAGED_MODEL_DIR = 'models/ner/ai4privacy';
 const PACKAGED_BARDSAI_MODEL_DIR = 'models/ner/bardsai-eu-pii-anonimization-multilang';
 const PACKAGED_HIKMAAI_MODEL_DIR = 'models/ner/hikmaai-distilbert-pii';
@@ -103,6 +110,12 @@ function getNerAssetCopyPatterns(rootDir = process.cwd()) {
       to: PACKAGED_HIKMAAI_MODEL_DIR,
       noErrorOnMissing: true,
     },
+    {
+      from: resolveFromRoot(rootDir, PREPARED_BARDSAI_V2_MODEL_SOURCE_DIR),
+      to: PACKAGED_BARDSAI_V2_MODEL_DIR,
+      noErrorOnMissing: true,
+      globOptions: { ignore: EXCLUDED_MODEL_ASSET_GLOBS },
+    },
     ...ONNX_RUNTIME_ASSETS.map((fileName) => ({
       from: resolveFromRoot(rootDir, path.join('node_modules', 'onnxruntime-web', 'dist', fileName)),
       to: `${PACKAGED_ONNX_RUNTIME_DIR}/[name][ext]`,
@@ -161,6 +174,8 @@ module.exports = {
   PREPARED_BARDSAI_MODEL_SOURCE_DIR,
   PREPARED_HIKMAAI_MODEL_SOURCE_DIR,
   PREPARED_MODEL_SOURCE_DIR,
+  PREPARED_BARDSAI_V2_MODEL_SOURCE_DIR,
+  PACKAGED_BARDSAI_V2_MODEL_DIR,
   REQUIRED_MODEL_ASSETS,
   getNerAssetCopyPatterns,
   missingOnnxRuntimeAssets,
