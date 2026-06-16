@@ -39,7 +39,15 @@ pub enum EntityType {
     DeviceIdentifier,
     VehicleIdentifier,
     ContactHandle,
-    Sensitive,
+    HealthData,
+    BiometricData,
+    GeneticData,
+    ReligionOrBelief,
+    PoliticalOpinion,
+    TradeUnionMembership,
+    EthnicOrigin,
+    SexualOrientation,
+    CriminalOffenceData,
 }
 
 impl EntityType {
@@ -80,7 +88,15 @@ impl EntityType {
             EntityType::DeviceIdentifier => "DEVICE_IDENTIFIER",
             EntityType::VehicleIdentifier => "VEHICLE_IDENTIFIER",
             EntityType::ContactHandle => "CONTACT_HANDLE",
-            EntityType::Sensitive => "SENSITIVE",
+            EntityType::HealthData => "HEALTH_DATA",
+            EntityType::BiometricData => "BIOMETRIC_DATA",
+            EntityType::GeneticData => "GENETIC_DATA",
+            EntityType::ReligionOrBelief => "RELIGION_OR_BELIEF",
+            EntityType::PoliticalOpinion => "POLITICAL_OPINION",
+            EntityType::TradeUnionMembership => "TRADE_UNION_MEMBERSHIP",
+            EntityType::EthnicOrigin => "ETHNIC_ORIGIN",
+            EntityType::SexualOrientation => "SEXUAL_ORIENTATION",
+            EntityType::CriminalOffenceData => "CRIMINAL_OFFENCE_DATA",
         }
     }
 }
@@ -147,6 +163,9 @@ pub struct PipelineConfig {
     pub context_window: usize,
     /// Whether NER is enabled (requires model to be loaded).
     pub ner_enabled: bool,
+    /// Language code for locale-specific PII detection (e.g., "en", "de", "fr", "nl", "eu").
+    /// Defaults to "eu" (all 24 supported languages).
+    pub language: String,
 }
 
 impl Default for PipelineConfig {
@@ -156,6 +175,7 @@ impl Default for PipelineConfig {
             context_boost: 0.15,
             context_window: 5,
             ner_enabled: false,
+            language: "eu".to_string(),
         }
     }
 }
@@ -166,6 +186,7 @@ pub struct PipelineConfigOverrides {
     pub context_boost: Option<f64>,
     pub context_window: Option<usize>,
     pub ner_enabled: Option<bool>,
+    pub language: Option<String>,
 }
 
 impl PipelineConfig {
@@ -191,6 +212,9 @@ impl PipelineConfig {
         }
         if let Some(ner_enabled) = overrides.ner_enabled {
             config.ner_enabled = ner_enabled;
+        }
+        if let Some(language) = overrides.language {
+            config.language = language;
         }
         config
     }
@@ -234,8 +258,17 @@ mod tests {
         EntityType::PaymentCardSecurity,
         EntityType::MacAddress,
         EntityType::DeviceIdentifier,
+        EntityType::VehicleIdentifier,
         EntityType::ContactHandle,
-        EntityType::Sensitive,
+        EntityType::HealthData,
+        EntityType::BiometricData,
+        EntityType::GeneticData,
+        EntityType::ReligionOrBelief,
+        EntityType::PoliticalOpinion,
+        EntityType::TradeUnionMembership,
+        EntityType::EthnicOrigin,
+        EntityType::SexualOrientation,
+        EntityType::CriminalOffenceData,
     ];
 
     #[test]
