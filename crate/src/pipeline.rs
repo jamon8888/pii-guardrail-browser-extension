@@ -38,6 +38,14 @@ pub fn detect_with_external_spans(
     // Merge: prefer cloakrs detections, fill gaps with hand-written regex
     let mut regex_spans = merge_regex_results(cloakrs_spans, hand_written_spans);
 
+    // Stage 1c: GDPR Art.9 regex (fallback for sensitive categories)
+    let gdpr_spans = crate::gdpr_regex::detect_gdpr(text);
+    regex_spans.extend(gdpr_spans);
+
+    // Stage 1d: NER fallback regex (supplementary for NER-only types)
+    let ner_fallback_spans = crate::ner_fallback_regex::detect_ner_fallback(text);
+    regex_spans.extend(ner_fallback_spans);
+
     // Stage 2: NER (if enabled and model is loaded)
     let mut ner_spans = if config.ner_enabled && ner::is_model_loaded() {
         ner::detect_ner(text)

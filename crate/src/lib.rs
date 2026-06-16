@@ -1,9 +1,12 @@
 mod checksum;
+mod cloakrs_integration;
 mod context;
 mod merger;
 mod ner;
 mod pipeline;
 mod regex_recognizers;
+mod gdpr_regex;
+mod ner_fallback_regex;
 mod tokenizer;
 pub mod types;
 
