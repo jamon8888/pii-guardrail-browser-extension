@@ -91,6 +91,16 @@
   --color-group-organization-fg: #c2410c;
   --color-group-low-signal-bg: rgb(148 163 184 / 18%);
   --color-group-low-signal-fg: #475569;
+  --color-group-health-bg: rgb(239 83 80 / 14%);
+  --color-group-health-fg: #ef5350;
+  --color-group-biometric-bg: rgb(171 71 188 / 14%);
+  --color-group-biometric-fg: #ab47bc;
+  --color-group-beliefs-bg: rgb(66 165 245 / 14%);
+  --color-group-beliefs-fg: #42a5f5;
+  --color-group-origin-bg: rgb(255 152 0 / 14%);
+  --color-group-origin-fg: #ff9800;
+  --color-group-criminal-bg: rgb(120 144 156 / 14%);
+  --color-group-criminal-fg: #78909c;
 }
 
 button,

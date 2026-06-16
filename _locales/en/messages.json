@@ -1147,12 +1147,52 @@
     "message": "Dates and dates of birth",
     "description": "Category description for temporal"
   },
-  "sensitive": {
-    "message": "Sensitive",
-    "description": "Category label for sensitive entity types"
+  "groupPersonal": {
+    "message": "Personal",
+    "description": "Group label for personal identity"
   },
-  "sensitiveDescription": {
-    "message": "Sensitive content that requires careful handling",
-    "description": "Category description for sensitive"
+  "groupPersonal_desc": {
+    "message": "Person names, aliases, and usernames",
+    "description": "Group description"
+  },
+  "groupHealth": {
+    "message": "Health",
+    "description": "Group label for health data"
+  },
+  "groupHealth_desc": {
+    "message": "Medical records, diagnoses, prescriptions",
+    "description": "Group description"
+  },
+  "groupBiometric": {
+    "message": "Biometric",
+    "description": "Group label for biometric data"
+  },
+  "groupBiometric_desc": {
+    "message": "Fingerprints, DNA, facial recognition",
+    "description": "Group description"
+  },
+  "groupBeliefs": {
+    "message": "Beliefs",
+    "description": "Group label for beliefs data"
+  },
+  "groupBeliefs_desc": {
+    "message": "Religion, political opinions, trade union membership",
+    "description": "Group description"
+  },
+  "groupIdentity": {
+    "message": "Identity",
+    "description": "Group label for identity data"
+  },
+  "groupIdentity_desc": {
+    "message": "Ethnic origin, sexual orientation",
+    "description": "Group description"
+  },
+  "groupCriminal": {
+    "message": "Criminal",
+    "description": "Group label for criminal data"
+  },
+  "groupCriminal_desc": {
+    "message": "Criminal records, convictions",
+    "description": "Group description"
   }
 }

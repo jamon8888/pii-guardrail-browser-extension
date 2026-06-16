@@ -426,6 +426,36 @@
   color: var(--color-group-low-signal-fg);
   border-bottom-color: var(--color-group-low-signal-fg);
 }
+.pg-highlight-health_data,
+.pg-pill-health_data {
+  background-color: var(--color-group-health-bg);
+  color: var(--color-group-health-fg);
+  border-bottom-color: var(--color-group-health-fg);
+}
+.pg-highlight-biometric_data, .pg-highlight-genetic_data,
+.pg-pill-biometric_data, .pg-pill-genetic_data {
+  background-color: var(--color-group-biometric-bg);
+  color: var(--color-group-biometric-fg);
+  border-bottom-color: var(--color-group-biometric-fg);
+}
+.pg-highlight-religion_or_belief, .pg-highlight-political_opinion, .pg-highlight-trade_union_membership,
+.pg-pill-religion_or_belief, .pg-pill-political_opinion, .pg-pill-trade_union_membership {
+  background-color: var(--color-group-beliefs-bg);
+  color: var(--color-group-beliefs-fg);
+  border-bottom-color: var(--color-group-beliefs-fg);
+}
+.pg-highlight-ethnic_origin, .pg-highlight-sexual_orientation,
+.pg-pill-ethnic_origin, .pg-pill-sexual_orientation {
+  background-color: var(--color-group-origin-bg);
+  color: var(--color-group-origin-fg);
+  border-bottom-color: var(--color-group-origin-fg);
+}
+.pg-highlight-criminal_offence_data,
+.pg-pill-criminal_offence_data {
+  background-color: var(--color-group-criminal-bg);
+  color: var(--color-group-criminal-fg);
+  border-bottom-color: var(--color-group-criminal-fg);
+}
 
 .pg-entity-type-label {
   background: rgb(34 197 94 / 14%);
