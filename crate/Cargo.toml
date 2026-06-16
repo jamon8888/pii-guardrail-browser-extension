@@ -13,6 +13,12 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 regex = "1"
 js-sys = "0.3"
+getrandom = { version = "0.2", features = ["js"] }
+
+# cloakrs: PII detection engine (core + patterns + locales, no CLI/adapters/tracing)
+cloakrs-core = "0.3.0"
+cloakrs-patterns = "0.3.0"
+cloakrs-locales = "0.3.0"
 
 # tract for ONNX inference (Phase 2 — stubbed for now)
 # tract-onnx = { version = "0.21", default-features = false }
