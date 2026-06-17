@@ -7,7 +7,7 @@
  */
 
 import { writable, get, type Readable } from 'svelte/store';
-import type { EntityType } from './message-types';
+import type { EntityType, NerModelKey } from './message-types';
 
 // Message keys matching _locales/<lang>/messages.json
 export type MessageKey = string;
@@ -15,7 +15,7 @@ export type MessageKey = string;
 // Supported languages
 export type Locale = 'en' | 'fr';
 export const SUPPORTED_LOCALES: readonly Locale[] = ['en', 'fr'];
-export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_LOCALE: Locale = 'fr';
 
 const STORAGE_KEY = 'pg_locale';
 
@@ -83,6 +83,11 @@ function applySubstitutions(message: string, substitutions: string[]): string {
 // Retrieve a human-readable label for an entity type.
 export function entityTypeLabel(type: EntityType): string {
   return t(`entityType_${type}`);
+}
+
+// Retrieve a human-readable label for an NER model key.
+export function nerModelLabel(key: NerModelKey): string {
+  return t(`nerModel_${key.replace(/-/g, '')}`);
 }
 
 // Retrieve a translated message by key.
