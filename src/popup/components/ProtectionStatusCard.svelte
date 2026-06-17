@@ -2,7 +2,6 @@
 	import type { Readable, Writable } from 'svelte/store';
 	import type { StatusPill } from '../popup-model.svelte';
 	import type { ResourceSummary } from '../../shared/popup-resource-summary';
-	import { AI_TRANSPARENCY_NOTICE } from '../../shared/project-links';
 	import { t } from '../../shared/i18n';
 
 	let { enabled, wasmStatus, nerStatus, cpuFallback, resourceSummary }: {
@@ -32,7 +31,7 @@
 	</span>
 </div>
 
-<p class="ai-notice" role="note">{AI_TRANSPARENCY_NOTICE}</p>
+<p class="ai-notice" role="note">{@html t('aiTransparencyNotice')}</p>
 
 {#if $resourceSummary}
 	<div class="resource-summary" data-tone={$resourceSummary.tone} role="status" aria-label="Local AI resource status">

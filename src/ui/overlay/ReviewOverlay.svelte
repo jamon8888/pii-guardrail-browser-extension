@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { EntityType } from '../../shared/message-types';
-  import { LIMITS_DISCLAIMER } from '../../shared/project-links';
   import { t } from '../../shared/i18n';
   import type { OverlayModel } from './overlay-model';
   import OverlayHeader from './components/OverlayHeader.svelte';
@@ -96,7 +95,7 @@
       {/if}
     </div>
 
-    <p class="pg-disclaimer">{LIMITS_DISCLAIMER}</p>
+    <p class="pg-disclaimer">{@html t('limitsDisclaimer')}</p>
 
     <footer class="pg-footer">
       <div class="pg-footer-left">

@@ -2,7 +2,6 @@
 	import type { Writable } from 'svelte/store';
 	import type { LocalAiUnloadTimeoutMs, Settings, SystemCompatibilityStatus } from '../../shared/message-types';
 	import { LOCAL_AI_UNLOAD_TIMEOUT_CHOICES, nerModelChoices, nerModelChoiceValue } from '../../shared/constants';
-	import { AI_TRANSPARENCY_NOTICE } from '../../shared/project-links';
 	import { t } from '../../shared/i18n';
 	import CardHeading from '../../popup/components/CardHeading.svelte';
 
@@ -113,7 +112,7 @@
 		</div>
 
 		<div class="local-ai-control">
-			<p class="ai-notice" role="note">{AI_TRANSPARENCY_NOTICE}</p>
+			<p class="ai-notice" role="note">{@html t('aiTransparencyNotice')}</p>
 
 			<div class="toggle-row">
 				<div>

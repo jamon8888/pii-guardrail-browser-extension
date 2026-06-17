@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { LIMITS_DISCLAIMER } from '../../shared/project-links';
 	import { t } from '../../shared/i18n';
 
 	let {
@@ -16,7 +15,7 @@
 	<button type="button" class="link-row" onclick={openPrivacyPolicy}><span class="row-label">{t('privacyPolicy')}</span><span class="right">›</span></button>
 	<div class="divider"></div>
 	<button type="button" class="link-row" onclick={openImpressum}><span class="row-label">{t('impressum')}</span><span class="right">›</span></button>
-	<p class="note">{LIMITS_DISCLAIMER}</p>
+	<p class="note">{@html t('limitsDisclaimer')}</p>
 </article>
 
 <style>
