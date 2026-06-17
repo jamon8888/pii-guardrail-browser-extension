@@ -183,6 +183,22 @@
     "message": "NER model",
     "description": "NER model label"
   },
+  "nerModel_ai4privacy": {
+    "message": "AI4Privacy prototype",
+    "description": "NER model: AI4Privacy"
+  },
+  "nerModel_bardsai": {
+    "message": "BardsAI EU multilingual",
+    "description": "NER model: BardsAI v1"
+  },
+  "nerModel_bardsaiv2": {
+    "message": "BardsAI EU PII v2 (36 entities)",
+    "description": "NER model: BardsAI v2"
+  },
+  "nerModel_hikmaai": {
+    "message": "HikmaAI DistilBERT PII",
+    "description": "NER model: HikmaAI"
+  },
   "localTransformerHint": {
     "message": "Local transformer used for detection",
     "description": "NER model hint"
@@ -607,6 +623,10 @@
     "message": "No unpinned records to clear.",
     "description": "No unpinned records message"
   },
+  "notPii": {
+    "message": "Not PII",
+    "description": "Title for dismiss button"
+  },
   "confirmRemoveUnpinned": {
     "message": "Remove {0} unpinned record(s)? This cannot be undone.",
     "description": "Confirm remove unpinned (0 = count)"
@@ -871,6 +891,10 @@
     "message": "Min. confidence",
     "description": "Confidence slider label"
   },
+  "markAsNotPii": {
+    "message": "Mark as not PII",
+    "description": "Aria label for dismiss button"
+  },
   "markNewPii": {
     "message": "Mark new PII",
     "description": "Mark overlay title"
@@ -1123,6 +1147,10 @@
     "message": "Was: {0}",
     "description": "Revealed original tooltip (0 = original text)"
   },
+  "whitelisted": {
+    "message": "Whitelisted",
+    "description": "Label for items on the allowlist"
+  },
   "language": {
     "message": "Language",
     "description": "Language selector label"
@@ -1194,6 +1222,10 @@
   "groupCriminal_desc": {
     "message": "Criminal records, convictions",
     "description": "Group description"
+  },
+  "entityTypeAria": {
+    "message": "Entity type",
+    "description": "Aria label for entity type dropdown"
   },
   "entityType_ADDRESS": { "message": "Address", "description": "Entity type: physical address" },
   "entityType_BANK_ACCOUNT": { "message": "Bank account", "description": "Entity type: bank account number" },

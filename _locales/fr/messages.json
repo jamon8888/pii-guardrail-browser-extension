@@ -183,6 +183,22 @@
     "message": "Modèle NER",
     "description": "NER model label"
   },
+  "nerModel_ai4privacy": {
+    "message": "Prototype AI4Privacy",
+    "description": "NER model: AI4Privacy"
+  },
+  "nerModel_bardsai": {
+    "message": "BardsAI EU multilingue",
+    "description": "NER model: BardsAI v1"
+  },
+  "nerModel_bardsaiv2": {
+    "message": "BardsAI EU PII v2 (36 entités)",
+    "description": "NER model: BardsAI v2"
+  },
+  "nerModel_hikmaai": {
+    "message": "HikmaAI DistilBERT PII",
+    "description": "NER model: HikmaAI"
+  },
   "localTransformerHint": {
     "message": "Transformateur local utilisé pour la détection",
     "description": "NER model hint"
@@ -607,6 +623,10 @@
     "message": "Aucun enregistrement non épinglé à effacer.",
     "description": "No unpinned records message"
   },
+  "notPii": {
+    "message": "Pas d'IPP",
+    "description": "Title for dismiss button"
+  },
   "confirmRemoveUnpinned": {
     "message": "Supprimer {0} enregistrement(s) non épinglé(s) ? Cette action est irréversible.",
     "description": "Confirm remove unpinned (0 = count)"
@@ -871,6 +891,10 @@
     "message": "Confiance min.",
     "description": "Confidence slider label"
   },
+  "markAsNotPii": {
+    "message": "Marquer comme non-IPP",
+    "description": "Aria label for dismiss button"
+  },
   "markNewPii": {
     "message": "Marquer la nouvelle IPE",
     "description": "Mark overlay title"
@@ -1123,6 +1147,10 @@
     "message": "Était : {0}",
     "description": "Revealed original tooltip (0 = original text)"
   },
+  "whitelisted": {
+    "message": "Autorisé",
+    "description": "Label for items on the allowlist"
+  },
   "language": {
     "message": "Langue",
     "description": "Language selector label"
@@ -1194,6 +1222,10 @@
   "groupCriminal_desc": {
     "message": "Casier judiciaire, condamnations",
     "description": "Group description"
+  },
+  "entityTypeAria": {
+    "message": "Type d'entité",
+    "description": "Aria label for entity type dropdown"
   },
   "entityType_ADDRESS": { "message": "Adresse", "description": "Entity type: physical address" },
   "entityType_BANK_ACCOUNT": { "message": "Compte bancaire", "description": "Entity type: bank account number" },
