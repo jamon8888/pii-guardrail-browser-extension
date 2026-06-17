@@ -7,6 +7,7 @@
  */
 
 import { writable, get, type Readable } from 'svelte/store';
+import type { EntityType } from './message-types';
 
 // Message keys matching _locales/<lang>/messages.json
 export type MessageKey = string;
@@ -77,6 +78,11 @@ export async function setLanguage(locale: Locale): Promise<void> {
 // Resolve substitution placeholders {0}, {1}, … in a message string.
 function applySubstitutions(message: string, substitutions: string[]): string {
   return message.replace(/\{(\d+)\}/g, (_, idx) => substitutions[Number(idx)] ?? `{${idx}}`);
+}
+
+// Retrieve a human-readable label for an entity type.
+export function entityTypeLabel(type: EntityType): string {
+  return t(`entityType_${type}`);
 }
 
 // Retrieve a translated message by key.
