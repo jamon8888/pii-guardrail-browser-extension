@@ -7,6 +7,12 @@
 	import LegalCard from './LegalCard.svelte';
 	import { t, currentLocale, setLanguage, SUPPORTED_LOCALES, type Locale } from '../../shared/i18n';
 
+async function onLanguageChange(event: Event) {
+	const locale = (event.currentTarget as HTMLSelectElement).value as Locale;
+	await setLanguage(locale);
+	window.location.reload();
+}
+
 	let {
 		minConfidence,
 		debug,
@@ -85,7 +91,7 @@
 		<div class="head"><span>{t('language')}</span></div>
 		<div class="row">
 			<div><div class="row-label">{t('language')}</div><div class="row-meta">{t('languageHint')}</div></div>
-			<select value={$currentLocale} onchange={(event) => setLanguage(event.currentTarget.value as Locale)}>
+			<select value={$currentLocale} onchange={onLanguageChange}>
 				<option value="en">English</option>
 				<option value="fr">Français</option>
 			</select>
