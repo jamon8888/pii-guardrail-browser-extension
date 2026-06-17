@@ -35,7 +35,7 @@ import { PUBLIC_PROJECT_LINKS } from '../shared/project-links';
 import { minResolvedThreshold, resolveThreshold } from '../shared/sensitivity-resolver';
 import { SYSTEM_CHECK_STORAGE_KEY } from '../shared/system-check-storage';
 import { clearEntityMaps, clearFeedback as clearFeedbackLog, getFeedbackLog, loadSettings, saveSettings } from '../shared/storage';
-import { t } from '../shared/i18n';
+import { t, nerModelLabel } from '../shared/i18n';
 
 export type TabId = 'protect' | 'detect' | 'test' | 'settings';
 export type TabDefinition = { id: TabId; label: string };
@@ -178,7 +178,7 @@ async function broadcastSettings(settings: Settings): Promise<void> {
 }
 
 function modelLabelFor(key: NerModelKey): string {
-  return ACTIVE_NER_MODELS.find((model) => model.key === key)?.label ?? key;
+  return nerModelLabel(key);
 }
 
 function status(label: string, tone: StatusTone, title?: string): StatusPill {

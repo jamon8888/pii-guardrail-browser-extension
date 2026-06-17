@@ -16,6 +16,7 @@ import type {
   NerWebGpuDtype,
   PiiSpan,
 } from '../shared/message-types';
+import { nerModelLabel } from '../shared/i18n';
 import { debugLog } from './debug';
 
 export interface NerProvider {
@@ -1289,7 +1290,7 @@ export function createTransformersNerProvider(
   return {
     mode: 'transformers',
     model: model.key,
-    modelLabel: model.label,
+    modelLabel: nerModelLabel(model.key),
     async detect(text: string, signal?: AbortSignal): Promise<PiiSpan[]> {
       throwIfAborted(signal);
       const startedAt = performance.now();
@@ -1306,6 +1307,7 @@ export function createTransformersNerProvider(
       throwIfAborted(signal);
       const inferenceMs = Math.round(performance.now() - inferenceStartedAt);
       const totalMs = Math.round(performance.now() - startedAt);
+      const filtered = applyNerThresholdPolicy(spans, model.key);
       lastTiming = {
         totalMs,
         inferenceMs,
@@ -1313,9 +1315,10 @@ export function createTransformersNerProvider(
         textBytes: byteLength(text),
         wasCold,
         ...(wasCold && typeof lastLoadMs === 'number' ? { loadMs: lastLoadMs } : {}),
+        rawSpanCount: spans.length,
+        filteredSpanCount: filtered.length,
+        droppedByThreshold: spans.length - filtered.length,
       };
-
-      const filtered = applyNerThresholdPolicy(spans, model.key);
       // Unconditional diagnostic — first-run users may not have flipped
       // the debug toggle yet. Keep until model behaviour is stable.
       console.log('[PG:ner] detect: complete', {

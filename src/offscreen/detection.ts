@@ -8,6 +8,7 @@ import type {
 } from '../shared/message-types';
 import { DEFAULT_NER_MODEL, nerModelDefinitionFor, runtimeNerModelKey } from '../shared/constants';
 import { debugLog } from './debug';
+import { nerModelLabel } from '../shared/i18n';
 import { detectPii } from './wasm-bridge';
 import { createNerProvider, resetNerProviderCachesForTests, type NerProvider } from './ner-provider';
 
@@ -29,8 +30,8 @@ function initialTransformersStatus(model = DEFAULT_NER_MODEL): NerStatus {
     mode: 'transformers',
     state: 'idle',
     model: definition.key,
-    modelLabel: definition.label,
-    message: `${definition.label} will load on first detection.`,
+    modelLabel: nerModelLabel(definition.key),
+    message: `${nerModelLabel(definition.key)} will load on first detection.`,
   };
 }
 
@@ -91,7 +92,7 @@ export function getNerStatus(config?: DetectionOptions): NerStatus {
       mode,
       state: 'unavailable',
       model: definition.key,
-      modelLabel: definition.label,
+      modelLabel: nerModelLabel(definition.key),
       message: 'NER provider is turned off.',
     };
   }
@@ -118,6 +119,8 @@ export function getNerStatus(config?: DetectionOptions): NerStatus {
 interface ExternalNerResult {
   spans: PiiSpan[];
   nerMs?: number;
+  nerRawSpanCount?: number;
+  nerFilteredSpanCount?: number;
 }
 
 async function externalNerSpansFor(
@@ -164,7 +167,7 @@ async function externalNerSpansFor(
         mode,
         state: 'unavailable',
         model: candidateDefinition.key,
-        modelLabel: candidateDefinition.label,
+        modelLabel: nerModelLabel(candidateDefinition.key),
         message: 'No NER provider is available for the selected mode.',
       });
       return { spans: [] };
@@ -183,7 +186,7 @@ async function externalNerSpansFor(
       mode,
       state: 'loading',
       model: provider.model ?? candidateDefinition.key,
-      modelLabel: provider.modelLabel ?? candidateDefinition.label,
+      modelLabel: provider.modelLabel ?? nerModelLabel(candidateDefinition.key),
     });
 
     try {
@@ -204,15 +207,15 @@ async function externalNerSpansFor(
         mode,
         state: 'ready',
         model: provider.model ?? candidateDefinition.key,
-        modelLabel: provider.modelLabel ?? candidateDefinition.label,
+        modelLabel: provider.modelLabel ?? nerModelLabel(candidateDefinition.key),
         device,
         message:
           mode === 'fixture'
             ? 'Fixture NER provider is ready.'
-            : `${provider.modelLabel ?? candidateDefinition.label} is ready.`,
+            : `${provider.modelLabel ?? nerModelLabel(candidateDefinition.key)} is ready.`,
         timings,
       });
-      return { spans, nerMs };
+      return { spans, nerMs, nerRawSpanCount: timings?.rawSpanCount, nerFilteredSpanCount: timings?.filteredSpanCount };
     } catch (err) {
       if (signal?.aborted || err instanceof DOMException && err.name === 'AbortError') {
         throw err;
@@ -242,7 +245,7 @@ async function externalNerSpansFor(
     mode,
     state: mode === 'transformers' ? 'unavailable' : 'failed',
     model: reportedProvider?.model ?? definition.key,
-    modelLabel: reportedProvider?.modelLabel ?? definition.label,
+    modelLabel: reportedProvider?.modelLabel ?? nerModelLabel(definition.key),
     message,
   });
   return { spans: [], nerMs };
@@ -251,6 +254,9 @@ async function externalNerSpansFor(
 export interface DetectionResult {
   spans: PiiSpan[];
   nerMs?: number;
+  nerRawSpanCount?: number;
+  nerFilteredSpanCount?: number;
+  nerSpans?: PiiSpan[];
 }
 
 export async function detectWithExternalNer(
@@ -259,31 +265,37 @@ export async function detectWithExternalNer(
   signal?: AbortSignal
 ): Promise<DetectionResult> {
   throwIfAborted(signal);
-  const { spans: externalNerSpans, nerMs } = await externalNerSpansFor(text, config, signal);
+  const { spans: externalNerSpans, nerMs, nerRawSpanCount, nerFilteredSpanCount } = await externalNerSpansFor(text, config, signal);
   throwIfAborted(signal);
+  console.log('[PG:offscreen] NER result', {
+    spanCount: externalNerSpans.length,
+    nerMs,
+    nerEnabled: config?.ner_enabled,
+    nerProvider: config?.ner_provider,
+    nerModel: config?.ner_model,
+    spanTypes: externalNerSpans.map((s) => `${s.entity_type}@${s.source}`),
+  });
   if (externalNerSpans.length === 0) {
-    console.warn('[PG:offscreen] NER returned 0 spans — falling back to regex-only mode', {
-      nerEnabled: config?.ner_enabled,
-      nerProvider: config?.ner_provider,
-      nerModel: config?.ner_model,
-    });
+    console.warn('[PG:offscreen] NER returned 0 spans — falling back to regex-only mode');
   }
   const detectConfig = externalNerSpans.length > 0 ? config : regexOnlyConfig(config);
-  debugLog('[PG:offscreen] handing off to WASM', {
+  console.log('[PG:offscreen] handing off to WASM', {
     externalNerSpanCount: externalNerSpans.length,
     nerEnabledForWasm: detectConfig?.ner_enabled,
+    nerSpanTypes: externalNerSpans.map((s) => `${s.entity_type}@${s.source}[${s.start}-${s.end}]`),
   });
   const spans = await detectPii(text, detectConfig, externalNerSpans);
   reattachNerRawLabels(spans, externalNerSpans);
   throwIfAborted(signal);
-  debugLog('[PG:offscreen] WASM pipeline result', {
+  console.log('[PG:offscreen] WASM result', {
+    inputNerSpans: externalNerSpans.length,
     finalSpanCount: spans.length,
     bySource: spans.reduce<Record<string, number>>((acc, s) => {
       acc[s.source] = (acc[s.source] ?? 0) + 1;
       return acc;
     }, {}),
   });
-  return { spans, nerMs };
+  return { spans, nerMs, nerRawSpanCount, nerFilteredSpanCount, nerSpans: externalNerSpans };
 }
 
 function reattachNerRawLabels(spans: PiiSpan[], externalNerSpans: PiiSpan[]): void {

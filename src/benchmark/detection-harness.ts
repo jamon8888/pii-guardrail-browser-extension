@@ -11,6 +11,7 @@ import {
 } from '../shared/constants';
 import type { DetectionOptions, NerModelKey, NerStatus, PiiSpan } from '../shared/message-types';
 import { requiredAssetsForDtype, type NerProvider } from '../offscreen/ner-provider';
+import { nerModelLabel } from '../shared/i18n';
 import { createBenchmarkReport, formatBenchmarkReport } from './reporting';
 
 export interface BenchmarkCliOptions {
@@ -167,7 +168,7 @@ export function validateBenchmarkModelAssets(
   if (missing.length > 0) {
     throw new Error(
       [
-        `Missing local NER assets for model "${model.key}" (${model.label}): ${missing.join(', ')}.`,
+        `Missing local NER assets for model "${model.key}" (${nerModelLabel(model.key)}): ${missing.join(', ')}.`,
         'Prepare the model assets before running a model-backed benchmark, or pass --regex-only.',
       ].join(' ')
     );
@@ -311,7 +312,7 @@ function defaultProviderStatus(config: DetectionOptions): NerStatus {
       mode: 'off',
       state: 'unavailable',
       model: definition.key,
-      modelLabel: definition.label,
+      modelLabel: nerModelLabel(definition.key),
       message: 'NER provider is turned off.',
     };
   }

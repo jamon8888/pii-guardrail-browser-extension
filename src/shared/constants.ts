@@ -1,5 +1,6 @@
 import type { LocalAiUnloadTimeoutMs, NerModelKey, NerWebGpuDtype, Settings } from './message-types';
 import { defaultGroupsEnabled } from './category-groups';
+import { nerModelLabel } from './i18n';
 
 /** Curated LLM chat URLs where paste interception is active. */
 export const DEFAULT_CURATED_URLS = [
@@ -260,13 +261,13 @@ export function nerModelChoices(
   return models.flatMap((model): NerModelChoice[] => {
     const dtypes = webGpuDtypeChoicesFor(model);
     if (dtypes.length < 2) {
-      return [{ value: model.key, key: model.key, dtype: null, label: model.label }];
+      return [{ value: model.key, key: model.key, dtype: null, label: nerModelLabel(model.key) }];
     }
     return dtypes.map((dtype) => ({
       value: `${model.key}@${dtype}`,
       key: model.key,
       dtype,
-      label: `${model.label} (${dtype})`,
+      label: `${nerModelLabel(model.key)} (${dtype})`,
     }));
   });
 }
