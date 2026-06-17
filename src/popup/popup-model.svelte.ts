@@ -19,7 +19,6 @@ import type {
   SystemCompatibilityStatusResponse,
 } from '../shared/message-types';
 import {
-  ACTIVE_NER_MODELS,
   nerModelChoices,
   nerModelChoiceValue,
   parseNerModelChoice,
