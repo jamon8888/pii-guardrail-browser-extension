@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t, entityTypeLabel } from '../../../shared/i18n';
   import { ENTITY_TYPES, type EntityType } from '../../../shared/message-types';
   import { truncate, type SpanState } from '../overlay-model';
 
@@ -45,18 +46,18 @@
     <!-- Disabled select so the layout box is identical to the real
          select in non-whitelisted rows (UA gives selects an intrinsic
          min-width a span can't match). -->
-    <select class="pg-entity-type pg-entity-type-whitelisted" disabled aria-label="Whitelisted">
-      <option>whitelisted</option>
+    <select class="pg-entity-type pg-entity-type-whitelisted" disabled aria-label={t('whitelisted')}>
+      <option>{t('whitelisted')}</option>
     </select>
   {:else}
     <select
       class="pg-entity-type pg-pill-{state.entityType.toLowerCase()}"
-      aria-label="Entity type"
+      aria-label={t('entityTypeAria')}
       value={state.entityType}
       onchange={(e) => onRetype(index, e.currentTarget.value as EntityType)}
     >
-      {#each ENTITY_TYPES as t (t)}
-        <option value={t}>{t}</option>
+      {#each ENTITY_TYPES as et (et)}
+        <option value={et}>{entityTypeLabel(et)}</option>
       {/each}
     </select>
   {/if}
@@ -69,8 +70,8 @@
     <button
       type="button"
       class="pg-entity-dismiss"
-      title="Not PII"
-      aria-label="Mark as not PII"
+      title={t('notPii')}
+      aria-label={t('markAsNotPii')}
       onclick={(e) => onDismissClick(index, e.currentTarget as HTMLElement)}
     >×</button>
   {/if}
