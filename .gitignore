@@ -52,7 +52,13 @@ tests-local/
 
 # Local assistant metadata
 .agents/
-.claude/
+.claude/*
+!.claude/settings.json
+!.claude/skills
+.claude/skills/*
+# privacy-guardrail skill is project-specific and committed for the team;
+# other skills (e.g. gitnexus) are personal/local tooling and stay untracked
+!.claude/skills/privacy-guardrail
 skills-lock.json
 
 # Local-only launch planning and private drafts
